@@ -7,7 +7,8 @@
 		"build": "remix build",
 		"dev": "remix dev --manual",
 		"start": "remix-serve ./build/index.js",
-		"typecheck": "tsc"
+		"typecheck": "tsc",
+		"format": "npx biome check ./app/* --apply-unsafe"
 	},
 	"dependencies": {
 		"@fontsource-variable/source-sans-3": "^5.0.18",
