@@ -1,5 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -10,8 +10,20 @@ import {
 } from "@remix-run/react";
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  ...(cssBundleHref
+    ? [
+        { rel: "stylesheet", href: cssBundleHref },
+        { rel: "icon", href: "/icon.svg", type: "image/svg" },
+      ]
+    : []),
 ];
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Mulailomba" },
+    { name: "description", content: "Mulailomba..." },
+  ];
+};
 
 export default function App() {
   return (
