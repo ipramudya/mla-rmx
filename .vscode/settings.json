@@ -4,5 +4,12 @@
 	"editor.codeActionsOnSave": {
 		"source.organizeImports.biome": true,
 		"quickfix.biome": true
-	}
+	},
+	"cssVariables.lookupFiles": [
+		"**/*.css",
+		"**/*.scss",
+		"**/*.sass",
+		"**/*.less",
+		"node_modules/@mantine/core/esm/index.css"
+	]
 }
