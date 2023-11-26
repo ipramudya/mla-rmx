@@ -25,12 +25,11 @@ const theme = {
 		],
 	} as unknown,
 	defaultGradient: {
-		from: "#818cf8",
-		to: "#4338ca",
+		from: "#6366f1",
+		to: "#3730a3",
 		deg: 45,
 	},
-
-	// overriding all components goes here
+	black: "#262626",
 	components: componentsOverriding,
 } as MantineTheme;
 

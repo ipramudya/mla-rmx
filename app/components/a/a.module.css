@@ -1,0 +1,5 @@
+.text:hover {
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    color: var(--mantine-color-indigo-6) !important;
+}
