@@ -1,6 +1,0 @@
-.focus {
-    &:focus {
-      outline: rem(1px) dashed var(--mantine-color-dark-1);
-      outline-offset: rem(2px);
-    }
-  }

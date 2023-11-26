@@ -10,7 +10,7 @@ interface Props extends PropsWithChildren<AnchorProps & LinkProps> {
 export default function A({ textProps, ...props }: Props) {
 	return (
 		<Anchor component={Link} underline="never" {...props}>
-			<Text c="dark.5" lh={0} className={styles.text} {...textProps}>
+			<Text c="white" lh={0} className={styles.text} {...textProps}>
 				{props.children}
 			</Text>
 		</Anchor>

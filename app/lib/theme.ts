@@ -1,5 +1,4 @@
 import type { MantineTheme } from "@mantine/core";
-import focusStyles from "app/styles/focus.module.css";
 import componentsOverriding from "./components-styles-override";
 
 /* main core theme */
@@ -7,7 +6,6 @@ const theme = {
 	fontFamily: "Source Sans 3 Variable, sans-serif",
 	fontFamilyMonospace: "Monaco, Courier, monospace",
 	headings: { fontFamily: "Source Sans 3 Variable, sans-serif" },
-	focusClassName: focusStyles.focus,
 	defaultRadius: "md",
 	primaryColor: "indigo",
 	colors: {

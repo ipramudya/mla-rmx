@@ -4,8 +4,8 @@ import "@mantine/core/styles.css";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
+import globalStyles from "app/assets/styles/global.css";
 import theme from "app/lib/theme";
-import globalStyles from "app/styles/global.css";
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref

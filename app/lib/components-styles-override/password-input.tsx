@@ -1,5 +1,5 @@
 import { PasswordInput } from "@mantine/core";
-import { Icon } from "app/components/icon";
+import { Icon } from "app/components/Icon";
 
 export const PasswordInputOverride = PasswordInput.extend({
 	defaultProps: {
