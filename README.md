@@ -1,38 +1,42 @@
-# Welcome to Remix!
+# Routes Rules
 
-- [Remix Docs](https://remix.run/docs)
+### Standart Filenames
 
-## Development
+| Filenames     | Deskripsi                                                   |
+|---------------|-------------------------------------------------------------|
+| `_index.tsx`  | Direpresentasikan dalam bentuk `/` pada browser url         |
+| `_layout.tsx` | Digunakan sebagai pembungkus beberapa halaman berupa layout |
 
-From your terminal:
+### Nested Routes
+Untuk membuat nested routes, buat folder dengan suffix `+`
 
-```sh
-npm run dev
+Contoh:
+
+```shell
+app/routes
+└── dashboard+
+   ├── index.tsx
+   └── settings+
+      ├── _index.tsx
+      ├── profile.tsx
+      └── account.tsx
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+Url tersedia
+- /dashboard
+- /dashboard/settings
+- /dashboard/profile
+- /dashboard/account
 
-## Deployment
+### Nested Folders Composition
+Untuk melakukan grouping terhadap routes namun tidak terefleksi terhadap `url`, tambahkan prefix `_` dan suffix `+`
 
-First, build your app for production:
+Contoh:
 
-```sh
-npm run build
-```
+| folder structures       | url      |
+|-------------------------|----------|
+| `_landing+ > index.tsx` | `/`      |
+| `_landing+ > about.tsx` | `/about` |
 
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
+### Colocation Components
+Untuk memecah tampilan UI yang kompleks ke dalam beberapa component, serta  menjaga agar struktur folder tetap rapi, setiap routes dapat memiliki scope componentnya sendiri dengan membuat folder `components`

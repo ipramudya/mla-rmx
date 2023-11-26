@@ -1,0 +1,22 @@
+.wrapper {
+    padding: 12px 14px;
+    border-radius: var(--mantine-radius-md);
+    transition: border 0.3s ease-in-out;
+    border: 1px solid var(--mantine-color-gray-2);
+    cursor: pointer;
+    box-shadow: rgba(68, 68, 68, 0.09) 0px 3px 14px;
+
+    @mixin hover {
+        border: 1px solid var(--mantine-color-gray-4);
+    }
+}
+
+.posterWrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 133%;
+    overflow: hidden;
+    border-radius: var(--mantine-radius-sm);
+    filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05));
+    background-color: var(--mantine-color-gray-2);
+}

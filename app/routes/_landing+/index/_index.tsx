@@ -1,8 +1,9 @@
-import { Box, Button, Center, Container, Flex, Group, Image } from "@mantine/core";
-import { Banner } from "app/assets/images";
+import { Box, Button, Center, Container, Flex, Group, Image, SimpleGrid } from "@mantine/core";
+import { Banner, Poster1, Poster2 } from "app/assets/images";
 import { Icon } from "app/components/Icon";
-import styles from "./banner.module.css";
-import { FILTERS } from "./utils";
+import LombaItem from "./components/LombaItem";
+import styles from "./components/banner.module.css";
+import { FILTERS } from "./components/utils";
 
 export default function LandingPage() {
 	return (
@@ -12,8 +13,8 @@ export default function LandingPage() {
 				<Box
 					className={styles.bannerWrapper}
 					style={{
-						// backgroundImage: "url(./banner1.png)",
-						backgroundImage: "url(./https://placehold.co/600x400?text=Placeholder)",
+						backgroundImage: "url(./banner1.png)",
+						// backgroundImage: "url(./https://placehold.co/600x400?text=Placeholder)",
 					}}
 				/>
 				<Container size="xl" pos="relative" style={{ zIndex: 10 }} mt={32}>
@@ -44,6 +45,18 @@ export default function LandingPage() {
 						Filter
 					</Button>
 				</Flex>
+			</Container>
+
+			{/* all lomba */}
+			<Container size="xl" w="100%">
+				<SimpleGrid cols={3}>
+					{Array.from({ length: 12 }).map((_, idx) => (
+						<LombaItem
+							key={"poster placeholder " + idx}
+							img={idx % 2 === 0 ? Poster1 : Poster2}
+						/>
+					))}
+				</SimpleGrid>
 			</Container>
 		</Flex>
 	);
