@@ -1,5 +1,11 @@
 # Routes Rules
 
+### Creating Route
+Untuk membuat route, terdapat beberapa opsi diantaranya:
+
+1. secara sederhana, dapat langsung membuat file dengan ekstensi `tsx` pada folder `routes`.
+2. apabila route berada di dalam sebuah folder -- dalam kasus ini adalah nested routes -- namun bukan folder grouping compositions, maka filename harus sama dengan foldername diawali dengan prefix `_`.
+
 ### Standart Filenames
 
 | Filenames     | Deskripsi                                                   |
