@@ -1,6 +1,6 @@
-.text {
+.text_base {
     @mixin hover {
-        font-weight: bold;
         transition: all 0.3s ease-in-out;
+        opacity: 0.8;
     }
 }

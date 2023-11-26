@@ -1,15 +1,19 @@
-import { Box, Button, Container, Divider, Flex, Group, Text, Title, rgba } from "@mantine/core";
-import A from "app/components/A";
-import Search from "./Search";
+import { Box, Button, Container, Divider, Flex, Group, Text, Title } from "@mantine/core";
+import useHeader from "app/hooks/useHeader";
+import HeaderLink from "../HeaderLink";
+import Search from "../Search";
+import styles from "./Header.module.css";
 
 export default function Header() {
+	const { isOver } = useHeader();
+
 	return (
 		<Container size="xl">
 			<Flex h="69px" pos="relative" justify="space-between" align="center">
 				{/* logo + links */}
 				<Group>
 					{/* logo */}
-					<Title fz={24} c="#fff">
+					<Title fz={24} c={isOver ? "black" : "#fff"}>
 						mulai
 						<Text fz={24} component="span">
 							lomba
@@ -19,10 +23,8 @@ export default function Header() {
 
 					{/* links */}
 					<Group gap="lg">
-						<A to="lomba" textProps={{ fw: "bold" }}>
-							Lomba
-						</A>
-						<A to="organizer">Organizer</A>
+						<HeaderLink to="lomba">Lomba</HeaderLink>
+						<HeaderLink to="organizer">Organizer</HeaderLink>
 					</Group>
 				</Group>
 
@@ -34,16 +36,13 @@ export default function Header() {
 				{/* create lomba + entry/profile */}
 				<Group>
 					<Group gap="lg">
-						<A to="auth/login">Masuk</A>
-						<A to="auth/register">Daftar</A>
+						<HeaderLink to="auth/login">Masuk</HeaderLink>
+						<HeaderLink to="auth/register">Daftar</HeaderLink>
 					</Group>
 					<Divider orientation="vertical" />
 					<Button
-						style={{
-							border: "none",
-							background: rgba("#fff", 0.5),
-							color: "white",
-						}}
+						classNames={{ root: isOver ? undefined : styles.create_lomba_btn }}
+						variant={isOver ? "gradient" : "default"}
 						size="md"
 					>
 						Buat Lomba
