@@ -1,6 +1,6 @@
 import { Box } from "@mantine/core";
 import { Outlet } from "@remix-run/react";
-import useHeader from "app/hooks/useHeader";
+import useHeader from "app/hooks/use-header";
 import Header from "app/routes/_landing+/components/Header";
 
 export default function LandingLayoyt() {

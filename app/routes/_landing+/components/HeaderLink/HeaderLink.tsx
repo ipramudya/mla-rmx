@@ -1,7 +1,7 @@
 import type { AnchorProps, TextProps } from "@mantine/core";
 import { Anchor, Text } from "@mantine/core";
 import { Link, type LinkProps } from "@remix-run/react";
-import useHeader from "app/hooks/useHeader";
+import useHeader from "app/hooks/use-header";
 import type { PropsWithChildren } from "react";
 import styles from "./HeaderLink.module.css";
 

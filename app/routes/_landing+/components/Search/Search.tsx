@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Flex, Space, TextInput } from "@mantine/core";
 import { Icon } from "app/components/Icon";
-import useHeader from "app/hooks/useHeader";
+import useHeader from "app/hooks/use-header";
 import styles from "./Search.module.css";
 
 export default function Search() {

@@ -1,5 +1,5 @@
 import { Box, Button, Container, Divider, Flex, Group, Text, Title } from "@mantine/core";
-import useHeader from "app/hooks/useHeader";
+import useHeader from "app/hooks/use-header";
 import HeaderLink from "../HeaderLink";
 import Search from "../Search";
 import styles from "./Header.module.css";
