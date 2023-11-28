@@ -2,7 +2,7 @@ import { createCookie } from "@remix-run/node";
 
 export const SERVER_ACCESS_TOKEN = "s_at";
 
-export const serverAccessToken = createCookie(SERVER_ACCESS_TOKEN, {
+export const userCookie = createCookie(SERVER_ACCESS_TOKEN, {
 	maxAge: 300, // 5min
 	path: "/",
 	sameSite: "lax",

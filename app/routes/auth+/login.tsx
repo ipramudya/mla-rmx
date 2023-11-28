@@ -4,8 +4,8 @@ import type { ActionFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import { SERVER_ACCESS_TOKEN, serverAccessToken } from "app/lib/cookie.server";
-import Tokenizing from "app/lib/token/tokenizing";
+import { userClientSession } from "app/lib/session/client";
+import { SERVER_ACCESS_TOKEN, userCookie } from "app/lib/session/server";
 import AuthUser from "app/services/api/user/AuthUser";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,7 +16,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 	return redirect("/", {
 		headers: {
-			"Set-Cookie": await serverAccessToken.serialize({
+			"Set-Cookie": await userCookie.serialize({
 				[SERVER_ACCESS_TOKEN]: accessToken,
 			}),
 		},
@@ -48,7 +48,7 @@ export default function LoginPage() {
 		}
 
 		if (data) {
-			Tokenizing.setAccessToken(data.access_token);
+			userClientSession.setAccessToken(data.access_token);
 			fetcher.submit({ s_at: data.access_token }, { method: "POST", action: "/auth/login" });
 		}
 	};

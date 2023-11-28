@@ -1,6 +1,5 @@
 import { BACKEND_API_URL } from "app/constant";
-import { OrganizerTokenizing } from "app/lib/token";
-import Tokenizing from "app/lib/token/tokenizing";
+import { userClientSession } from "app/lib/session/client";
 import type { BaseServiceReturn } from "app/services";
 import axios from "axios";
 
@@ -23,18 +22,11 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
 	async (request) => {
-		const resourceType = request.headers.get("X-Resource-Type");
+		// const resourceType = request.headers.get("X-Resource-Type");
 
-		if (resourceType && resourceType === "organizer") {
-			const organizerAccessToken = OrganizerTokenizing.getAccessToken();
-			if (organizerAccessToken) {
-				request.headers["Authorization"] = "Bearer " + organizerAccessToken;
-			}
-		} else {
-			const accessToken = Tokenizing.getAccessToken();
-			if (accessToken) {
-				request.headers["Authorization"] = "Bearer " + accessToken;
-			}
+		const accessToken = userClientSession.getAccessToken();
+		if (accessToken) {
+			request.headers["Authorization"] = "Bearer " + accessToken;
 		}
 
 		return request;
@@ -58,11 +50,7 @@ axiosInstance.interceptors.response.use(
 				});
 
 				if (refreshTokenResponse.data.access_token) {
-					if (previousRequest.headers.get("X-Resource-Type") === "organizer") {
-						OrganizerTokenizing.setAccessToken(refreshTokenResponse.data.access_token);
-					} else {
-						Tokenizing.setAccessToken(refreshTokenResponse.data.access_token);
-					}
+					userClientSession.setAccessToken(refreshTokenResponse.data.access_token);
 				}
 
 				return axiosInstance(previousRequest);
