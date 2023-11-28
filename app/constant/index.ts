@@ -12,4 +12,8 @@ export const BACKEND_API_URL = IS_PRODUCTION
 	? "https://api-dev.mulailomba.com/v1"
 	: "http://localhost:8080/v1";
 
+export const APP_API_URL = IS_PRODUCTION
+	? "https://rmx.mulailomba.com/v1"
+	: "http://localhost:3000/api";
+
 export const IS_SERVER = typeof window === "undefined";

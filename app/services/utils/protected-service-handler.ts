@@ -1,7 +1,5 @@
-import { BACKEND_API_URL } from "app/constant";
-import { userClientSession } from "app/lib/session/client";
-import type { BaseServiceReturn } from "app/services";
-import axios from "axios";
+import { axiosInstance as axiosInstanceV2 } from "app/lib/axios/instance";
+import type { BaseServiceReturn } from "..";
 
 const remapRequestMethod = new Map([
 	["GET", "get"],
@@ -15,60 +13,12 @@ type RequestOptions = {
 	asOrganizer?: boolean;
 };
 
-const axiosInstance = axios.create({
-	baseURL: BACKEND_API_URL,
-	withCredentials: true,
-});
-
-axiosInstance.interceptors.request.use(
-	async (request) => {
-		// const resourceType = request.headers.get("X-Resource-Type");
-
-		const accessToken = userClientSession.getAccessToken();
-		if (accessToken) {
-			request.headers["Authorization"] = "Bearer " + accessToken;
-		}
-
-		return request;
-	},
-	(error) => {
-		return Promise.reject(error);
-	},
-);
-
-axiosInstance.interceptors.response.use(
-	(response) => response,
-	async (error) => {
-		const previousRequest = error.config;
-
-		if (error.response.status === 401 && !previousRequest._retry) {
-			try {
-				const refreshTokenResponse = await axiosInstance({
-					method: "post",
-					url: "/auth/refresh",
-					headers: previousRequest.headers,
-				});
-
-				if (refreshTokenResponse.data.access_token) {
-					userClientSession.setAccessToken(refreshTokenResponse.data.access_token);
-				}
-
-				return axiosInstance(previousRequest);
-			} catch (_error) {
-				return Promise.reject(_error);
-			}
-		}
-
-		return Promise.reject(error);
-	},
-);
-
 export default async function protectedServiceHandler<T>(
 	url: string,
 	opts: RequestOptions,
-): Promise<BaseServiceReturn<{ ok: boolean } & T>> {
+): Promise<BaseServiceReturn<{ ok: boolean } & T & { config: any }>> {
 	try {
-		const res = await axiosInstance<T>({
+		const { data, status, statusText, config } = await axiosInstanceV2<T>({
 			url,
 			method: remapRequestMethod.get(opts.method) || "get",
 			headers: opts.asOrganizer
@@ -80,14 +30,14 @@ export default async function protectedServiceHandler<T>(
 			data: opts.body,
 		});
 
-		if (res.status > 300 || !res.data) {
-			return { data: null, error: `${res.status} -- ${res.statusText}` };
+		if (status > 300 || !data) {
+			return { data: null, error: `${status} -- ${statusText}`, config: null };
 		}
 
 		// @ts-expect-error extending generic
-		return { data: res.data, error: null };
+		return { data, error: null, config };
 	} catch (error: any) {
 		console.log("error-" + url, error.message);
-		return { data: null, error: "Server Error" };
+		return { data: null, error: "Server Error", config: null };
 	}
 }

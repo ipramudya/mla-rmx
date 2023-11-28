@@ -1,30 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, PasswordInput, Stack, Text } from "@mantine/core";
-import type { ActionFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
-import { useFetcher } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import { userClientSession } from "app/lib/session/client";
-import { SERVER_ACCESS_TOKEN, userCookie } from "app/lib/session/server";
+import { userClientSession } from "app/lib/session";
 import AuthUser from "app/services/api/user/AuthUser";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-export const action: ActionFunction = async ({ request }) => {
-	const body = await request.formData();
-	const accessToken = body.get("s_at");
-
-	return redirect("/", {
-		headers: {
-			"Set-Cookie": await userCookie.serialize({
-				[SERVER_ACCESS_TOKEN]: accessToken,
-			}),
-		},
-	});
-};
-
 export default function LoginPage() {
-	const fetcher = useFetcher();
+	const navigate = useNavigate();
 	const { handleSubmit, register, formState, setError } = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -49,7 +33,7 @@ export default function LoginPage() {
 
 		if (data) {
 			userClientSession.setAccessToken(data.access_token);
-			fetcher.submit({ s_at: data.access_token }, { method: "POST", action: "/auth/login" });
+			navigate("/");
 		}
 	};
 

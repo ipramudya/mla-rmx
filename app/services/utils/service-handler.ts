@@ -7,14 +7,15 @@ interface ServiceHandlerOptions extends Omit<RequestInit, "method"> {
 
 export default async function serviceHandler<T>(
 	url: string,
-	options: ServiceHandlerOptions,
-): Promise<BaseServiceReturn<{ ok: boolean } & T>> {
+	{ headers, ...options }: ServiceHandlerOptions,
+): Promise<Omit<BaseServiceReturn<{ ok: boolean } & T>, "config">> {
 	try {
 		const res = await fetch(BACKEND_API_URL + url, {
 			headers: {
 				Accept: "application/json",
 				"Content-Type": "application/json",
 				Cache: "no-cache",
+				...headers,
 			},
 			...options,
 		});

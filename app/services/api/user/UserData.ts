@@ -10,8 +10,13 @@ type GetOrganizerAccountsResponse = {
 };
 
 export default class UserData {
-	public static async me() {
-		return await protectedServiceHandler<MeResponse>("/users/me", { method: "GET" });
+	public static async me(cookie?: any) {
+		return await protectedServiceHandler<MeResponse>("/users/me", {
+			method: "GET",
+			headers: {
+				Cookie: cookie,
+			},
+		});
 	}
 
 	public static async getOrganizerAccounts() {

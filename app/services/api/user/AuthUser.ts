@@ -60,10 +60,11 @@ export default class AuthUser {
 		});
 	}
 
-	public static async refreshAccessToken() {
+	public static async refreshAccessToken(cookie?: string) {
 		return await serviceHandler<{ access_token: string }>("/auth/refresh", {
 			method: "POST",
 			credentials: "include",
+			...(cookie ? { headers: { Cookie: cookie } } : undefined),
 		});
 	}
 }
