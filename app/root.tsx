@@ -15,7 +15,7 @@ import {
 } from "@remix-run/react";
 import globalStyles from "app/assets/styles/global.css";
 import { parseCookie } from "app/functions/parse-cookie.server";
-import { CLIENT_SESSION_ACCESS_TOKEN, userClientSession } from "app/lib/session";
+import { userClientSession } from "app/lib/session";
 import theme from "app/lib/theme";
 import { UserData } from "app/services/api/user";
 
@@ -34,13 +34,11 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
-	console.log("root loader runs");
-
 	const cookieHeader = request.headers.get("Cookie");
 	if (cookieHeader) {
 		const parsedCookie = parseCookie(cookieHeader);
 
-		if (!parsedCookie.refresh_token || parsedCookie[CLIENT_SESSION_ACCESS_TOKEN]) return null;
+		if (!parsedCookie.refresh_token) return null;
 
 		const { data, config } = await UserData.me(cookieHeader);
 		if (data && config) {
