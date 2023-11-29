@@ -1,6 +1,15 @@
 import { Box, Button, Center, Divider, Group, SimpleGrid, Stack, Text, Title } from "@mantine/core";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { Link, Outlet, useLocation } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+	const cookieHeader = request.headers.get("Cookie");
+
+	if (cookieHeader) return redirect("/", 301);
+	return null;
+}
 
 export default function AuthLayout() {
 	const { pathname } = useLocation();
