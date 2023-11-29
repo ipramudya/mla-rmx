@@ -1,7 +1,7 @@
 import { BACKEND_API_URL, IS_SERVER } from "app/constant";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { CLIENT_SESSION_ACCESS_TOKEN, userClientSession } from "app/lib/session";
-import AuthUser from "app/services/api/user/AuthUser";
+import { AuthUser } from "app/services/api/user";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -30,7 +30,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
 	(response) => {
-		if (response.config.headers.Authorization) {
+		if (IS_SERVER && response.config.headers.Authorization) {
 			response.config.params = {
 				access_token: response.config.headers["Authorization"].toString().split(" ")[1],
 			};
@@ -46,9 +46,8 @@ axiosInstance.interceptors.response.use(
 				const { data, error } = await AuthUser.refreshAccessToken(
 					IS_SERVER ? previousRequest.headers.get("Cookie") : undefined,
 				);
-				if (error) return Promise.reject(error);
 
-				if (data && data.access_token) {
+				if (data && data.access_token && !error) {
 					if (!IS_SERVER) {
 						userClientSession.setAccessToken(data.access_token);
 					}
@@ -56,6 +55,8 @@ axiosInstance.interceptors.response.use(
 					previousRequest.headers["Authorization"] = `Bearer ${data.access_token}`;
 					return axiosInstance(previousRequest);
 				}
+
+				return Promise.reject(error);
 			} catch (_error) {
 				return Promise.reject(_error);
 			}

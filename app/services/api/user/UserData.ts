@@ -1,4 +1,4 @@
-import { protectedServiceHandler } from "app/services";
+import protectedServiceHandler from "app/functions/protected-service-handler";
 import type { OrganizerAccounts, ParticipantUser } from "app/types";
 
 type MeResponse = {
@@ -9,7 +9,7 @@ type GetOrganizerAccountsResponse = {
 	organizers: OrganizerAccounts[];
 };
 
-export default class UserData {
+export class UserData {
 	public static async me(cookie?: any) {
 		return await protectedServiceHandler<MeResponse>("/users/me", {
 			method: "GET",

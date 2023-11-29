@@ -1,5 +1,5 @@
-import { axiosInstance as axiosInstanceV2 } from "app/lib/axios/instance";
-import type { BaseServiceReturn } from "..";
+import { axiosInstance } from "app/lib/axios/instance";
+import type { BaseServiceReturn } from "../services";
 
 const remapRequestMethod = new Map([
 	["GET", "get"],
@@ -16,9 +16,9 @@ type RequestOptions = {
 export default async function protectedServiceHandler<T>(
 	url: string,
 	opts: RequestOptions,
-): Promise<BaseServiceReturn<{ ok: boolean } & T & { config: any }>> {
+): Promise<BaseServiceReturn<{ ok: boolean } & T>> {
 	try {
-		const { data, status, statusText, config } = await axiosInstanceV2<T>({
+		const { data, status, statusText, config } = await axiosInstance<T>({
 			url,
 			method: remapRequestMethod.get(opts.method) || "get",
 			headers: opts.asOrganizer

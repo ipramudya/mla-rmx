@@ -1,4 +1,5 @@
-import { protectedServiceHandler, serviceHandler } from "app/services";
+import protectedServiceHandler from "app/functions/protected-service-handler";
+import serviceHandler from "app/functions/service-handler";
 
 type RegisterParam = {
 	firstName: string;
@@ -25,7 +26,7 @@ type LoginResponse = {
 	};
 };
 
-export default class AuthUser {
+export class AuthUser {
 	public static async login(payload: LoginParam) {
 		return await serviceHandler<LoginResponse>("/auth/user/login", {
 			method: "POST",

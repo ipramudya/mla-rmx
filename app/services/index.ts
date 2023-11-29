@@ -5,6 +5,3 @@ export declare interface BaseServiceReturn<T> {
 	error: string | null;
 	config: AxiosRequestConfig | null;
 }
-
-export { default as protectedServiceHandler } from "./utils/protected-service-handler";
-export { default as serviceHandler } from "./utils/service-handler";

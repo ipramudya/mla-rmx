@@ -1,6 +1,6 @@
-import { serviceHandler } from "app/services";
+import serviceHandler from "app/functions/service-handler";
 
-export default class OAuthUser {
+export class OAuthUser {
 	public static async googleRedirect() {
 		return await serviceHandler("/auth/google/redirect", { method: "GET" });
 	}

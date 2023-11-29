@@ -14,9 +14,10 @@ import {
 	useLoaderData,
 } from "@remix-run/react";
 import globalStyles from "app/assets/styles/global.css";
+import { parseCookie } from "app/functions/parse-cookie.server";
+import { CLIENT_SESSION_ACCESS_TOKEN, userClientSession } from "app/lib/session";
 import theme from "app/lib/theme";
-import { userClientSession } from "./lib/session";
-import UserData from "./services/api/user/UserData";
+import { UserData } from "app/services/api/user";
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref
@@ -33,20 +34,25 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader({ request }: LoaderFunctionArgs) {
+	console.log("root loader runs");
+
 	const cookieHeader = request.headers.get("Cookie");
-	if (!cookieHeader) return null;
+	if (cookieHeader) {
+		const parsedCookie = parseCookie(cookieHeader);
 
-	const { data, config } = await UserData.me(cookieHeader);
+		if (!parsedCookie.refresh_token || parsedCookie[CLIENT_SESSION_ACCESS_TOKEN]) return null;
 
-	if (data) {
-		return json(
-			{ user: data.user, accessToken: config?.params.access_token },
-			{
-				headers: {
-					"Cache-Control": "private, max-age=10",
+		const { data, config } = await UserData.me(cookieHeader);
+		if (data && config) {
+			return json(
+				{ user: data.user, accessToken: config.params.access_token },
+				{
+					headers: {
+						"Cache-Control": "private, max-age=60",
+					},
 				},
-			},
-		);
+			);
+		}
 	}
 
 	return null;

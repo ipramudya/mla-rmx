@@ -3,7 +3,7 @@ import { Button, Input, PasswordInput, Stack, Text } from "@mantine/core";
 import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import { userClientSession } from "app/lib/session";
-import AuthUser from "app/services/api/user/AuthUser";
+import { AuthUser } from "app/services/api/user";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
