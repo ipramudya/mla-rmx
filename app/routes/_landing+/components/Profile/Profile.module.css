@@ -1,11 +1,33 @@
 .profile_btn {
-    border: transparent;
+    @mixin hover {
+        opacity: 0.8
+    }
+
+    transition-property: color, opacity, background-color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+}
+
+.profile_btn1 {
+    border: none;
     background: rgba(255, 255, 255, 0.5);
     color: white;
 }
 
-.profile_btn_bordered {
-    border: 1px solid var(--mantine-color-gray-3);
-    background: transparent;
+.profile_btn2 {
+    border: none;
+    background: var(--mantine-color-gray-1);
     color: var(--mantine-color-black);
+}
+
+.to_dashboard_btn {
+    padding: 8px 12px;
+    border-radius: var(--mantine-radius-md);
+    border: 1px solid var(--mantine-color-indigo-5);
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+
+    @mixin hover {
+        background-color: var(--mantine-color-indigo-0);
+    }
 }

@@ -4,7 +4,7 @@
     display: flex;
     overflow: hidden;
     border-radius: var(--mantine-radius-md);
-    height: 42px;
+    height: 36px;
     align-items: center;
 }
 
@@ -14,7 +14,7 @@
     display: flex;
     overflow: hidden;
     border-radius: var(--mantine-radius-md);
-    height: 42px;
+    height: 36px;
     align-items: center;
 }
 

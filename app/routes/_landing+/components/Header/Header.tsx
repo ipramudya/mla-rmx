@@ -54,7 +54,6 @@ export default function Header() {
 					<Button
 						classNames={{ root: isOver ? undefined : styles.create_lomba_btn }}
 						variant={isOver ? "gradient" : "default"}
-						size="md"
 					>
 						Buat Lomba
 					</Button>

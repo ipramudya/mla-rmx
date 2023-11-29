@@ -66,15 +66,15 @@ export default function LombaItem(props: Props) {
 							</Transition>
 						</Group>
 						<Text c="dark.3" truncate="end">
-							Organizer lorem
+							Organizer lorem dsandaodjaoij
 						</Text>
 					</div>
 					<Stack gap={4} style={{ flexGrow: 1 }}>
 						<HoverCard shadow="sm" position="right">
 							<HoverCard.Target>
-								<Group gap="xs" c="dark.4" w="fit-content">
+								<Group gap="xs" w="fit-content">
 									<Icon.Calendar size={16} />
-									<Text truncate="end" fz="sm">
+									<Text truncate="end" fz="sm" variant="body-text">
 										13 - 21 Dec 2023
 									</Text>
 								</Group>
@@ -90,15 +90,15 @@ export default function LombaItem(props: Props) {
 								</div>
 							</HoverCard.Dropdown>
 						</HoverCard>
-						<Group gap="xs" c="dark.4">
+						<Group gap="xs">
 							<Icon.Location size={16} />
-							<Text truncate="end" fz="sm">
+							<Text truncate="end" fz="sm" variant="body-text">
 								Online
 							</Text>
 						</Group>
-						<Group gap="xs" c="dark.4">
+						<Group gap="xs">
 							<Icon.Wallet size={16} />
-							<Text truncate="end" fz="sm">
+							<Text truncate="end" fz="sm" variant="body-text">
 								Tidak dipungut biaya
 							</Text>
 						</Group>
