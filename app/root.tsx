@@ -1,6 +1,8 @@
 import "@fontsource-variable/source-sans-3/wght.css";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import { Notifications } from "@mantine/notifications";
+import "@mantine/notifications/styles.css";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
@@ -36,6 +38,7 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
+
 	if (cookieHeader) {
 		const parsedCookie = parseCookie(cookieHeader);
 
@@ -77,6 +80,7 @@ export default function App() {
 			</head>
 			<body>
 				<MantineProvider theme={theme}>
+					<Notifications position="top-right" />
 					<Outlet />
 					<ScrollRestoration />
 					<Scripts />

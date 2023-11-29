@@ -3,12 +3,15 @@ import { Button, Input, PasswordInput, Stack, Text } from "@mantine/core";
 import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import { userClientSession } from "app/lib/session";
+import useUser from "app/lib/store/hooks/use-user";
 import { AuthUser } from "app/services/api/user";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function LoginPage() {
 	const navigate = useNavigate();
+	const setUser = useUser((s) => s.setUserData);
+
 	const { handleSubmit, register, formState, setError } = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -33,6 +36,7 @@ export default function LoginPage() {
 
 		if (data) {
 			userClientSession.setAccessToken(data.access_token);
+			setUser(data.identity);
 			navigate("/");
 		}
 	};

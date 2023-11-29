@@ -10,8 +10,6 @@ export default function Header() {
 	const { isOver } = useHeader();
 	const user = useUser((s) => s.userData);
 
-	console.log("info user from header", user);
-
 	return (
 		<Container size="xl">
 			<Flex h="69px" pos="relative" justify="space-between" align="center">
