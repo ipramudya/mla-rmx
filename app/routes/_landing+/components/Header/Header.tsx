@@ -1,11 +1,15 @@
 import { Box, Button, Container, Divider, Flex, Group, Text, Title } from "@mantine/core";
 import useHeader from "app/hooks/use-header";
+import useUser from "app/lib/store/hooks/use-user";
 import HeaderLink from "../HeaderLink";
 import Search from "../Search";
 import styles from "./Header.module.css";
 
 export default function Header() {
 	const { isOver } = useHeader();
+	const user = useUser((s) => s.userData);
+
+	console.log("info user from header", user);
 
 	return (
 		<Container size="xl">

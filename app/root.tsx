@@ -16,6 +16,7 @@ import {
 import globalStyles from "app/assets/styles/global.css";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { userClientSession } from "app/lib/session";
+import useUser from "app/lib/store/hooks/use-user";
 import theme from "app/lib/theme";
 import { UserData } from "app/services/api/user";
 
@@ -58,9 +59,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function App() {
 	const data = useLoaderData<typeof loader>();
+	const setUserData = useUser((s) => s.setUserData);
 
 	if (data) {
-		console.log("data", data);
+		setUserData(data.user);
 		userClientSession.setAccessToken(data.accessToken);
 	}
 
