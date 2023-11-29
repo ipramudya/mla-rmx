@@ -1,0 +1,11 @@
+.profile_btn {
+    border: transparent;
+    background: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+.profile_btn_bordered {
+    border: 1px solid var(--mantine-color-gray-3);
+    background: transparent;
+    color: var(--mantine-color-black);
+}

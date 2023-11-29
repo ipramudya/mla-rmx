@@ -2,6 +2,7 @@ import { Box, Button, Container, Divider, Flex, Group, Text, Title } from "@mant
 import useHeader from "app/hooks/use-header";
 import useUser from "app/lib/store/hooks/use-user";
 import HeaderLink from "../HeaderLink";
+import Profile from "../Profile";
 import Search from "../Search";
 import styles from "./Header.module.css";
 
@@ -39,11 +40,17 @@ export default function Header() {
 
 				{/* create lomba + entry/profile */}
 				<Group>
-					<Group gap="lg">
-						<HeaderLink to="auth/login">Masuk</HeaderLink>
-						<HeaderLink to="auth/register">Daftar</HeaderLink>
-					</Group>
-					<Divider orientation="vertical" />
+					{!user ? (
+						<>
+							<Group gap="lg">
+								<HeaderLink to="auth/login">Masuk</HeaderLink>
+								<HeaderLink to="auth/register">Daftar</HeaderLink>
+							</Group>
+							<Divider orientation="vertical" />
+						</>
+					) : (
+						<Profile isOver={isOver} />
+					)}
 					<Button
 						classNames={{ root: isOver ? undefined : styles.create_lomba_btn }}
 						variant={isOver ? "gradient" : "default"}
