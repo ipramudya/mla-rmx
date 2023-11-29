@@ -22,4 +22,5 @@ RUN adduser --system --uid 1001 remix
 COPY --from=builder /app .
 USER remix
 EXPOSE 3000
+ENV NODE_ENV production
 CMD ["npm", "run", "start"]
