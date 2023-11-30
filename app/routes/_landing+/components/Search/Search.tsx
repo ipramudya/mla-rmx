@@ -1,10 +1,10 @@
 import { Box, Button, Divider, Flex, Space, TextInput } from "@mantine/core";
 import { Icon } from "app/components/Icon";
-import useHeader from "app/hooks/use-header";
+import useHeader from "app/routes/_landing+/components/Header/use-header";
 import styles from "./Search.module.css";
 
 export default function Search() {
-	const { isOver } = useHeader();
+	const { isScrolledOver: isOver } = useHeader();
 
 	return (
 		<Box pos="relative" miw={{ md: 340, lg: 360, xl: 420 }}>

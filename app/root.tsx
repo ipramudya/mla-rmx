@@ -20,7 +20,7 @@ import { parseCookie } from "app/functions/parse-cookie.server";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
 import theme from "app/lib/theme";
-import { UserData } from "app/services/api/user";
+import { me } from "app/services/user-data-service";
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref
@@ -44,7 +44,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 		if (!parsedCookie.refresh_token) return null;
 
-		const { data, ctx } = await UserData.me(cookieHeader);
+		const { data, ctx } = await me(cookieHeader);
 
 		if (data && ctx) {
 			return json(

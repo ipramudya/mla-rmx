@@ -20,10 +20,10 @@ import LogoutButton from "./LogoutButton";
 import styles from "./Profile.module.css";
 
 interface Props {
-	isOver: boolean;
+	isScrolledOver: boolean;
 }
 
-export default function Profile({ isOver }: Props) {
+export default function Profile({ isScrolledOver }: Props) {
 	const user = useUser((s) => s.userData);
 	const [isOpen, { toggle, close }] = useDisclosure();
 
@@ -32,10 +32,10 @@ export default function Profile({ isOver }: Props) {
 			<Button
 				onClick={toggle}
 				className={clsx(
-					isOver ? styles.profile_btn2 : styles.profile_btn1,
+					isScrolledOver ? styles.profile_btn2 : styles.profile_btn1,
 					styles.profile_btn,
 				)}
-				leftSection={<Icon.User size={16} variant={isOver ? "Outline" : "Bold"} />}
+				leftSection={<Icon.User size={16} variant={isScrolledOver ? "Outline" : "Bold"} />}
 			>
 				<Text truncate="end" maw="70px" size="sm" fw={600} lh={1}>
 					{user?.full_name ?? "-"}

@@ -4,24 +4,24 @@ import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
-import { AuthUser } from "app/services/api/user";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import login from "./api-login";
+import { loginFormSchema, type LoginPayload } from "./login-schema";
 
 export default function LoginPage() {
 	const navigate = useNavigate();
 	const setUser = useUser((s) => s.setUserData);
 
-	const { handleSubmit, register, formState, setError } = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const { handleSubmit, register, formState, setError } = useForm<LoginPayload>({
+		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
 			email: "",
 			password: "",
 		},
 	});
 
-	const handleFormSubmit = async (fields: z.infer<typeof formSchema>) => {
-		const { data, error } = await AuthUser.login(fields);
+	const handleFormSubmit = async (fields: LoginPayload) => {
+		const { data, error } = await login(fields);
 
 		if (error && !data) {
 			for (const key in fields) {
@@ -87,8 +87,3 @@ export default function LoginPage() {
 		</>
 	);
 }
-
-const formSchema = z.object({
-	email: z.string().email({ message: "Email tidak valid" }),
-	password: z.string().min(8, { message: "Password tidak valid" }),
-});

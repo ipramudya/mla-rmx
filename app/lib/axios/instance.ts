@@ -1,7 +1,7 @@
 import { BACKEND_API_URL, IS_SERVER } from "app/constant";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { CLIENT_SESSION_ACCESS_TOKEN, userClientSession } from "app/lib/session";
-import { AuthUser } from "app/services/api/user";
+import { refreshAccessToken } from "app/services/auth-user-service";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -48,7 +48,7 @@ axiosInstance.interceptors.response.use(
 
 		if (error.response.status === 401 && !isRetry) {
 			try {
-				const { data, error } = await AuthUser.refreshAccessToken(
+				const { data, error } = await refreshAccessToken(
 					IS_SERVER ? previousRequest.headers.get("Cookie") : undefined,
 				);
 

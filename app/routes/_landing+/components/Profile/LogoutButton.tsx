@@ -4,8 +4,8 @@ import { useFetcher } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
-import { AuthUser } from "app/services/api/user";
 import { useState } from "react";
+import logout from "./api-logout";
 
 export default function LogoutButton() {
 	const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ export default function LogoutButton() {
 	const onLogout = async () => {
 		setLoading(true);
 
-		const { data, error } = await AuthUser.logout();
+		const { data, error } = await logout();
 
 		if (data && !error) {
 			clearUserData();

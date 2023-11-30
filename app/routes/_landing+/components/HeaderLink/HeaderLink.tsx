@@ -1,7 +1,7 @@
 import type { AnchorProps, TextProps } from "@mantine/core";
 import { Anchor, Text } from "@mantine/core";
 import { Link, type LinkProps } from "@remix-run/react";
-import useHeader from "app/hooks/use-header";
+import useHeader from "app/routes/_landing+/components/Header/use-header";
 import type { PropsWithChildren } from "react";
 import styles from "./HeaderLink.module.css";
 
@@ -10,7 +10,7 @@ interface Props extends PropsWithChildren<AnchorProps & LinkProps> {
 }
 
 export default function HeaderLink({ textProps, ...props }: Props) {
-	const { isOver } = useHeader();
+	const { isScrolledOver: isOver } = useHeader();
 
 	return (
 		<Anchor component={Link} underline="never" {...props}>

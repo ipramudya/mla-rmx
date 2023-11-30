@@ -11,13 +11,13 @@ import {
 } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import { Icon } from "app/components/Icon";
-import styles from "./LombaItem.module.css";
+import styles from "./ItemLomba.module.css";
 
 interface Props {
 	img: string;
 }
 
-export default function LombaItem(props: Props) {
+export default function ItemLomba({ img }: Props) {
 	const { ref, hovered } = useHover();
 
 	return (
@@ -28,7 +28,7 @@ export default function LombaItem(props: Props) {
 					<Box
 						component="img"
 						alt="poster"
-						src={props.img}
+						src={img}
 						pos="absolute"
 						inset={0}
 						w="100%"
