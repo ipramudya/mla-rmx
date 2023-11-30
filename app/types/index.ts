@@ -1,3 +1,5 @@
+import type { AxiosRequestConfig } from "axios";
+
 export interface ParticipantUser {
 	id: string;
 	full_name: string;
@@ -35,4 +37,10 @@ export interface OrganizerAccounts {
 	updated_at: number;
 	logout_at: number | null;
 	user_id: string;
+}
+
+export declare interface BaseAPIReturn<T> {
+	data: T | null;
+	error: string | null;
+	ctx: AxiosRequestConfig | null;
 }

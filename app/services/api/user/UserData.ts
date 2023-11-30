@@ -1,4 +1,4 @@
-import protectedServiceHandler from "app/functions/protected-service-handler";
+import protectedAPIHandler from "app/functions/protected-api-handler";
 import type { OrganizerAccounts, ParticipantUser } from "app/types";
 
 type MeResponse = {
@@ -11,7 +11,7 @@ type GetOrganizerAccountsResponse = {
 
 export class UserData {
 	public static async me(cookie?: any) {
-		return await protectedServiceHandler<MeResponse>("/users/me", {
+		return await protectedAPIHandler<MeResponse>("/users/me", {
 			method: "GET",
 			headers: {
 				Cookie: cookie,
@@ -20,7 +20,7 @@ export class UserData {
 	}
 
 	public static async getOrganizerAccounts() {
-		return await protectedServiceHandler<GetOrganizerAccountsResponse>("/organizers/accounts", {
+		return await protectedAPIHandler<GetOrganizerAccountsResponse>("/organizers/accounts", {
 			method: "GET",
 		});
 	}

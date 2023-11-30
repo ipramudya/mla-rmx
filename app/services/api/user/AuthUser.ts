@@ -1,5 +1,5 @@
-import protectedServiceHandler from "app/functions/protected-service-handler";
-import serviceHandler from "app/functions/service-handler";
+import protectedAPIHandler from "app/functions/protected-api-handler";
+import publicAPIHandler from "app/functions/public-api-handler";
 
 type RegisterParam = {
 	firstName: string;
@@ -28,7 +28,7 @@ type LoginResponse = {
 
 export class AuthUser {
 	public static async login(payload: LoginParam) {
-		return await serviceHandler<LoginResponse>("/auth/user/login", {
+		return await publicAPIHandler<LoginResponse>("/auth/user/login", {
 			method: "POST",
 			body: JSON.stringify(payload),
 			credentials: "include",
@@ -36,7 +36,7 @@ export class AuthUser {
 	}
 
 	public static async register({ firstName, lastName, phone, password }: RegisterParam) {
-		return await serviceHandler("/auth/user/register", {
+		return await publicAPIHandler("/auth/user/register", {
 			method: "POST",
 			body: JSON.stringify({
 				full_name: firstName + lastName,
@@ -48,7 +48,7 @@ export class AuthUser {
 	}
 
 	public static async sendMagicLink(email: string) {
-		return await serviceHandler("/auth/check-availability-email", {
+		return await publicAPIHandler("/auth/check-availability-email", {
 			method: "POST",
 			body: JSON.stringify({ email }),
 			credentials: "include",
@@ -56,13 +56,13 @@ export class AuthUser {
 	}
 
 	public static async logout() {
-		return await protectedServiceHandler("/auth/user/logout", {
+		return await protectedAPIHandler("/auth/user/logout", {
 			method: "POST",
 		});
 	}
 
 	public static async refreshAccessToken(cookie?: string) {
-		return await serviceHandler<{ access_token: string }>("/auth/refresh", {
+		return await publicAPIHandler<{ access_token: string }>("/auth/refresh", {
 			method: "POST",
 			credentials: "include",
 			...(cookie ? { headers: { Cookie: cookie } } : undefined),

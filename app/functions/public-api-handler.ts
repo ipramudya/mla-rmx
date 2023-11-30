@@ -1,14 +1,15 @@
 import { BACKEND_API_URL } from "app/constant";
-import type { BaseServiceReturn } from "app/services";
+import type { BaseAPIReturn } from "app/types";
 
-interface ServiceHandlerOptions extends Omit<RequestInit, "method"> {
+interface APIHandlerOptions extends Omit<RequestInit, "method"> {
 	method: "POST" | "GET";
 }
 
-export default async function serviceHandler<T>(
+/* service handler without bearer access token to call endpoints */
+export default async function publicAPIHandler<T>(
 	url: string,
-	{ headers, ...options }: ServiceHandlerOptions,
-): Promise<Omit<BaseServiceReturn<{ ok: boolean } & T>, "config">> {
+	{ headers, ...options }: APIHandlerOptions,
+): Promise<Omit<BaseAPIReturn<{ ok: boolean } & T>, "ctx">> {
 	try {
 		const res = await fetch(BACKEND_API_URL + url, {
 			headers: {

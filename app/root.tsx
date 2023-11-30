@@ -44,11 +44,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 		if (!parsedCookie.refresh_token) return null;
 
-		const { data, config } = await UserData.me(cookieHeader);
+		const { data, ctx } = await UserData.me(cookieHeader);
 
-		if (data && config) {
+		if (data && ctx) {
 			return json(
-				{ user: data.user, accessToken: config.params.access_token },
+				{ user: data.user, accessToken: ctx.params.access_token },
 				{
 					headers: {
 						"Cache-Control": "private, max-age=60",

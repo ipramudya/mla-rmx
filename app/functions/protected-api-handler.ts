@@ -1,5 +1,5 @@
 import { axiosInstance } from "app/lib/axios/instance";
-import type { BaseServiceReturn } from "../services";
+import type { BaseAPIReturn } from "app/types";
 
 const remapRequestMethod = new Map([
 	["GET", "get"],
@@ -13,10 +13,11 @@ type RequestOptions = {
 	asOrganizer?: boolean;
 };
 
-export default async function protectedServiceHandler<T>(
+/* service handler with bearer access token and token expiry rotation */
+export default async function protectedAPIHandler<T>(
 	url: string,
 	opts: RequestOptions,
-): Promise<BaseServiceReturn<{ ok: boolean } & T>> {
+): Promise<BaseAPIReturn<{ ok: boolean } & T>> {
 	try {
 		const { data, status, statusText, config } = await axiosInstance<T>({
 			url,
@@ -31,13 +32,13 @@ export default async function protectedServiceHandler<T>(
 		});
 
 		if (status > 300 || !data) {
-			return { data: null, error: `${status} -- ${statusText}`, config: null };
+			return { data: null, error: `${status} -- ${statusText}`, ctx: null };
 		}
 
 		// @ts-expect-error extending generic
-		return { data, error: null, config };
+		return { data, error: null, ctx: config };
 	} catch (error: any) {
 		console.log("error-" + url, error.message);
-		return { data: null, error: "Server Error", config: null };
+		return { data: null, error: "Server Error", ctx: null };
 	}
 }
