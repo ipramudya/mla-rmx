@@ -16,13 +16,14 @@ axiosInstance.interceptors.request.use(
 		let token;
 		if (IS_SERVER) {
 			const cookieHeaders = request.headers.get("Cookie")?.toString() || "";
+
 			token = parseCookie(cookieHeaders)[CLIENT_SESSION_ACCESS_TOKEN];
 		} else {
 			token = userClientSession.getAccessToken();
 		}
 
 		/* jika x-retry header ada, berarti bearer header telah diatur pada fail interceptor response */
-		if (token && isRetry) {
+		if (token && !isRetry) {
 			request.headers["Authorization"] = `Bearer ${token}`;
 		}
 
@@ -33,7 +34,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
 	(response) => {
-		if (IS_SERVER && response.config.headers.Authorization) {
+		if (IS_SERVER && response.config.headers["Authorization"]) {
 			response.config.params = {
 				access_token: response.config.headers["Authorization"].toString().split(" ")[1],
 			};
@@ -51,18 +52,18 @@ axiosInstance.interceptors.response.use(
 					IS_SERVER ? previousRequest.headers.get("Cookie") : undefined,
 				);
 
-				if (error) return Promise.reject(error);
-
-				if (data && data.access_token) {
+				if (data && data.access_token && !error) {
 					if (!IS_SERVER) {
 						userClientSession.setAccessToken(data.access_token);
 					}
 
 					previousRequest.headers["Authorization"] = `Bearer ${data.access_token}`;
-					previousRequest.headers.retry = "true";
+					previousRequest.headers["x-retry"] = "true";
 
 					return axiosInstance(previousRequest);
 				}
+
+				return Promise.reject(error);
 			} catch (_error) {
 				return Promise.reject(_error);
 			}

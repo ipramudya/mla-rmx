@@ -14,10 +14,14 @@ export default function LogoutButton() {
 
 	const onLogout = async () => {
 		setLoading(true);
+
 		const { data, error } = await AuthUser.logout();
+
 		if (data && !error) {
 			clearUserData();
+
 			userClientSession.clearAccessToken();
+
 			fetcher.load("/");
 		} else {
 			showNotification({
@@ -26,6 +30,7 @@ export default function LogoutButton() {
 				color: "red",
 			});
 		}
+
 		setLoading(false);
 	};
 

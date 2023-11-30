@@ -8,6 +8,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
 
 	if (cookieHeader) return redirect("/", 301);
+
 	return null;
 }
 

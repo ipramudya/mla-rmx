@@ -45,6 +45,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 		if (!parsedCookie.refresh_token) return null;
 
 		const { data, config } = await UserData.me(cookieHeader);
+
 		if (data && config) {
 			return json(
 				{ user: data.user, accessToken: config.params.access_token },
