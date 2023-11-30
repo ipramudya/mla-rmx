@@ -6,7 +6,7 @@ import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
 import { useForm } from "react-hook-form";
 import login from "./api-login";
-import { loginFormSchema, type LoginPayload } from "./login-schema";
+import { type LoginPayload, loginFormSchema } from "./login-schema";
 
 export default function LoginPage() {
 	const navigate = useNavigate();
@@ -57,6 +57,7 @@ export default function LoginPage() {
 						<Input.Wrapper
 							label="Email"
 							error={formState.errors.email?.message || false}
+							withAsterisk
 						>
 							<Input
 								error={!!formState.errors.email}
@@ -69,6 +70,12 @@ export default function LoginPage() {
 						<Input.Wrapper
 							label="Password"
 							error={formState.errors.password?.message || false}
+							withAsterisk
+							styles={{
+								root: {
+									position: "relative",
+								},
+							}}
 						>
 							<PasswordInput
 								error={!!formState.errors.password}
@@ -77,6 +84,16 @@ export default function LoginPage() {
 								placeholder="Masukan password kamu..."
 								{...register("password")}
 							/>
+							<Text
+								size="xs"
+								variant="body-text"
+								pos="absolute"
+								top={8}
+								right={0}
+								lh={1}
+							>
+								Lupa password ?
+							</Text>
 						</Input.Wrapper>
 					</Stack>
 					<Button type="submit" variant="gradient" loading={formState.isSubmitting}>

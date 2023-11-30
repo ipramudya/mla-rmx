@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
 	async (request) => {
-		const isRetry = request.headers.get("x-retry");
+		const isRetry = request.headers.get("X-Retry");
 
 		let token;
 		if (IS_SERVER) {
@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
 			token = userClientSession.getAccessToken();
 		}
 
-		/* jika x-retry header ada, berarti bearer header telah diatur pada fail interceptor response */
+		/* jika X-Retry header ada, berarti bearer header telah diatur pada fail interceptor response */
 		if (token && !isRetry) {
 			request.headers["Authorization"] = `Bearer ${token}`;
 		}
@@ -44,7 +44,7 @@ axiosInstance.interceptors.response.use(
 	},
 	async (error) => {
 		const previousRequest = error.config;
-		const isRetry = previousRequest.headers.get("x-retry");
+		const isRetry = previousRequest.headers.get("X-Retry");
 
 		if (error.response.status === 401 && !isRetry) {
 			try {
@@ -58,7 +58,7 @@ axiosInstance.interceptors.response.use(
 					}
 
 					previousRequest.headers["Authorization"] = `Bearer ${data.access_token}`;
-					previousRequest.headers["x-retry"] = "true";
+					previousRequest.headers["X-Retry"] = "true";
 
 					return axiosInstance(previousRequest);
 				}

@@ -1,6 +1,7 @@
 import {
 	Button,
 	Center,
+	CloseButton,
 	Divider,
 	Drawer,
 	Flex,
@@ -48,10 +49,11 @@ export default function Profile({ isScrolledOver }: Props) {
 				onClose={close}
 				withCloseButton={false}
 				scrollAreaComponent={ScrollArea.Autosize}
+				styles={{}}
 			>
-				<Stack gap="md" style={{ overflowX: "hidden" }}>
+				<Stack gap="md">
 					{/* header */}
-					<Flex align="center" pos="relative" maw="90%">
+					<Flex align="center" pos="relative">
 						<div>
 							<Text component="h4" size="lg" fw="600">
 								Informasi Akun
@@ -60,8 +62,15 @@ export default function Profile({ isScrolledOver }: Props) {
 								Segala informasi mengenai data kamu
 							</Text>
 						</div>
+						<CloseButton
+							pos="absolute"
+							right={4}
+							variant="subtle"
+							size="sm"
+							onClick={toggle}
+						/>
 					</Flex>
-					<Divider orientation="horizontal" ml={-20} mr={-20} />
+					<Divider orientation="horizontal" ml={-16} mr={-16} />
 					<Flex align="center" gap="sm">
 						<Center
 							w="40px"

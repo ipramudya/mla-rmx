@@ -3,11 +3,18 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { Link, Outlet, useLocation } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
+import { parseCookie } from "app/functions/parse-cookie.server";
+import { CLIENT_SESSION_ACCESS_TOKEN } from "app/lib/session";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
+	if (!cookieHeader) return null;
 
-	if (cookieHeader) return redirect("/", 301);
+	const parsedCookie = parseCookie(cookieHeader);
+
+	if (parsedCookie.refresh_token || parsedCookie[CLIENT_SESSION_ACCESS_TOKEN]) {
+		return redirect("/", 301);
+	}
 
 	return null;
 }
@@ -57,14 +64,15 @@ export default function AuthLayout() {
 					</Button>
 				</SimpleGrid>
 				<Group justify="center" gap={4}>
-					<Text component="span" size="sm">
+					<Text component="span" size="sm" variant="body-text">
 						{currentPath === "login" ? "Belum" : "Sudah"} punya akun?
 					</Text>
 					<Text
 						component={Link}
 						to={`/auth/${currentPath === "login" ? "register" : "login"}`}
 						fw={600}
-						c="indigo.6"
+						size="sm"
+						variant="body-text"
 					>
 						{currentPath === "login" ? "Daftar" : "Masuk"}
 					</Text>
