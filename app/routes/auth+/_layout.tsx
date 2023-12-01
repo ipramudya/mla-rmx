@@ -25,7 +25,7 @@ export default function AuthLayout() {
 	const isFillPage = currentPath === "fill";
 
 	return (
-		<Center miw="100%" mih="100dvh" pos="relative">
+		<Center bg="gray.0" miw="100%" mih="100dvh" pos="relative">
 			<Box component={Link} to="/">
 				<Title
 					fz={32}
@@ -41,7 +41,17 @@ export default function AuthLayout() {
 					</Text>
 				</Title>
 			</Box>
-			<Stack gap="xl" miw={{ lg: 400 }} maw={{ base: 342, lg: "100%" }}>
+			<Stack
+				p="xl"
+				bg="white"
+				gap="xl"
+				w={{ lg: 500 }}
+				maw={{ base: 342, lg: "100%" }}
+				style={{
+					border: "1px dashed var(--mantine-color-gray-3)",
+					borderRadius: "var(--mantine-radius-lg)",
+				}}
+			>
 				{/* login or register form */}
 				<Outlet />
 

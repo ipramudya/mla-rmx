@@ -53,13 +53,12 @@ export default function RegisterPage() {
 	return (
 		<>
 			{isEmailSent && (
-				<Box pos="absolute" top="15%">
+				<Box pos="absolute" top="12%" left="50%" style={{ transform: "translateX(-50%)" }}>
 					<Alert
 						variant="light"
 						color="violet"
 						title="Kode Terkirim"
 						icon={icon}
-						maw={400}
 						withCloseButton
 						onClose={() => setIsEmailSent(false)}
 					>
