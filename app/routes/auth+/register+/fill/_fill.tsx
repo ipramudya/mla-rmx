@@ -1,25 +1,32 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Checkbox, Input, NumberInput, PasswordInput, Stack, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { useFetcher, useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import { APP_API_URL } from "app/constant";
-import { useEffect } from "react";
+import { parseCookie } from "app/functions/parse-cookie.server";
 import { useForm } from "react-hook-form";
-import register from "./api-register";
+import apiRegister from "./api-register";
 import type { FillPayload } from "./fill-schema";
 import { fillFormSchema } from "./fill-schema";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+	const cookieHeader = request.headers.get("Cookie");
+	if (!cookieHeader) return redirect("/auth/login");
+
+	const verified = parseCookie(cookieHeader);
+	if (!verified) return redirect("/auth/register");
+
+	return null;
+}
 
 export default function FillPage() {
 	const navigate = useNavigate();
 	const fetcher = useFetcher();
 
-	const {
-		handleSubmit,
-		formState,
-		getValues,
-		register: formRegister,
-	} = useForm<FillPayload>({
+	const { handleSubmit, formState, register } = useForm<FillPayload>({
 		resolver: zodResolver(fillFormSchema),
 		defaultValues: {
 			firstName: "",
@@ -29,13 +36,8 @@ export default function FillPage() {
 		},
 	});
 
-	useEffect(() => {
-		console.log(123, formState);
-		console.log("va", getValues());
-	}, [formState, getValues]);
-
 	const handleFormSubmit = async ({ accepted, ...fields }: FillPayload) => {
-		const { error } = await register(fields);
+		const { error } = await apiRegister(fields);
 
 		if (error) {
 			showNotification({
@@ -78,7 +80,7 @@ export default function FillPage() {
 							size="md"
 							leftSection={<Icon.Text size={20} />}
 							placeholder="masukan nama depan"
-							{...formRegister("firstName")}
+							{...register("firstName")}
 						/>
 					</Input.Wrapper>
 					<Input.Wrapper
@@ -91,7 +93,7 @@ export default function FillPage() {
 							size="md"
 							leftSection={<Icon.Text size={20} />}
 							placeholder="masukan nama belakang"
-							{...formRegister("lastName")}
+							{...register("lastName")}
 						/>
 					</Input.Wrapper>
 					<Input.Wrapper
@@ -106,7 +108,7 @@ export default function FillPage() {
 							placeholder="masukan nomor telepon"
 							hideControls
 							prefix="+"
-							{...(formRegister("phone") as any)}
+							{...(register("phone") as any)}
 						/>
 					</Input.Wrapper>
 					<Input.Wrapper
@@ -119,13 +121,13 @@ export default function FillPage() {
 							size="md"
 							leftSection={<Icon.Password size={20} />}
 							placeholder="masukan password"
-							{...formRegister("password")}
+							{...register("password")}
 						/>
 					</Input.Wrapper>
 					<Checkbox
 						error={!!formState.errors.accepted}
 						label="Menyetujui segala ketentuan dan kebijakan kami"
-						{...formRegister("accepted")}
+						{...register("accepted")}
 					/>
 					<Button type="submit" variant="gradient" loading={formState.isSubmitting}>
 						Buat Akun
