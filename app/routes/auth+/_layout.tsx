@@ -21,7 +21,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function AuthLayout() {
 	const { pathname } = useLocation();
-	const currentPath = pathname.split("/").pop() as "register" | "login";
+	const currentPath = pathname.split("/").pop() as "register" | "login" | "fill";
+	const isFillPage = currentPath === "fill";
 
 	return (
 		<Center miw="100%" mih="100dvh" pos="relative">
@@ -44,39 +45,49 @@ export default function AuthLayout() {
 				{/* login or register form */}
 				<Outlet />
 
-				<Divider variant="dashed" label="Atau melalui" />
-				<SimpleGrid spacing="lg" cols={2}>
-					<Button
-						fullWidth
-						leftSection={
-							<Icon.Google size={20} color="var(--mantine-color-indigo-6)" />
-						}
-					>
-						Google
-					</Button>
-					<Button
-						fullWidth
-						leftSection={
-							<Icon.Facebook size={20} color="var(--mantine-color-indigo-6)" />
-						}
-					>
-						Facebook
-					</Button>
-				</SimpleGrid>
-				<Group justify="center" gap={4}>
-					<Text component="span" size="sm" variant="body-text">
-						{currentPath === "login" ? "Belum" : "Sudah"} punya akun?
-					</Text>
-					<Text
-						component={Link}
-						to={`/auth/${currentPath === "login" ? "register" : "login"}`}
-						fw={600}
-						size="sm"
-						variant="body-text"
-					>
-						{currentPath === "login" ? "Daftar" : "Masuk"}
-					</Text>
-				</Group>
+				{/* ignored if /auth/register/fill page */}
+				{!isFillPage ? (
+					<>
+						<Divider variant="dashed" label="Atau melalui" />
+						<SimpleGrid spacing="lg" cols={2}>
+							<Button
+								fullWidth
+								leftSection={
+									<Icon.Google size={20} color="var(--mantine-color-indigo-6)" />
+								}
+							>
+								Google
+							</Button>
+							<Button
+								fullWidth
+								leftSection={
+									<Icon.Facebook
+										size={20}
+										color="var(--mantine-color-indigo-6)"
+									/>
+								}
+							>
+								Facebook
+							</Button>
+						</SimpleGrid>
+						<Group justify="center" gap={4}>
+							<Text component="span" size="sm" variant="body-text">
+								{currentPath === "login" ? "Belum" : "Sudah"} punya akun?
+							</Text>
+							<Text
+								component={Link}
+								to={`/auth/${currentPath === "login" ? "register" : "login"}`}
+								fw={600}
+								size="sm"
+								variant="body-text"
+							>
+								{currentPath === "login" ? "Daftar" : "Masuk"}
+							</Text>
+						</Group>
+					</>
+				) : (
+					false
+				)}
 			</Stack>
 		</Center>
 	);

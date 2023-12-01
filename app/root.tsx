@@ -21,6 +21,7 @@ import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
 import theme from "app/lib/theme";
 import { me } from "app/services/user-data-service";
+import { useEffect } from "react";
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref
@@ -41,14 +42,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (cookieHeader) {
 		const parsedCookie = parseCookie(cookieHeader);
+		const authenticated = Boolean(parsedCookie.refresh_token);
 
-		if (!parsedCookie.refresh_token) return null;
+		if (!parsedCookie || !authenticated) return null;
 
 		const { data, ctx } = await me(cookieHeader);
 
 		if (data && ctx) {
 			return json(
-				{ user: data.user, accessToken: ctx.params.access_token },
+				{ user: data.user, accessToken: ctx.params.access_token, authenticated },
 				{
 					headers: {
 						"Cache-Control": "private, max-age=60",
@@ -65,10 +67,17 @@ export default function App() {
 	const data = useLoaderData<typeof loader>();
 	const setUserData = useUser((s) => s.setUserData);
 
-	if (data) {
-		setUserData(data.user);
-		userClientSession.setAccessToken(data.accessToken);
-	}
+	useEffect(() => {
+		if (!data && userClientSession.getAccessToken()) {
+			userClientSession.clearAccessToken();
+			return;
+		}
+
+		if (data) {
+			setUserData(data.user);
+			userClientSession.setAccessToken(data.accessToken);
+		}
+	}, [data, setUserData]);
 
 	return (
 		<html lang="en">

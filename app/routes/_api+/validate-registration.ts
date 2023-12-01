@@ -22,7 +22,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (!res.ok) redirect("/register?error=true");
 
-	return redirect("/register/fill", {
+	return redirect("/auth/register/fill", {
 		headers: {
 			"Set-Cookie": await verifiedCookie.serialize(id),
 		},
