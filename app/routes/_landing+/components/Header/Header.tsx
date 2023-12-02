@@ -1,14 +1,16 @@
 import { Box, Button, Container, Divider, Flex, Group, Text, Title } from "@mantine/core";
-import useHeader from "app/hooks/use-header";
+import { Link } from "@remix-run/react";
 import useUser from "app/lib/store/hooks/use-user";
+import useHeader from "app/routes/_landing+/components/Header/use-header";
 import HeaderLink from "../HeaderLink";
 import Profile from "../Profile";
 import Search from "../Search";
 import styles from "./Header.module.css";
 
 export default function Header() {
-	const { isOver } = useHeader();
+	const { isScrolledOver } = useHeader();
 	const user = useUser((s) => s.userData);
+	const isLoggedIn = Boolean(user);
 
 	return (
 		<Container size="xl">
@@ -16,12 +18,14 @@ export default function Header() {
 				{/* logo + links */}
 				<Group>
 					{/* logo */}
-					<Title fz={24} c={isOver ? "black" : "#fff"}>
-						mulai
-						<Text fz={24} component="span">
-							lomba
-						</Text>
-					</Title>
+					<Link to="/" style={{ textDecoration: "none" }}>
+						<Title fz={24} c={isScrolledOver ? "black" : "#fff"}>
+							mulai
+							<Text fz={24} component="span">
+								lomba
+							</Text>
+						</Title>
+					</Link>
 					<Divider orientation="vertical" />
 
 					{/* links */}
@@ -38,7 +42,7 @@ export default function Header() {
 
 				{/* create lomba + entry/profile */}
 				<Group>
-					{!user ? (
+					{!isLoggedIn ? (
 						<>
 							<Group gap="lg">
 								<HeaderLink to="auth/login">Masuk</HeaderLink>
@@ -47,11 +51,14 @@ export default function Header() {
 							<Divider orientation="vertical" />
 						</>
 					) : (
-						<Profile isOver={isOver} />
+						<Profile isScrolledOver={isScrolledOver} />
 					)}
 					<Button
-						classNames={{ root: isOver ? undefined : styles.create_lomba_btn }}
-						variant={isOver ? "gradient" : "default"}
+						classNames={{ root: isScrolledOver ? undefined : styles.create_lomba_btn }}
+						variant={isScrolledOver ? "gradient" : "default"}
+						component={Link}
+						to={isLoggedIn ? "/dashboard/choose" : "/auth/login"}
+						prefetch="intent"
 					>
 						Buat Lomba
 					</Button>

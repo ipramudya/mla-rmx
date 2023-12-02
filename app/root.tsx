@@ -15,12 +15,16 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from "@remix-run/react";
+import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import globalStyles from "app/assets/styles/global.css";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
 import theme from "app/lib/theme";
-import { UserData } from "app/services/api/user";
+import { me } from "app/services/user-data-service";
+import { useEffect, useState } from "react";
+import { useDehydratedState } from "use-dehydrated-state";
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref
@@ -41,13 +45,15 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (cookieHeader) {
 		const parsedCookie = parseCookie(cookieHeader);
+		const authenticated = Boolean(parsedCookie?.refresh_token);
 
-		if (!parsedCookie.refresh_token) return null;
+		if (!parsedCookie || !authenticated) return null;
 
-		const { data, config } = await UserData.me(cookieHeader);
-		if (data && config) {
+		const { data, ctx } = await me(cookieHeader);
+
+		if (data && ctx) {
 			return json(
-				{ user: data.user, accessToken: config.params.access_token },
+				{ user: data.user, accessToken: ctx.params.access_token, authenticated },
 				{
 					headers: {
 						"Cache-Control": "private, max-age=60",
@@ -64,10 +70,27 @@ export default function App() {
 	const data = useLoaderData<typeof loader>();
 	const setUserData = useUser((s) => s.setUserData);
 
-	if (data) {
-		setUserData(data.user);
-		userClientSession.setAccessToken(data.accessToken);
-	}
+	useEffect(() => {
+		if (!data) {
+			userClientSession.clearAccessToken();
+			return;
+		}
+
+		if (data) {
+			setUserData(data.user);
+			userClientSession.setAccessToken(data.accessToken);
+		}
+	}, [data, setUserData]);
+
+	const [queryClient] = useState(
+		() =>
+			new QueryClient({
+				defaultOptions: {
+					queries: { staleTime: 60 * 1000 },
+				},
+			}),
+	);
+	const dehydratedState = useDehydratedState();
 
 	return (
 		<html lang="en">
@@ -81,7 +104,13 @@ export default function App() {
 			<body>
 				<MantineProvider theme={theme}>
 					<Notifications position="top-right" />
-					<Outlet />
+					<QueryClientProvider client={queryClient}>
+						<HydrationBoundary state={dehydratedState}>
+							<Outlet />
+
+							<ReactQueryDevtools initialIsOpen={false} />
+						</HydrationBoundary>
+					</QueryClientProvider>
 					<ScrollRestoration />
 					<Scripts />
 					<LiveReload />

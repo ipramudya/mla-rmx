@@ -1,0 +1,17 @@
+.root {
+    border-radius: var(--mantine-radius-md);
+    border: 1px solid var(--mantine-color-gray-2);
+    transition: border 0.3s ease-in-out;
+    box-shadow: rgba(68, 68, 68, 0.09) 0px 3px 14px;
+    height: fit-content;
+    cursor: pointer;
+    
+    @mixin hover {
+        border: 1px solid var(--mantine-color-indigo-6);
+    }
+}
+
+.banner {
+    overflow: hidden;
+    max-height: 72px;
+}

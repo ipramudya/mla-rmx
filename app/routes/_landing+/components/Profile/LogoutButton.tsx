@@ -1,23 +1,29 @@
 import { Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
-import { AuthUser } from "app/services/api/user";
 import { useState } from "react";
+import logout from "./api-logout";
 
 export default function LogoutButton() {
+	const { pathname } = useLocation();
+	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const clearUserData = useUser((s) => s.clearUserData);
 	const fetcher = useFetcher();
 
 	const onLogout = async () => {
 		setLoading(true);
-		const { data, error } = await AuthUser.logout();
+
+		const { data, error } = await logout();
+
 		if (data && !error) {
 			clearUserData();
+
 			userClientSession.clearAccessToken();
+
 			fetcher.load("/");
 		} else {
 			showNotification({
@@ -26,6 +32,11 @@ export default function LogoutButton() {
 				color: "red",
 			});
 		}
+
+		if (pathname.includes("dashboard")) {
+			navigate("/");
+		}
+
 		setLoading(false);
 	};
 

@@ -1,6 +1,7 @@
 import {
 	Button,
 	Center,
+	CloseButton,
 	Divider,
 	Drawer,
 	Flex,
@@ -20,10 +21,10 @@ import LogoutButton from "./LogoutButton";
 import styles from "./Profile.module.css";
 
 interface Props {
-	isOver: boolean;
+	isScrolledOver: boolean;
 }
 
-export default function Profile({ isOver }: Props) {
+export default function Profile({ isScrolledOver }: Props) {
 	const user = useUser((s) => s.userData);
 	const [isOpen, { toggle, close }] = useDisclosure();
 
@@ -32,10 +33,10 @@ export default function Profile({ isOver }: Props) {
 			<Button
 				onClick={toggle}
 				className={clsx(
-					isOver ? styles.profile_btn2 : styles.profile_btn1,
+					isScrolledOver ? styles.profile_btn2 : styles.profile_btn1,
 					styles.profile_btn,
 				)}
-				leftSection={<Icon.User size={16} variant={isOver ? "Outline" : "Bold"} />}
+				leftSection={<Icon.User size={16} variant={isScrolledOver ? "Outline" : "Bold"} />}
 			>
 				<Text truncate="end" maw="70px" size="sm" fw={600} lh={1}>
 					{user?.full_name ?? "-"}
@@ -48,10 +49,11 @@ export default function Profile({ isOver }: Props) {
 				onClose={close}
 				withCloseButton={false}
 				scrollAreaComponent={ScrollArea.Autosize}
+				styles={{}}
 			>
-				<Stack gap="md" style={{ overflowX: "hidden" }}>
+				<Stack gap="md">
 					{/* header */}
-					<Flex align="center" pos="relative" maw="90%">
+					<Flex align="center" pos="relative">
 						<div>
 							<Text component="h4" size="lg" fw="600">
 								Informasi Akun
@@ -60,8 +62,15 @@ export default function Profile({ isOver }: Props) {
 								Segala informasi mengenai data kamu
 							</Text>
 						</div>
+						<CloseButton
+							pos="absolute"
+							right={4}
+							variant="subtle"
+							size="sm"
+							onClick={toggle}
+						/>
 					</Flex>
-					<Divider orientation="horizontal" ml={-20} mr={-20} />
+					<Divider orientation="horizontal" ml={-16} mr={-16} />
 					<Flex align="center" gap="sm">
 						<Center
 							w="40px"
