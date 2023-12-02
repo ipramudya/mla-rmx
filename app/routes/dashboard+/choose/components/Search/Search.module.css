@@ -3,6 +3,10 @@
     border-bottom: 1px solid;
 }
 
+.input_root {
+    flex-grow: 1;
+}
+
 .input_section {
     justify-content: start;
 }

@@ -12,6 +12,7 @@ export default function Search() {
 			<Flex
 				component="section"
 				align="center"
+				gap="md"
 				justify="space-between"
 				className={styles.wrapper}
 				style={{
@@ -27,6 +28,7 @@ export default function Search() {
 					placeholder="Cari organizer"
 					leftSection={<Icon.Search size={20} />}
 					classNames={{
+						root: styles.input_root,
 						section: styles.input_section,
 						input: styles.input,
 					}}
