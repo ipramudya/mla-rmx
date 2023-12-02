@@ -11,3 +11,5 @@ export { default as BannerOrganizer3 } from "./banner_organizer3.jpg";
 export { default as BannerOrganizer4 } from "./banner_organizer4.jpg";
 
 export { default as OrganizerAvatar } from "./organizer.png";
+
+export { default as ErrorDoodle } from "./work-doodle.svg";

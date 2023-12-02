@@ -12,7 +12,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	const parsedCookie = parseCookie(cookieHeader);
 
-	if (parsedCookie.refresh_token || parsedCookie[CLIENT_SESSION_ACCESS_TOKEN]) {
+	if (parsedCookie && (parsedCookie.refresh_token || parsedCookie[CLIENT_SESSION_ACCESS_TOKEN])) {
 		return redirect("/", 301);
 	}
 

@@ -8,7 +8,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (cookieHeaders) {
 		const parsedCookie = parseCookie(cookieHeaders);
-		const cookieKeys = Object.keys(parsedCookie);
+		const cookieKeys = Object.keys(parsedCookie ?? {});
 
 		const headers = new Headers();
 		for (const cookieKey of cookieKeys) {

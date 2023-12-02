@@ -4,7 +4,12 @@ import "@mantine/core/styles.css";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type {
+	HandleErrorFunction,
+	LinksFunction,
+	LoaderFunctionArgs,
+	MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
 	Links,
@@ -25,6 +30,7 @@ import theme from "app/lib/theme";
 import { me } from "app/services/user-data-service";
 import { useEffect, useState } from "react";
 import { useDehydratedState } from "use-dehydrated-state";
+import ErrorNotFoundPage from "./components/404/404";
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref
@@ -39,6 +45,8 @@ export const links: LinksFunction = () => [
 export const meta: MetaFunction = () => {
 	return [{ title: "Mulailomba" }, { name: "description", content: "Mulailomba..." }];
 };
+
+export const ErrorBoundary: HandleErrorFunction = ErrorNotFoundPage;
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
