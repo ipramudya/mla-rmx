@@ -1,6 +1,7 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { verifiedCookie } from "app/lib/cookies/verify-cookie.server";
+import { endOfYesterday } from "date-fns";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeaders = request.headers.get("Cookie");
@@ -19,6 +20,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 						: await verifiedCookie.serialize("", {
 								maxAge: -1,
 								httpOnly: true,
+								expires: endOfYesterday(),
 								path: "/",
 						  }),
 				);

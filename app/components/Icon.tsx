@@ -28,13 +28,13 @@ import {
 	MessageAdd1,
 	MessageQuestion,
 	MoneyRecive,
-	More,
 	People,
 	SearchNormal1,
 	SearchStatus,
 	Setting2,
 	Setting4,
 	Sms,
+	Star1,
 	Text,
 	Trash,
 	User,
@@ -58,7 +58,6 @@ export const Icon = {
 	Edit: Edit2,
 	Email: Sms,
 	Error: Danger,
-	Ellipsis: More,
 	Feedback: MessageAdd1,
 	Filter: Setting4,
 	Finance: MoneyRecive,
@@ -79,6 +78,7 @@ export const Icon = {
 	PlusSquare: AddSquare,
 	Reveal: Eye,
 	Search: SearchNormal1,
+	Star: Star1,
 	Text,
 	User,
 	UserSquare,
@@ -194,6 +194,24 @@ export const Icon = {
 			<path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08v0c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66" />
 			<path d="m18 15-2-2" />
 			<path d="m15 18-2-2" />
+		</svg>
+	),
+	More: ({ size = 16 }: IconProps) => (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width={size}
+			height={size}
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="1.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className="lucide lucide-more-horizontal"
+		>
+			<circle cx="12" cy="12" r="1" />
+			<circle cx="19" cy="12" r="1" />
+			<circle cx="5" cy="12" r="1" />
 		</svg>
 	),
 };

@@ -1,5 +1,11 @@
 .wrapper {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
     border-bottom: 1px solid var(--mantine-color-gray-3);
+    background: white;
+    z-index: 100;
 }
 
 .logo {
@@ -7,6 +13,5 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    /* transform: translate(); */
     translate: -50% -50%;
 }
