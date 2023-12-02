@@ -1,4 +1,5 @@
 import { Button, Container, Flex, Group, Stack, Text, Title } from "@mantine/core";
+import { Link } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 
 export default function Heading() {
@@ -19,6 +20,8 @@ export default function Heading() {
 				</Stack>
 
 				<Button
+					component={Link}
+					to="/dashboard/create"
 					variant="gradient"
 					rightSection={<Icon.Organizer size={20} variant="Bold" />}
 				>

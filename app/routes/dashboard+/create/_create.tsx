@@ -26,7 +26,7 @@ export default function Create() {
 		});
 
 	const handleFormSubmit = async (fields: CreateOrganizerPayload) => {
-		const { error, data } = await createOrganizer(fields);
+		const { error } = await createOrganizer(fields);
 
 		if (error) {
 			showNotification({
@@ -42,8 +42,7 @@ export default function Create() {
 			message: "Selamat, organizer baru berhasil ditambahkan",
 			color: "green",
 		});
-		navigate(-1);
-		console.log("data", data);
+		navigate("/dashboard/choose");
 	};
 
 	useEffect(() => {
