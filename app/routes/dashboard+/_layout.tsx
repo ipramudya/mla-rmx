@@ -4,6 +4,7 @@ import { parseCookie } from "app/functions/parse-cookie.server";
 import { CLIENT_SESSION_ACCESS_TOKEN } from "app/lib/session";
 
 export async function loader({ request }: LoaderFunctionArgs) {
+	const url = new URL(request.url);
 	const cookieHeader = request.headers.get("Cookie") || "";
 	const parsedCookie = parseCookie(cookieHeader);
 
@@ -15,5 +16,5 @@ export async function loader({ request }: LoaderFunctionArgs) {
 		return redirect("/");
 	}
 
-	return redirect("/dashboard/choose");
+	return url.pathname === "/dashboard" ? redirect("/dashboard/choose") : null;
 }

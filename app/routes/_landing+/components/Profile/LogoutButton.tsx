@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
@@ -8,6 +8,8 @@ import { useState } from "react";
 import logout from "./api-logout";
 
 export default function LogoutButton() {
+	const { pathname } = useLocation();
+	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const clearUserData = useUser((s) => s.clearUserData);
 	const fetcher = useFetcher();
@@ -29,6 +31,10 @@ export default function LogoutButton() {
 				message: "Server sedang tidak stabil, silahkan coba lagi",
 				color: "red",
 			});
+		}
+
+		if (pathname.includes("dashboard")) {
+			navigate("/");
 		}
 
 		setLoading(false);

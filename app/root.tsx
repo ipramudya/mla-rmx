@@ -42,7 +42,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	if (cookieHeader) {
 		const parsedCookie = parseCookie(cookieHeader);
-		const authenticated = Boolean(parsedCookie.refresh_token);
+		const authenticated = Boolean(parsedCookie?.refresh_token);
 
 		if (!parsedCookie || !authenticated) return null;
 
@@ -68,7 +68,7 @@ export default function App() {
 	const setUserData = useUser((s) => s.setUserData);
 
 	useEffect(() => {
-		if (!data && userClientSession.getAccessToken()) {
+		if (!data) {
 			userClientSession.clearAccessToken();
 			return;
 		}
