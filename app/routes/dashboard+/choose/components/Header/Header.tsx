@@ -28,12 +28,7 @@ export default function Header() {
 					</Button>
 
 					{/* logo */}
-					<Box
-						component={Link}
-						to="/"
-						style={{ textDecoration: "none" }}
-						className={styles.logo}
-					>
+					<Box component={Link} to="/" className={styles.logo}>
 						<Group gap={8} align="center" justify="center">
 							<Title fz={20} c="black">
 								mulai
@@ -41,7 +36,6 @@ export default function Header() {
 									lomba
 								</Text>
 							</Title>
-							{/* <span>|</span> */}
 							<Divider orientation="vertical" />
 							<Text
 								fz={20}
