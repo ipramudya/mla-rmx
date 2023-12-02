@@ -1,0 +1,12 @@
+.wrapper {
+    border-bottom: 1px solid var(--mantine-color-gray-3);
+}
+
+.logo {
+    text-decoration: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* transform: translate(); */
+    translate: -50% -50%;
+}

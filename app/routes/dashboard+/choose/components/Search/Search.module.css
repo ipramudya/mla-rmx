@@ -1,0 +1,12 @@
+.wrapper {
+    padding-bottom: 8px;
+    border-bottom: 1px solid;
+}
+
+.input_section {
+    justify-content: start;
+}
+
+.input {
+    font-size: var(--mantine-font-size-md);
+}

@@ -1,4 +1,4 @@
-import type { Icon as IconsaxIcon, IconProps } from "iconsax-react";
+import type { IconProps, Icon as IconsaxIcon } from "iconsax-react";
 import {
 	AddCircle,
 	AddSquare,
@@ -12,6 +12,7 @@ import {
 	ArrowUp2,
 	Calendar2,
 	Call,
+	Clock,
 	Danger,
 	Edit2,
 	Eye,
@@ -52,6 +53,7 @@ export const Icon = {
 	ChevRight: ArrowRight2,
 	ChevDown: ArrowDown2,
 	ChevLeft: ArrowLeft2,
+	Clock,
 	Delete: Trash,
 	Edit: Edit2,
 	Email: Sms,
