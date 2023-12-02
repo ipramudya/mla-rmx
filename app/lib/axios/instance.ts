@@ -17,7 +17,7 @@ axiosInstance.interceptors.request.use(
 		if (IS_SERVER) {
 			const cookieHeaders = request.headers.get("Cookie")?.toString() || "";
 
-			token = parseCookie(cookieHeaders)[CLIENT_SESSION_ACCESS_TOKEN];
+			token = parseCookie(cookieHeaders)?.[CLIENT_SESSION_ACCESS_TOKEN];
 		} else {
 			token = userClientSession.getAccessToken();
 		}

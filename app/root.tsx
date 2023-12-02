@@ -15,13 +15,16 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from "@remix-run/react";
+import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import globalStyles from "app/assets/styles/global.css";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
 import theme from "app/lib/theme";
 import { me } from "app/services/user-data-service";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDehydratedState } from "use-dehydrated-state";
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref
@@ -79,6 +82,16 @@ export default function App() {
 		}
 	}, [data, setUserData]);
 
+	const [queryClient] = useState(
+		() =>
+			new QueryClient({
+				defaultOptions: {
+					queries: { staleTime: 60 * 1000 },
+				},
+			}),
+	);
+	const dehydratedState = useDehydratedState();
+
 	return (
 		<html lang="en">
 			<head>
@@ -91,7 +104,13 @@ export default function App() {
 			<body>
 				<MantineProvider theme={theme}>
 					<Notifications position="top-right" />
-					<Outlet />
+					<QueryClientProvider client={queryClient}>
+						<HydrationBoundary state={dehydratedState}>
+							<Outlet />
+
+							<ReactQueryDevtools initialIsOpen={false} />
+						</HydrationBoundary>
+					</QueryClientProvider>
 					<ScrollRestoration />
 					<Scripts />
 					<LiveReload />

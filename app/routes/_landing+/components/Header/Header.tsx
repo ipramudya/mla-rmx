@@ -56,6 +56,9 @@ export default function Header() {
 					<Button
 						classNames={{ root: isScrolledOver ? undefined : styles.create_lomba_btn }}
 						variant={isScrolledOver ? "gradient" : "default"}
+						component={Link}
+						to={isLoggedIn ? "/dashboard/choose" : "/auth/login"}
+						prefetch="intent"
 					>
 						Buat Lomba
 					</Button>

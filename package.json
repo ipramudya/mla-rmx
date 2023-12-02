@@ -21,6 +21,8 @@
 		"@remix-run/node": "^2.3.1",
 		"@remix-run/react": "^2.3.1",
 		"@remix-run/serve": "^2.3.1",
+		"@tanstack/react-query": "^5.12.2",
+		"@tanstack/react-query-devtools": "^5.12.2",
 		"axios": "^1.6.2",
 		"clsx": "^2.0.0",
 		"date-fns": "^2.30.0",
@@ -30,6 +32,7 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.48.2",
+		"use-dehydrated-state": "^0.1.0",
 		"zod": "^3.22.4",
 		"zustand": "^4.4.7"
 	},
