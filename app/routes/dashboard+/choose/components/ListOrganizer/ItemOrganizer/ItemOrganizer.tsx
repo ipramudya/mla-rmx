@@ -1,10 +1,13 @@
 import { Avatar, Badge, Flex, Group, Image, Stack, Text } from "@mantine/core";
 import { BannerOrganizer1, OrganizerAvatar } from "app/assets/images";
 import { dateToWords } from "app/functions/date";
+import { type MouseEvent } from "react";
+import usePopupLogin from "../../../use-popup-login";
 import styles from "./ItemOrganizer.module.css";
 import ItemOrganizerMenu from "./ItemOrganizerMenu";
 
 interface Props {
+	id: string;
 	isLocked: boolean;
 	email: string;
 	name: string;
@@ -12,9 +15,26 @@ interface Props {
 	lastAccessedAt: number | null;
 }
 
-export default function ItemOrganizer({ name, email, isLocked, isActive, lastAccessedAt }: Props) {
+export default function ItemOrganizer({
+	id,
+	name,
+	email,
+	isLocked,
+	isActive,
+	lastAccessedAt,
+}: Props) {
+	// const [loading, setLoading] = useState(false)
+	const { setPopup } = usePopupLogin();
+
+	const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+		if (isLocked) {
+			setPopup({ id, show: true, name });
+			return;
+		}
+	};
+
 	return (
-		<Flex gap="md" direction="column" p={12} className={styles.root}>
+		<Flex gap="md" direction="column" p={12} className={styles.root} onClick={handleClick}>
 			<Image src={BannerOrganizer1} radius="sm" className={styles.banner} />
 
 			<Stack px={8}>

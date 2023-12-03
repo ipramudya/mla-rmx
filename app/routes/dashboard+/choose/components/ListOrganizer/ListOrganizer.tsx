@@ -18,6 +18,7 @@ export default function ListOrganizer() {
 					({ id, email_address, name, is_locked, is_active, logout_at }) => (
 						<ItemOrganizer
 							key={id}
+							id={id}
 							email={email_address}
 							name={name}
 							isLocked={is_locked}

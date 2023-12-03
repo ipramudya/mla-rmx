@@ -5,7 +5,13 @@ export default function ItemOrganizerMenu() {
 	return (
 		<Menu position="bottom-end" width={180} shadow="md">
 			<Menu.Target>
-				<ActionIcon variant="transparent" color="gray">
+				<ActionIcon
+					variant="transparent"
+					color="gray"
+					pos="relative"
+					style={{ zIndex: 10 }}
+					onClick={(e) => e.stopPropagation()}
+				>
 					<Icon.More size={16} />
 				</ActionIcon>
 			</Menu.Target>

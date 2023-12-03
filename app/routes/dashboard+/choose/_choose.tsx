@@ -6,7 +6,9 @@ import getOrganizerAccounts, { GET_ORGANIZER_ACCOUNTS_QUERY_KEY } from "./api-or
 import Header from "./components/Header";
 import Heading from "./components/Heading";
 import ListOrganizer from "./components/ListOrganizer";
+import LoginPopup from "./components/LoginPopup/LoginPopup";
 import Search from "./components/Search";
+import usePopupLogin from "./use-popup-login";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
@@ -28,16 +30,23 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function ChoosePage() {
+	const { popup, resetPopup } = usePopupLogin();
+
 	return (
-		<Stack gap="xl" pb={100}>
-			<Header />
+		<>
+			{popup.show && (
+				<LoginPopup name={popup.name} opened={popup.show} onClose={() => resetPopup()} />
+			)}
+			<Stack gap="xl" pb={100}>
+				<Header />
 
-			<Heading />
+				<Heading />
 
-			<Search />
+				<Search />
 
-			{/* <EmptyOrgs /> */}
-			<ListOrganizer />
-		</Stack>
+				{/* <EmptyOrgs /> */}
+				<ListOrganizer />
+			</Stack>
+		</>
 	);
 }
