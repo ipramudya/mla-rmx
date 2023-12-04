@@ -5,7 +5,7 @@ import getOrganizerAccounts, {
 	GET_ORGANIZER_ACCOUNTS_QUERY_KEY,
 } from "../../api-organizers-accounts";
 import EmptyOrgs from "../EmptyOrgs";
-import useSearchOrgs from "../Search/use-search-orgs";
+import useSearchOrgs from "../Panel/Search/use-search-orgs";
 import ItemOrganizer from "./ItemOrganizer";
 import ListOrganizerSkeleton from "./ListOrganizerSkeleton";
 

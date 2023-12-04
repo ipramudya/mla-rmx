@@ -7,7 +7,7 @@ import Header from "./components/Header";
 import Heading from "./components/Heading";
 import ListOrganizer from "./components/ListOrganizer";
 import LoginPopup from "./components/LoginPopup";
-import Search from "./components/Search";
+import Panel from "./components/Panel";
 import usePopupLogin from "./use-popup-login";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -44,7 +44,7 @@ export default function ChoosePage() {
 
 				<Heading />
 
-				<Search />
+				<Panel />
 
 				<ListOrganizer />
 			</Stack>
