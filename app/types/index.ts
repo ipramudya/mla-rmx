@@ -25,6 +25,7 @@ export interface OrganizerUser {
 }
 
 export interface OrganizerAccounts {
+	id: string;
 	name: string;
 	profile: null;
 	background: null;
@@ -32,6 +33,7 @@ export interface OrganizerAccounts {
 	email_address: string;
 	is_locked: boolean;
 	is_active: boolean;
+	is_favorite: boolean;
 	created_at: number;
 	updated_at: number;
 	logout_at: number | null;
