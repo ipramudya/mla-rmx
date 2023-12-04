@@ -6,7 +6,7 @@ import getOrganizerAccounts, { GET_ORGANIZER_ACCOUNTS_QUERY_KEY } from "./api-or
 import Header from "./components/Header";
 import Heading from "./components/Heading";
 import ListOrganizer from "./components/ListOrganizer";
-import LoginPopup from "./components/LoginPopup/LoginPopup";
+import LoginPopup from "./components/LoginPopup";
 import Search from "./components/Search";
 import usePopupLogin from "./use-popup-login";
 
@@ -37,6 +37,7 @@ export default function ChoosePage() {
 			{popup.show && (
 				<LoginPopup name={popup.name} opened={popup.show} onClose={() => resetPopup()} />
 			)}
+
 			<Stack gap="xl" pb={100}>
 				<Header />
 
@@ -44,7 +45,6 @@ export default function ChoosePage() {
 
 				<Search />
 
-				{/* <EmptyOrgs /> */}
 				<ListOrganizer />
 			</Stack>
 		</>

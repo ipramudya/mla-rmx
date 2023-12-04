@@ -1,8 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { ModalProps } from "@mantine/core";
 import { Button, CloseButton, Flex, Input, Modal, PasswordInput, Stack, Text } from "@mantine/core";
+import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
+import { orgsClientSession } from "app/lib/session/organizer-session";
+import useOrganizer from "app/lib/store/hooks/use-organizer";
 import { useForm } from "react-hook-form";
+import loginOrganizer from "../../api-login-organizer";
+import usePopupLogin from "../../use-popup-login";
 import type { LoginPopupPayload } from "./login-popup-schema";
 import { loginPopupSchema } from "./login-popup-schema";
 
@@ -11,13 +16,29 @@ interface Props extends Omit<ModalProps, "children"> {
 }
 
 export default function LoginPopup({ name, opened, onClose, ...props }: Props) {
-	const { handleSubmit, register, formState } = useForm<LoginPopupPayload>({
+	const navigate = useNavigate();
+	const setCurrentOrgs = useOrganizer((s) => s.setCurrentOrgs);
+	const { popup } = usePopupLogin();
+
+	const { handleSubmit, register, formState, setError } = useForm<LoginPopupPayload>({
 		resolver: zodResolver(loginPopupSchema),
 		defaultValues: { password: "" },
 	});
 
-	const handleFormSubmit = async (fields: LoginPopupPayload) => {
-		console.log("fields", fields);
+	const handleFormSubmit = async ({ password }: LoginPopupPayload) => {
+		const { data, error } = await loginOrganizer({ organizerId: popup.id, password });
+
+		if (error || !data) {
+			setError("password", {
+				type: "custom",
+				message: "Password yang anda masukan salah",
+			});
+			return;
+		}
+
+		orgsClientSession.setAccessToken(data.access_token);
+		setCurrentOrgs(data.identity);
+		navigate(`/dashboard/${data.identity.username}`);
 	};
 
 	return (
