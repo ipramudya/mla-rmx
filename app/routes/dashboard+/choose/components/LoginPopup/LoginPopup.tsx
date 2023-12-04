@@ -18,7 +18,7 @@ interface Props extends Omit<ModalProps, "children"> {
 export default function LoginPopup({ name, opened, onClose, ...props }: Props) {
 	const navigate = useNavigate();
 	const setCurrentOrgs = useOrganizer((s) => s.setCurrentOrgs);
-	const { popup } = usePopupLogin();
+	const { popup, resetPopup } = usePopupLogin();
 
 	const { handleSubmit, register, formState, setError } = useForm<LoginPopupPayload>({
 		resolver: zodResolver(loginPopupSchema),
@@ -39,6 +39,7 @@ export default function LoginPopup({ name, opened, onClose, ...props }: Props) {
 		orgsClientSession.setAccessToken(data.access_token);
 		setCurrentOrgs(data.identity);
 		navigate(`/dashboard/${data.identity.username}`);
+		resetPopup();
 	};
 
 	return (

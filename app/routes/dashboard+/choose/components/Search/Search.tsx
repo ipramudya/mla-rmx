@@ -1,11 +1,19 @@
 import { Container, Flex, TextInput } from "@mantine/core";
 import { useFocusWithin } from "@mantine/hooks";
 import { Icon } from "app/components/Icon";
+import { useEffect } from "react";
 import styles from "./Search.module.css";
 import Sort from "./Sort";
+import useSearchOrgs from "./use-search-orgs";
 
 export default function Search() {
 	const { ref, focused } = useFocusWithin();
+	const { setSearch, resetSearch } = useSearchOrgs();
+
+	/* cleanup search state when unmounting search component */
+	useEffect(() => {
+		return () => resetSearch();
+	}, [resetSearch]);
 
 	return (
 		<Container size="lg" w="100%" mt={56}>
@@ -32,6 +40,7 @@ export default function Search() {
 						section: styles.input_section,
 						input: styles.input,
 					}}
+					onChange={(e) => setSearch(e.currentTarget.value)}
 				/>
 
 				<Sort />

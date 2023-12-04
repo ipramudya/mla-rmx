@@ -16,7 +16,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	await queryClient.prefetchQuery({
 		queryKey: [GET_ORGANIZER_ACCOUNTS_QUERY_KEY],
-		queryFn: () => getOrganizerAccounts(cookieHeader ?? undefined),
+		queryFn: () =>
+			getOrganizerAccounts(undefined, cookieHeader ? { cookie: cookieHeader } : undefined),
 	});
 
 	return json(
