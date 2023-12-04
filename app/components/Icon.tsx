@@ -1,4 +1,4 @@
-import type { IconProps, Icon as IconsaxIcon } from "iconsax-react";
+import type { Icon as IconsaxIcon, IconProps } from "iconsax-react";
 import {
 	AddCircle,
 	AddSquare,

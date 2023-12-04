@@ -28,7 +28,12 @@ export default function Sort() {
 		setSort({ [k]: "asc" });
 	};
 
-	useEffect(() => {}, []);
+	useEffect(
+		() => () => {
+			resetSort();
+		},
+		[resetSort],
+	);
 
 	const sortKey = useMemo(() => {
 		if (!sort) return "reset";
