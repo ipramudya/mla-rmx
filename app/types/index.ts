@@ -25,7 +25,6 @@ export interface OrganizerUser {
 }
 
 export interface OrganizerAccounts {
-	id: string;
 	name: string;
 	profile: null;
 	background: null;
@@ -37,6 +36,7 @@ export interface OrganizerAccounts {
 	updated_at: number;
 	logout_at: number | null;
 	user_id: string;
+	total_event: number;
 }
 
 export declare interface BaseAPIReturn<T> {

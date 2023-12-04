@@ -19,6 +19,7 @@ interface Props {
 	name: string;
 	isActive: boolean;
 	lastAccessedAt: number | null;
+	totalLomba: number;
 }
 
 export default function ItemOrganizer({
@@ -28,6 +29,7 @@ export default function ItemOrganizer({
 	isLocked,
 	isActive,
 	lastAccessedAt,
+	totalLomba,
 }: Props) {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
@@ -95,7 +97,9 @@ export default function ItemOrganizer({
 
 					<Group gap="sm">
 						<Text variant="body-text" size="sm">
-							Tidak ada lomba
+							{!totalLomba
+								? "Tidak ada lomba"
+								: `${totalLomba} lomba diselenggarakan`}
 						</Text>
 						<span style={{ color: "var(--mantine-color-gray-3)" }}>&#8226;</span>
 						<Text variant="body-text" size="sm">
