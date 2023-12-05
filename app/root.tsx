@@ -37,7 +37,6 @@ export const links: LinksFunction = () => [
 		? [
 				{ rel: "stylesheet", href: cssBundleHref },
 				{ rel: "stylesheet", href: globalStyles },
-				{ rel: "icon", href: "/icon.svg", type: "image/svg" },
 		  ]
 		: []),
 ];

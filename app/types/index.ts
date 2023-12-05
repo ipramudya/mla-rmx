@@ -33,10 +33,12 @@ export interface OrganizerAccounts {
 	email_address: string;
 	is_locked: boolean;
 	is_active: boolean;
+	is_favorite: boolean;
 	created_at: number;
 	updated_at: number;
 	logout_at: number | null;
 	user_id: string;
+	total_event: number;
 }
 
 export declare interface BaseAPIReturn<T> {

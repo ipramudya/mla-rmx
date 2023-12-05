@@ -6,7 +6,9 @@ import getOrganizerAccounts, { GET_ORGANIZER_ACCOUNTS_QUERY_KEY } from "./api-or
 import Header from "./components/Header";
 import Heading from "./components/Heading";
 import ListOrganizer from "./components/ListOrganizer";
-import Search from "./components/Search";
+import LoginPopup from "./components/LoginPopup";
+import Panel from "./components/Panel";
+import usePopupLogin from "./use-popup-login";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
@@ -14,7 +16,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	await queryClient.prefetchQuery({
 		queryKey: [GET_ORGANIZER_ACCOUNTS_QUERY_KEY],
-		queryFn: () => getOrganizerAccounts(cookieHeader ?? undefined),
+		queryFn: () =>
+			getOrganizerAccounts(undefined, cookieHeader ? { cookie: cookieHeader } : undefined),
 	});
 
 	return json(
@@ -28,16 +31,23 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function ChoosePage() {
+	const { popup, resetPopup } = usePopupLogin();
+
 	return (
-		<Stack gap="xl" pb={100}>
-			<Header />
+		<>
+			{popup.show && (
+				<LoginPopup name={popup.name} opened={popup.show} onClose={() => resetPopup()} />
+			)}
 
-			<Heading />
+			<Stack gap="xl" pb={100}>
+				<Header />
 
-			<Search />
+				<Heading />
 
-			{/* <EmptyOrgs /> */}
-			<ListOrganizer />
-		</Stack>
+				<Panel />
+
+				<ListOrganizer />
+			</Stack>
+		</>
 	);
 }
