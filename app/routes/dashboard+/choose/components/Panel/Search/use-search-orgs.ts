@@ -8,7 +8,7 @@ export const SearchOrgsAtom = atomWithReset<string>("");
 export default function useSearchOrgs() {
 	const [value, setValue] = useAtom(SearchOrgsAtom);
 	const resetAtom = useResetAtom(SearchOrgsAtom);
-	const [debouncedValue, setDebouncedValue] = useDebouncedState("", 400);
+	const [debouncedValue, setDebouncedValue] = useDebouncedState(value, 400);
 
 	useEffect(() => {
 		if (debouncedValue || debouncedValue === "") {
