@@ -37,12 +37,12 @@ export default function ItemOrganizer({
 	const { setCurrentOrgs } = useOrganizer();
 
 	const handleClick = async () => {
-		setLoading(true);
-
 		if (isLocked) {
 			setPopup({ id, show: true, name });
 			return;
 		}
+
+		setLoading(true);
 
 		const { error, data } = await loginOrganizer({ organizerId: id });
 
@@ -84,7 +84,7 @@ export default function ItemOrganizer({
 									Private
 								</Badge>
 							)}
-							<ItemOrganizerMenu />
+							<ItemOrganizerMenu id={id} />
 						</Group>
 					</Group>
 

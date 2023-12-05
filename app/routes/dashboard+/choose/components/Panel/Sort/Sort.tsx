@@ -5,13 +5,13 @@ import useSortOrgs from "./use-sort-orgs";
 
 const REMAP_SORT_LABEL = new Map([
 	["reset", "Paling relevan"],
-	["logout_at", "Baru diakses"],
+	["activity", "Baru diakses"],
 	["total_event", "Lomba terbanyak"],
 ]);
 
 const SORT_ITEMS = [
 	{ key: "reset", label: "Paling relevan" },
-	{ key: "logout_at", label: "Baru diakses" },
+	{ key: "activity", label: "Baru diakses" },
 	{ key: "total_event", label: "Lomba terbanyak" },
 ];
 
