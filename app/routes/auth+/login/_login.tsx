@@ -6,7 +6,7 @@ import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
 import { useForm } from "react-hook-form";
 import login from "./api-login";
-import { loginFormSchema, type LoginPayload } from "./login-schema";
+import { type LoginPayload, loginFormSchema } from "./login-schema";
 
 export default function LoginPage() {
 	const navigate = useNavigate();
