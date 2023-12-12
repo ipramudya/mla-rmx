@@ -3,7 +3,7 @@ import type { ModalProps } from "@mantine/core";
 import { Button, CloseButton, Flex, Input, Modal, PasswordInput, Stack, Text } from "@mantine/core";
 import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import loginOrganizer from "app/features/organizer/api/api-login-organizer";
+import loginOrganizer from "app/features/organizer/api/login-organizer";
 import usePopupLogin from "app/features/organizer/hooks/use-popup-login";
 import { orgsClientSession } from "app/lib/session/organizer-session";
 import useOrganizer from "app/lib/store/hooks/use-organizer";

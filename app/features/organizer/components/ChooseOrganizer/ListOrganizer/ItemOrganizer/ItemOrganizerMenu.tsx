@@ -1,7 +1,7 @@
 import { ActionIcon, Menu, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Icon } from "app/components/Icon";
-import favoriteOrgs from "app/features/organizer/api/api-favorite";
+import favoriteOrgs from "app/features/organizer/api/favorite";
 import useListOrganizers from "app/features/organizer/hooks/use-list-organizers";
 import { useMemo } from "react";
 

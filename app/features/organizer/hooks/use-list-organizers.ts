@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import getOrganizerAccounts, {
 	GET_ORGANIZER_ACCOUNTS_QUERY_KEY,
-} from "app/features/organizer/api/api-organizers-accounts";
+} from "app/features/organizer/api/get-organizers-accounts";
 import { useMemo } from "react";
 import useSearchOrgs from "./use-search-orgs";
 import useSortOrgs from "./use-sort-orgs";

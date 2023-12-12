@@ -3,7 +3,7 @@ import { Button, Input, PasswordInput, Stack, Switch, Text } from "@mantine/core
 import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import createOrganizer from "app/features/organizer/api/api-create-organizer";
+import createOrganizer from "app/features/organizer/api/create-organizer";
 import CreateOrganizerLayout from "app/features/organizer/components/CreateOrganizer/CreateOrganizerLayout";
 import styles from "app/features/organizer/components/CreateOrganizer/Switch.module.css";
 import type { CreateOrganizerPayload } from "app/features/organizer/utils/create-organizer-schema";

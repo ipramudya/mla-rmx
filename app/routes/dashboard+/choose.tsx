@@ -4,7 +4,7 @@ import { json } from "@remix-run/node";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import getOrganizerAccounts, {
 	GET_ORGANIZER_ACCOUNTS_QUERY_KEY,
-} from "app/features/organizer/api/api-organizers-accounts";
+} from "app/features/organizer/api/get-organizers-accounts";
 import Header from "app/features/organizer/components/ChooseOrganizer/Header";
 import Heading from "app/features/organizer/components/ChooseOrganizer/Heading";
 import ListOrganizer from "app/features/organizer/components/ChooseOrganizer/ListOrganizer";

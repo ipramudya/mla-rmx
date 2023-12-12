@@ -1,6 +1,6 @@
 import { Container, SimpleGrid } from "@mantine/core";
 import { Poster1, Poster2 } from "app/assets/images";
-import LombaItem from "../LombaItem";
+import LombaItem from "./LombaItem";
 
 export default function LombaList() {
 	return (

@@ -6,7 +6,7 @@ import { redirect } from "@remix-run/node";
 import { useFetcher, useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import { APP_API_URL } from "app/constant";
-import apiRegister from "app/features/auth/api/api-register";
+import apiRegister from "app/features/auth/api/register";
 import type { FillPayload } from "app/features/auth/utils/fill-schema";
 import { fillFormSchema } from "app/features/auth/utils/fill-schema";
 import { parseCookie } from "app/functions/parse-cookie.server";

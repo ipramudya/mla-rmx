@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Box, Button, Input, Stack, Text } from "@mantine/core";
 import { useSearchParams } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import sendMagicLink from "app/features/auth/api/api-send-magic-link";
+import sendMagicLink from "app/features/auth/api/send-magic-link";
 import type { RegisterPayload } from "app/features/auth/utils/register-schema";
 import { registerFormSchema } from "app/features/auth/utils/register-schema";
 import { useCallback, useEffect, useState } from "react";

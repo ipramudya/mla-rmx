@@ -6,7 +6,7 @@ import type { OrganizerAccounts } from "app/types";
 import { useMemo } from "react";
 import { groupBy, isEmpty } from "remeda";
 import EmptyOrgs from "../EmptyOrgs";
-import ItemOrganizer from "../ItemOrganizer";
+import ItemOrganizer from "./ItemOrganizer";
 import ListOrganizerSkeleton from "./ListOrganizerSkeleton";
 
 export default function ListOrganizer() {

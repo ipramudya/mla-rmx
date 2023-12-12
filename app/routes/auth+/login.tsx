@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, PasswordInput, Stack, Text } from "@mantine/core";
 import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import login from "app/features/auth/api/api-login";
+import login from "app/features/auth/api/login";
 import type { LoginPayload } from "app/features/auth/utils/login-schema";
 import { loginFormSchema } from "app/features/auth/utils/login-schema";
 import { userClientSession } from "app/lib/session";
