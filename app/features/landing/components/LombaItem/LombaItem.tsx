@@ -11,13 +11,13 @@ import {
 } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import { Icon } from "app/components/Icon";
-import styles from "./ItemLomba.module.css";
+import styles from "./LombaItem.module.css";
 
 interface Props {
 	img: string;
 }
 
-export default function ItemLomba({ img }: Props) {
+export default function LombaItem({ img }: Props) {
 	const { ref, hovered } = useHover();
 
 	return (

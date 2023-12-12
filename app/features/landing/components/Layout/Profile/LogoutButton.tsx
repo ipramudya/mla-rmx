@@ -2,10 +2,10 @@ import { Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
+import logout from "app/features/landing/api/api-logout";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
 import { useState } from "react";
-import logout from "./api-logout";
 
 export default function LogoutButton() {
 	const { pathname } = useLocation();
