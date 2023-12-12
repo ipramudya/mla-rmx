@@ -12,6 +12,8 @@ import apiRegister from "./api-register";
 import type { FillPayload } from "./fill-schema";
 import { fillFormSchema } from "./fill-schema";
 
+const DEFAULT_FORM_VALUES = { firstName: "", lastName: "", password: "", phone: "" };
+
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
 	if (!cookieHeader) return redirect("/auth/login");
@@ -28,13 +30,18 @@ export default function FillPage() {
 
 	const { handleSubmit, formState, register } = useForm<FillPayload>({
 		resolver: zodResolver(fillFormSchema),
-		defaultValues: {
-			firstName: "",
-			lastName: "",
-			password: "",
-			phone: "",
-		},
+		defaultValues: DEFAULT_FORM_VALUES,
 	});
+
+	const triggerRuntimeLoaders = (): void => {
+		/* call runtime remix api to destroy cookie, you can found this on app/routes/api+ directory */
+		fetch(APP_API_URL + "/clear-unused-auth-cookie", {
+			credentials: "include",
+		});
+
+		/* trigger runtime and client side effects on root layout */
+		fetcher.load("/");
+	};
 
 	const handleFormSubmit = async ({ accepted, ...fields }: FillPayload) => {
 		const { error } = await apiRegister(fields);
@@ -46,18 +53,17 @@ export default function FillPage() {
 				color: "red",
 			});
 			throw new Error(error);
-		}
+		} else {
+			triggerRuntimeLoaders();
 
-		fetch(APP_API_URL + "/clear-unused-auth-cookie", {
-			credentials: "include",
-		});
-		showNotification({
-			title: "Berhasil",
-			message: "Selamat, anda berhasil membuat akun baru",
-			color: "green",
-		});
-		fetcher.load("/");
-		navigate("/");
+			showNotification({
+				title: "Berhasil",
+				message: "Selamat, anda berhasil membuat akun baru",
+				color: "green",
+			});
+
+			navigate("/");
+		}
 	};
 
 	return (

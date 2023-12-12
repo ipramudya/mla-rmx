@@ -11,18 +11,18 @@ import usePopupLogin from "../../use-popup-login";
 import type { LoginPopupPayload } from "./login-popup-schema";
 import { loginPopupSchema } from "./login-popup-schema";
 
-interface Props extends Omit<ModalProps, "children"> {
-	name: string;
-}
+const FORM_DEFAULT_VALUES = { password: "" };
 
-export default function LoginPopup({ name, opened, onClose, ...props }: Props) {
+type Props = Omit<ModalProps, "children" | "opened" | "onClose">;
+
+export default function LoginPopup(props: Props) {
 	const navigate = useNavigate();
 	const setCurrentOrgs = useOrganizer((s) => s.setCurrentOrgs);
 	const { popup, resetPopup } = usePopupLogin();
 
 	const { handleSubmit, register, formState, setError } = useForm<LoginPopupPayload>({
 		resolver: zodResolver(loginPopupSchema),
-		defaultValues: { password: "" },
+		defaultValues: FORM_DEFAULT_VALUES,
 	});
 
 	const handleFormSubmit = async ({ password }: LoginPopupPayload) => {
@@ -37,22 +37,34 @@ export default function LoginPopup({ name, opened, onClose, ...props }: Props) {
 		}
 
 		orgsClientSession.setAccessToken(data.access_token);
+
 		setCurrentOrgs(data.identity);
+
 		navigate(`/dashboard/${data.identity.username}`);
+
 		resetPopup();
 	};
 
+	/* unmount this component when popup state is false */
+	if (!popup.show) return false;
+
 	return (
-		<Modal opened={opened} onClose={onClose} centered withCloseButton={false} {...props}>
+		<Modal
+			opened={popup.show}
+			onClose={() => resetPopup()}
+			centered
+			withCloseButton={false}
+			{...props}
+		>
 			<Stack>
-				<Flex align="center" justify="space-between">
+				<Flex justify="space-between">
 					<div>
 						<Text fw={600}>Masuk Dashboard</Text>
 						<Text size="sm" maw="90%">
-							Penggunaan akses akun {name} dibatasi, silahkan login dulu.
+							Penggunaan akses akun {popup.name} dibatasi, silahkan login dulu.
 						</Text>
 					</div>
-					<CloseButton variant="subtle" size="sm" onClick={onClose} />
+					<CloseButton variant="subtle" size="sm" onClick={() => resetPopup()} />
 				</Flex>
 				<form onSubmit={handleSubmit(handleFormSubmit)}>
 					<Stack>

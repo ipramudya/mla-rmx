@@ -114,7 +114,6 @@ export default function App() {
 					<QueryClientProvider client={queryClient}>
 						<HydrationBoundary state={dehydratedState}>
 							<Outlet />
-
 							<ReactQueryDevtools initialIsOpen={false} />
 						</HydrationBoundary>
 					</QueryClientProvider>

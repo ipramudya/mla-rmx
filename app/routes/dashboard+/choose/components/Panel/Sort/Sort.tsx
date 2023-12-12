@@ -1,9 +1,11 @@
 import { Button, Group, Menu, Text } from "@mantine/core";
 import { Icon } from "app/components/Icon";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import useSortOrgs from "./use-sort-orgs";
 
-const REMAP_SORT_LABEL = new Map([
+type SORT_KEY = "reset" | "activity" | "total_event";
+
+const REMAP_SORT_LABEL = new Map<SORT_KEY, string>([
 	["reset", "Paling relevan"],
 	["activity", "Baru diakses"],
 	["total_event", "Lomba terbanyak"],
@@ -13,13 +15,14 @@ const SORT_ITEMS = [
 	{ key: "reset", label: "Paling relevan" },
 	{ key: "activity", label: "Baru diakses" },
 	{ key: "total_event", label: "Lomba terbanyak" },
-];
+] as const;
 
 export default function Sort() {
 	const [opened, setOpened] = useState(false);
+
 	const { setSort, resetSort, sort } = useSortOrgs();
 
-	const handleSelectMenu = (k: string) => {
+	const handleSelectMenu = (k: SORT_KEY) => {
 		if (k === "reset") {
 			resetSort();
 			return;
@@ -28,17 +31,12 @@ export default function Sort() {
 		setSort({ [k]: "asc" });
 	};
 
-	useEffect(
-		() => () => {
-			resetSort();
-		},
-		[resetSort],
-	);
+	console.log("sort", sort);
 
-	const sortKey = useMemo(() => {
+	const sortedKey = useMemo(() => {
 		if (!sort) return "reset";
 
-		return Object.keys(sort)[0];
+		return Object.keys(sort)[0] as SORT_KEY;
 	}, [sort]);
 
 	return (
@@ -64,7 +62,7 @@ export default function Sort() {
 							/>
 						}
 					>
-						{REMAP_SORT_LABEL.get(sortKey)}
+						{REMAP_SORT_LABEL.get(sortedKey)}
 					</Button>
 				</Menu.Target>
 
@@ -74,7 +72,7 @@ export default function Sort() {
 						<Menu.Item
 							key={"sort item " + key}
 							onClick={() => handleSelectMenu(key)}
-							rightSection={sortKey === key ? <Icon.Check /> : undefined}
+							rightSection={sortedKey === key ? <Icon.Check /> : undefined}
 						>
 							{label}
 						</Menu.Item>

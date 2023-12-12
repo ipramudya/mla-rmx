@@ -20,19 +20,20 @@ export default function LoginPage() {
 		},
 	});
 
+	/* warn error to the input field */
+	const warnError = (fields: LoginPayload): void => {
+		for (const field in fields) {
+			setError(field as keyof LoginPayload, {
+				type: "custom",
+				message: "Data yang anda masukan belum terdaftar",
+			});
+		}
+	};
+
 	const handleFormSubmit = async (fields: LoginPayload) => {
 		const { data, error } = await login(fields);
 
-		if (error && !data) {
-			for (const key in fields) {
-				// @ts-expect-error unhandled constraint key
-				setError(key, {
-					type: "custom",
-					message: "Data yang anda masukan belum terdaftar",
-				});
-			}
-			return;
-		}
+		if (error && !data) warnError(fields);
 
 		if (data) {
 			userClientSession.setAccessToken(data.access_token);

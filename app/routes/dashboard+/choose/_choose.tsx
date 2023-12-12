@@ -2,22 +2,23 @@ import { Stack } from "@mantine/core";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
+import { Provider } from "jotai";
 import getOrganizerAccounts, { GET_ORGANIZER_ACCOUNTS_QUERY_KEY } from "./api-organizers-accounts";
 import Header from "./components/Header";
 import Heading from "./components/Heading";
 import ListOrganizer from "./components/ListOrganizer";
 import LoginPopup from "./components/LoginPopup";
 import Panel from "./components/Panel";
-import usePopupLogin from "./use-popup-login";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
 	const queryClient = new QueryClient();
 
+	const cookie = cookieHeader ? { cookie: cookieHeader } : undefined;
+
 	await queryClient.prefetchQuery({
 		queryKey: [GET_ORGANIZER_ACCOUNTS_QUERY_KEY],
-		queryFn: () =>
-			getOrganizerAccounts(undefined, cookieHeader ? { cookie: cookieHeader } : undefined),
+		queryFn: () => getOrganizerAccounts(undefined, cookie),
 	});
 
 	return json(
@@ -31,13 +32,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function ChoosePage() {
-	const { popup, resetPopup } = usePopupLogin();
-
 	return (
-		<>
-			{popup.show && (
-				<LoginPopup name={popup.name} opened={popup.show} onClose={() => resetPopup()} />
-			)}
+		<Provider>
+			<LoginPopup />
 
 			<Stack gap="xl" pb={100}>
 				<Header />
@@ -48,6 +45,6 @@ export default function ChoosePage() {
 
 				<ListOrganizer />
 			</Stack>
-		</>
+		</Provider>
 	);
 }

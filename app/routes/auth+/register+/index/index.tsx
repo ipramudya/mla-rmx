@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Box, Button, Input, Stack, Text } from "@mantine/core";
 import { useSearchParams } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import sendMagicLink from "./api-register";
 import type { RegisterPayload } from "./register-schema";
@@ -22,12 +22,11 @@ export default function RegisterPage() {
 		},
 	});
 
-	const handleFormSubmit = async (fields: RegisterPayload) => {
-		const { error } = await sendMagicLink(fields.email);
-
-		if (error) {
+	/* warn error to the input field */
+	const warnError = (fields: RegisterPayload): void => {
+		for (const field in fields) {
 			setError(
-				"email",
+				field as keyof RegisterPayload,
 				{
 					type: "custom",
 					message: "Server sedang tidak stabil",
@@ -35,11 +34,17 @@ export default function RegisterPage() {
 				{ shouldFocus: true },
 			);
 		}
+	};
+
+	const handleFormSubmit = async (fields: RegisterPayload) => {
+		const { error } = await sendMagicLink(fields.email);
+
+		if (error) warnError(fields);
 
 		setIsEmailSent(true);
 	};
 
-	useEffect(() => {
+	const warnErrorFromSearchURL = useCallback(() => {
 		const err = searchParams.get("error");
 
 		if (err) {
@@ -49,6 +54,10 @@ export default function RegisterPage() {
 			});
 		}
 	}, [searchParams, setError]);
+
+	useEffect(() => {
+		warnErrorFromSearchURL();
+	}, [warnErrorFromSearchURL]);
 
 	return (
 		<>
@@ -75,7 +84,11 @@ export default function RegisterPage() {
 			</div>
 			<form onSubmit={handleSubmit(handleFormSubmit)}>
 				<Stack gap="lg">
-					<Input.Wrapper label="Email" error={formState.errors.email?.message || false}>
+					<Input.Wrapper
+						withAsterisk
+						label="Email"
+						error={formState.errors.email?.message || false}
+					>
 						<Input
 							error={!!formState.errors.email}
 							size="md"

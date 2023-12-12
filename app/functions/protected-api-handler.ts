@@ -19,15 +19,14 @@ export default async function protectedAPIHandler<T>(
 	opts: RequestOptions,
 ): Promise<BaseAPIReturn<{ ok: boolean } & T>> {
 	try {
+		const headers = opts.asOrganizer
+			? { "X-Resource-Type": "organizer", ...opts.headers }
+			: opts.headers;
+
 		const { data, status, statusText, config } = await axiosInstance<T>({
 			url,
 			method: remapRequestMethod.get(opts.method) || "get",
-			headers: opts.asOrganizer
-				? {
-						"X-Resource-Type": "organizer",
-						...opts.headers,
-				  }
-				: opts.headers,
+			headers,
 			data: opts.body,
 		});
 

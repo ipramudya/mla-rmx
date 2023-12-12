@@ -3,7 +3,7 @@ import { Button, Input, PasswordInput, Stack, Switch, Text } from "@mantine/core
 import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import createOrganizer from "./api-create-organizer";
 import CreateOrganizerLayout from "./components/CreateOrganizerLayout";
@@ -11,18 +11,15 @@ import styles from "./components/Switch.module.css";
 import type { CreateOrganizerPayload } from "./create-organizer-schema";
 import { createOrganizerSchema } from "./create-organizer-schema";
 
-export default function Create() {
+const DEFAULT_FORM_VALUES = { email: "", name: "", isLocked: undefined, password: undefined };
+
+export default function CreatePage() {
 	const navigate = useNavigate();
 
 	const { handleSubmit, register, unregister, formState, resetField, watch } =
 		useForm<CreateOrganizerPayload>({
 			resolver: zodResolver(createOrganizerSchema),
-			defaultValues: {
-				email: "",
-				name: "",
-				isLocked: undefined,
-				password: undefined,
-			},
+			defaultValues: DEFAULT_FORM_VALUES,
 		});
 
 	const handleFormSubmit = async (fields: CreateOrganizerPayload) => {
@@ -45,12 +42,18 @@ export default function Create() {
 		navigate("/dashboard/choose");
 	};
 
-	useEffect(() => {
-		if (!watch("isLocked")) {
+	const unsetPasswordFild = useCallback(() => {
+		const organizerLocked = watch("isLocked");
+
+		if (!organizerLocked) {
 			unregister("password");
 			resetField("password");
 		}
 	}, [resetField, unregister, watch]);
+
+	useEffect(() => {
+		unsetPasswordFild();
+	}, [unsetPasswordFild]);
 
 	return (
 		<CreateOrganizerLayout>

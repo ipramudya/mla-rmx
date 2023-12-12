@@ -24,9 +24,13 @@ export function formatRangeDate(startDate: string, endDate: string) {
 	const start = parseISO(startDate);
 	const end = parseISO(endDate);
 
-	if (start.getFullYear() === end.getFullYear()) {
-		if (start.getMonth() === end.getMonth()) {
-			if (start.getDate() === end.getDate()) {
+	const isSameYear = start.getFullYear() === end.getFullYear();
+	const isSameMonth = start.getMonth() === end.getMonth();
+	const isSameDate = start.getDate() === end.getDate();
+
+	if (isSameYear) {
+		if (isSameMonth) {
+			if (isSameDate) {
 				// Same day
 				return `${formatDate(endDate, "d MMM yyyy")}, ${formatDate(
 					startDate,

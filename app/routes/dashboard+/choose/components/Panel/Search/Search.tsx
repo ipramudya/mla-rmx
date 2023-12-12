@@ -1,16 +1,11 @@
 import { TextInput } from "@mantine/core";
 import { Icon } from "app/components/Icon";
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 import styles from "./Search.module.css";
 import useSearchOrgs from "./use-search-orgs";
 
 const Search = forwardRef<HTMLInputElement>((_, ref) => {
-	const { setSearch, resetSearch } = useSearchOrgs();
-
-	/* cleanup search state when unmounting search component */
-	useEffect(() => {
-		return () => resetSearch();
-	}, [resetSearch]);
+	const { setSearch } = useSearchOrgs();
 
 	return (
 		<TextInput
