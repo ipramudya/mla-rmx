@@ -1,8 +1,8 @@
 import { TextInput } from "@mantine/core";
 import { Icon } from "app/components/Icon";
+import useSearchOrgs from "app/features/organizer/hooks/use-search-orgs";
 import { forwardRef } from "react";
 import styles from "./Search.module.css";
-import useSearchOrgs from "./use-search-orgs";
 
 const Search = forwardRef<HTMLInputElement>((_, ref) => {
 	const { setSearch } = useSearchOrgs();
@@ -23,5 +23,6 @@ const Search = forwardRef<HTMLInputElement>((_, ref) => {
 		/>
 	);
 });
+Search.displayName = "search-organizer";
 
 export default Search;

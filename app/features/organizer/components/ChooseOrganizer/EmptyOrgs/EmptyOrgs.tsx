@@ -1,6 +1,6 @@
 import { Center, Container, Stack, Text } from "@mantine/core";
 import { Icon } from "app/components/Icon";
-import useSearchOrgs from "../Panel/Search/use-search-orgs";
+import useSearchOrgs from "app/features/organizer/hooks/use-search-orgs";
 import styles from "./EmptyOrgs.module.css";
 
 export default function EmptyOrgs() {

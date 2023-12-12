@@ -1,13 +1,13 @@
 import { Button, Container, Divider, SimpleGrid, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Icon } from "app/components/Icon";
+import useListOrganizers from "app/features/organizer/hooks/use-list-organizers";
 import type { OrganizerAccounts } from "app/types";
 import { useMemo } from "react";
 import { groupBy, isEmpty } from "remeda";
 import EmptyOrgs from "../EmptyOrgs";
-import ItemOrganizer from "./ItemOrganizer";
+import ItemOrganizer from "../ItemOrganizer";
 import ListOrganizerSkeleton from "./ListOrganizerSkeleton";
-import useListOrganizers from "./use-list-organizers";
 
 export default function ListOrganizer() {
 	const [isFavoriteShown, { toggle }] = useDisclosure();

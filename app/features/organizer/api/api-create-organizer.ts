@@ -1,5 +1,5 @@
 import protectedAPIHandler from "app/functions/protected-api-handler";
-import type { CreateOrganizerPayload } from "./create-organizer-schema";
+import type { CreateOrganizerPayload } from "../utils/create-organizer-schema";
 
 export default async function createOrganizer({
 	isLocked = false,

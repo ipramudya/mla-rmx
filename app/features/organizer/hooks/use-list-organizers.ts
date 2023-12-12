@@ -1,10 +1,10 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMemo } from "react";
 import getOrganizerAccounts, {
 	GET_ORGANIZER_ACCOUNTS_QUERY_KEY,
-} from "../../api-organizers-accounts";
-import useSearchOrgs from "../Panel/Search/use-search-orgs";
-import useSortOrgs from "../Panel/Sort/use-sort-orgs";
+} from "app/features/organizer/api/api-organizers-accounts";
+import { useMemo } from "react";
+import useSearchOrgs from "./use-search-orgs";
+import useSortOrgs from "./use-sort-orgs";
 
 export default function useListOrganizers() {
 	const { search } = useSearchOrgs();

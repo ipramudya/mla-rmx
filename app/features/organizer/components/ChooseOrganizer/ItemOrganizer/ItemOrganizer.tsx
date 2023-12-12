@@ -3,12 +3,12 @@ import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "@remix-run/react";
 import { BannerOrganizer1, OrganizerAvatar } from "app/assets/images";
 import LoadingOverlay from "app/components/LoadingOverlay";
+import loginOrganizer from "app/features/organizer/api/api-login-organizer";
+import usePopupLogin from "app/features/organizer/hooks/use-popup-login";
 import { dateToWords } from "app/functions/date";
 import { orgsClientSession } from "app/lib/session/organizer-session";
 import useOrganizer from "app/lib/store/hooks/use-organizer";
 import { useState } from "react";
-import loginOrganizer from "../../../api-login-organizer";
-import usePopupLogin from "../../../use-popup-login";
 import styles from "./ItemOrganizer.module.css";
 import ItemOrganizerMenu from "./ItemOrganizerMenu";
 

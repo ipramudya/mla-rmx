@@ -1,7 +1,7 @@
 import { Button, Group, Menu, Text } from "@mantine/core";
 import { Icon } from "app/components/Icon";
+import useSortOrgs from "app/features/organizer/hooks/use-sort-orgs";
 import { useMemo, useState } from "react";
-import useSortOrgs from "./use-sort-orgs";
 
 type SORT_KEY = "reset" | "activity" | "total_event";
 

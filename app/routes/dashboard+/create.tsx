@@ -3,13 +3,13 @@ import { Button, Input, PasswordInput, Stack, Switch, Text } from "@mantine/core
 import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
+import createOrganizer from "app/features/organizer/api/api-create-organizer";
+import CreateOrganizerLayout from "app/features/organizer/components/CreateOrganizer/CreateOrganizerLayout";
+import styles from "app/features/organizer/components/CreateOrganizer/Switch.module.css";
+import type { CreateOrganizerPayload } from "app/features/organizer/utils/create-organizer-schema";
+import { createOrganizerSchema } from "app/features/organizer/utils/create-organizer-schema";
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import createOrganizer from "./api-create-organizer";
-import CreateOrganizerLayout from "./components/CreateOrganizerLayout";
-import styles from "./components/Switch.module.css";
-import type { CreateOrganizerPayload } from "./create-organizer-schema";
-import { createOrganizerSchema } from "./create-organizer-schema";
 
 const DEFAULT_FORM_VALUES = { email: "", name: "", isLocked: undefined, password: undefined };
 
