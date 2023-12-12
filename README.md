@@ -31,8 +31,8 @@ app/routes
 Url tersedia
 - /dashboard
 - /dashboard/settings
-- /dashboard/profile
-- /dashboard/account
+- /dashboard/settings/profile
+- /dashboard/settings/account
 
 ### Nested Folders Composition
 Untuk melakukan grouping terhadap routes namun tidak terefleksi terhadap `url`, tambahkan prefix `_` dan suffix `+`
