@@ -1,5 +1,5 @@
 import publicAPIHandler from "app/functions/public-api-handler";
-import type { LoginPayload } from "./login-schema";
+import type { LoginPayload } from "../utils/login-schema";
 
 type LoginResponse = {
 	access_token: string;

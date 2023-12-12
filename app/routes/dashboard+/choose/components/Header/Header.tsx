@@ -1,7 +1,7 @@
 import { Box, Button, Container, Divider, Flex, Group, Text, Title } from "@mantine/core";
 import { Link } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import Profile from "app/routes/_landing+/components/Profile";
+import Profile from "app/features/landing/components/Layout/Profile";
 import styles from "./Header.module.css";
 
 export default function Header() {

@@ -1,5 +1,5 @@
 import publicAPIHandler from "app/functions/public-api-handler";
-import type { FillPayload } from "./fill-schema";
+import type { FillPayload } from "../utils/fill-schema";
 
 export default async function register({
 	firstName,

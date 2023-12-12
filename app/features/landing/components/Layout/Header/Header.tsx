@@ -1,7 +1,7 @@
 import { Box, Button, Container, Divider, Flex, Group, Text, Title } from "@mantine/core";
 import { Link } from "@remix-run/react";
+import useHeader from "app/features/landing/hooks/use-header";
 import useUser from "app/lib/store/hooks/use-user";
-import useHeader from "app/routes/_landing+/components/Header/use-header";
 import HeaderLink from "../HeaderLink";
 import Profile from "../Profile";
 import Search from "../Search";
