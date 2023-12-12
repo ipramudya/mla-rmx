@@ -19,6 +19,7 @@ export default function Heading() {
 					component={Link}
 					to="/dashboard/create"
 					variant="gradient"
+					prefetch="intent"
 					rightSection={<Icon.Organizer size={20} variant="Bold" />}
 				>
 					Buat Organizer

@@ -1,6 +1,7 @@
 import { Button, Container, Divider, SimpleGrid, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Icon } from "app/components/Icon";
+import type { OrganizerAccounts } from "app/types";
 import { useMemo } from "react";
 import { groupBy, isEmpty } from "remeda";
 import EmptyOrgs from "../EmptyOrgs";
@@ -52,72 +53,47 @@ export default function ListOrganizer() {
 									>
 										Favorit anda
 									</Button>
+
 									{isFavoriteShown && (
 										<>
-											<SimpleGrid cols={3}>
-												{splited.favorite.map(
-													(
-														{
-															email_address,
-															name,
-															total_event,
-															is_locked,
-															is_active,
-															logout_at,
-															id,
-														},
-														idx,
-													) => (
-														<ItemOrganizer
-															key={id + idx}
-															id={id}
-															email={email_address}
-															name={name}
-															isLocked={is_locked}
-															isActive={is_active}
-															lastAccessedAt={logout_at}
-															totalLomba={total_event}
-														/>
-													),
-												)}
-											</SimpleGrid>
+											<OrganizerGrid organizers={splited.favorite} />
 											<Divider />
 										</>
 									)}
 								</Stack>
 							)}
 
-							<SimpleGrid cols={3}>
-								{splited.general.map(
-									(
-										{
-											email_address,
-											name,
-											total_event,
-											is_locked,
-											is_active,
-											logout_at,
-											id,
-										},
-										idx,
-									) => (
-										<ItemOrganizer
-											key={id + idx}
-											id={id}
-											email={email_address}
-											name={name}
-											isLocked={is_locked}
-											isActive={is_active}
-											lastAccessedAt={logout_at}
-											totalLomba={total_event}
-										/>
-									),
-								)}
-							</SimpleGrid>
+							<OrganizerGrid organizers={splited.general} />
 						</Stack>
 					)}
 				</>
 			)}
 		</Container>
+	);
+}
+
+function OrganizerGrid({
+	organizers,
+}: { organizers: [OrganizerAccounts, ...OrganizerAccounts[]] }) {
+	return (
+		<SimpleGrid cols={3}>
+			{organizers.map(
+				(
+					{ email_address, name, total_event, is_locked, is_active, logout_at, id },
+					idx,
+				) => (
+					<ItemOrganizer
+						key={id + idx}
+						id={id}
+						email={email_address}
+						name={name}
+						isLocked={is_locked}
+						isActive={is_active}
+						lastAccessedAt={logout_at}
+						totalLomba={total_event}
+					/>
+				),
+			)}
+		</SimpleGrid>
 	);
 }
