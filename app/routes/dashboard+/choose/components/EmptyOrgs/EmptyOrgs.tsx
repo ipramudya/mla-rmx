@@ -1,8 +1,11 @@
 import { Center, Container, Stack, Text } from "@mantine/core";
 import { Icon } from "app/components/Icon";
+import useSearchOrgs from "../Panel/Search/use-search-orgs";
 import styles from "./EmptyOrgs.module.css";
 
 export default function EmptyOrgs() {
+	const { search } = useSearchOrgs();
+
 	return (
 		<Container size="lg" w="100%">
 			<Stack align="center">
@@ -11,11 +14,12 @@ export default function EmptyOrgs() {
 				</Center>
 				<div style={{ textAlign: "center" }}>
 					<Text fw={600} mb={2}>
-						Organizer Kosong
+						{search ? "Organizer Tidak Ditemukan" : "Organizer Kosong"}
 					</Text>
 					<Text variant="body-text" size="sm" maw={400}>
-						Jika anda ingin mengadakan perlombaan, harap membuat akun organizer terlebih
-						dahulu.
+						{search
+							? `Kami tidak dapat menemukan Organizer ${search} yang anda cari`
+							: "Jika anda ingin mengadakan perlombaan, harap membuat akun organizer terlebih dahulu."}
 					</Text>
 				</div>
 			</Stack>
