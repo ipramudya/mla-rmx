@@ -1,7 +1,7 @@
 import type { QueryStringBuilderParams } from "app/functions/build-query-string";
 import buildQueryString from "app/functions/build-query-string";
 import protectedAPIHandler from "app/functions/protected-api-handler";
-import type { OrganizerAccounts } from "app/types";
+import type { OrganizerAccounts } from "../types/organizer-accounts";
 
 type GetOrganizerAccountsResponse = {
 	organizers: OrganizerAccounts[];

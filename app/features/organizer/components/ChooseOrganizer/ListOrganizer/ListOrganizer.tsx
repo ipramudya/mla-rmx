@@ -2,7 +2,7 @@ import { Button, Container, Divider, SimpleGrid, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Icon } from "app/components/Icon";
 import useListOrganizers from "app/features/organizer/hooks/use-list-organizers";
-import type { OrganizerAccounts } from "app/types";
+import type { OrganizerAccounts } from "app/features/organizer/types/organizer-accounts";
 import { useMemo } from "react";
 import { groupBy, isEmpty } from "remeda";
 import EmptyOrgs from "../EmptyOrgs";
@@ -13,7 +13,7 @@ export default function ListOrganizer() {
 	const [isFavoriteShown, { toggle }] = useDisclosure();
 	const { allOrgsResponse, isLoading } = useListOrganizers();
 
-	const splited = useMemo(() => {
+	const splitOrgsByFavorites = useMemo(() => {
 		if (allOrgsResponse && allOrgsResponse.data && allOrgsResponse.data.organizers) {
 			return groupBy(allOrgsResponse.data.organizers, (x) =>
 				x.is_favorite ? "favorite" : "general",
@@ -25,7 +25,7 @@ export default function ListOrganizer() {
 
 	return (
 		<Container mih="80vh" size="lg" w="100%">
-			{allOrgsResponse === undefined || splited === null || isLoading ? (
+			{allOrgsResponse === undefined || splitOrgsByFavorites === null || isLoading ? (
 				<ListOrganizerSkeleton />
 			) : (
 				<>
@@ -33,7 +33,7 @@ export default function ListOrganizer() {
 						<EmptyOrgs />
 					) : (
 						<Stack gap="lg">
-							{splited.favorite && (
+							{splitOrgsByFavorites.favorite && (
 								<Stack>
 									<Button
 										ml={-18}
@@ -56,14 +56,16 @@ export default function ListOrganizer() {
 
 									{isFavoriteShown && (
 										<>
-											<OrganizerGrid organizers={splited.favorite} />
+											<OrganizerGrid
+												organizers={splitOrgsByFavorites.favorite}
+											/>
 											<Divider />
 										</>
 									)}
 								</Stack>
 							)}
 
-							<OrganizerGrid organizers={splited.general} />
+							<OrganizerGrid organizers={splitOrgsByFavorites.general} />
 						</Stack>
 					)}
 				</>
