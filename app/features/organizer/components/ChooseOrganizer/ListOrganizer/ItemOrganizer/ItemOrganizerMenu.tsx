@@ -1,9 +1,9 @@
 import { ActionIcon, Menu, Text } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { Icon } from "app/components/Icon";
 import favoriteOrgs from "app/features/organizer/api/favorite";
 import useListOrganizers from "app/features/organizer/hooks/use-list-organizers";
 import { useMemo } from "react";
+import { toast } from "sonner";
 
 interface Props {
 	id: string;
@@ -27,10 +27,8 @@ export default function ItemOrganizerMenu({ id }: Props) {
 			return;
 		}
 
-		showNotification({
-			title: "Error",
-			message: "Tidak dapat menambah/menghapus item dari favorite",
-			color: "red",
+		toast.error("Error", {
+			description: "Tidak dapat menambah/menghapus item dari favorite",
 		});
 	};
 

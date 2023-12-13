@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Checkbox, Input, NumberInput, PasswordInput, Stack, Text } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { useFetcher, useNavigate } from "@remix-run/react";
@@ -11,6 +10,7 @@ import type { FillPayload } from "app/features/auth/utils/fill-schema";
 import { fillFormSchema } from "app/features/auth/utils/fill-schema";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const DEFAULT_FORM_VALUES = { firstName: "", lastName: "", password: "", phone: "" };
 
@@ -47,19 +47,15 @@ export default function FillPage() {
 		const { error } = await apiRegister(fields);
 
 		if (error) {
-			showNotification({
-				title: "Error",
-				message: error,
-				color: "red",
+			toast.error("Error", {
+				description: error,
 			});
 			throw new Error(error);
 		} else {
 			triggerRuntimeLoaders();
 
-			showNotification({
-				title: "Berhasil",
-				message: "Selamat, anda berhasil membuat akun baru",
-				color: "green",
+			toast.success("Berhasil", {
+				description: "Selamat, anda berhasil membuat akun baru",
 			});
 
 			navigate("/");

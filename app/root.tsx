@@ -1,8 +1,6 @@
 import "@fontsource-variable/source-sans-3/wght.css";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
-import { Notifications } from "@mantine/notifications";
-import "@mantine/notifications/styles.css";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type {
 	HandleErrorFunction,
@@ -23,6 +21,8 @@ import {
 import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import globalStyles from "app/assets/styles/global.css";
+import ErrorNotFoundPage from "app/components/404";
+import Notification from "app/components/Notification";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
@@ -30,7 +30,6 @@ import theme from "app/lib/theme";
 import { me } from "app/services/user-data-service";
 import { useEffect, useState } from "react";
 import { useDehydratedState } from "use-dehydrated-state";
-import ErrorNotFoundPage from "./components/404/404";
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref
@@ -110,10 +109,10 @@ export default function App() {
 			</head>
 			<body>
 				<MantineProvider theme={theme}>
-					<Notifications position="top-right" />
 					<QueryClientProvider client={queryClient}>
 						<HydrationBoundary state={dehydratedState}>
 							<Outlet />
+							<Notification />
 							<ReactQueryDevtools initialIsOpen={false} />
 						</HydrationBoundary>
 					</QueryClientProvider>

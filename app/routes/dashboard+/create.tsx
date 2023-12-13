@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, PasswordInput, Stack, Switch, Text } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import createOrganizer from "app/features/organizer/api/create-organizer";
@@ -10,6 +9,7 @@ import type { CreateOrganizerPayload } from "app/features/organizer/utils/create
 import { createOrganizerSchema } from "app/features/organizer/utils/create-organizer-schema";
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const DEFAULT_FORM_VALUES = { email: "", name: "", isLocked: undefined, password: undefined };
 
@@ -26,18 +26,14 @@ export default function CreatePage() {
 		const { error } = await createOrganizer(fields);
 
 		if (error) {
-			showNotification({
-				title: "Proses Gagal",
-				message: `Gagal membuat organizer, ${error}`,
-				color: "red",
+			toast.error("Proses Gagal", {
+				description: `Gagal membuat organizer, ${error}`,
 			});
 			return;
 		}
 
-		showNotification({
-			title: "Berhasil",
-			message: "Selamat, organizer baru berhasil ditambahkan",
-			color: "green",
+		toast.success("Berhasil", {
+			description: "Selamat, organizer baru berhasil ditambahkan",
 		});
 		navigate("/dashboard/choose");
 	};

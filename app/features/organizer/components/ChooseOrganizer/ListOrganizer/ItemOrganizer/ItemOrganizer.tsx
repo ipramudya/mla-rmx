@@ -1,5 +1,4 @@
 import { Avatar, Badge, Flex, Group, Image, Stack, Text } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "@remix-run/react";
 import { BannerOrganizer1, OrganizerAvatar } from "app/assets/images";
 import LoadingOverlay from "app/components/LoadingOverlay";
@@ -9,6 +8,7 @@ import { dateToWords } from "app/functions/date";
 import { orgsClientSession } from "app/lib/session/organizer-session";
 import useOrganizer from "app/lib/store/hooks/use-organizer";
 import { useState } from "react";
+import { toast } from "sonner";
 import styles from "./ItemOrganizer.module.css";
 import ItemOrganizerMenu from "./ItemOrganizerMenu";
 
@@ -47,10 +47,8 @@ export default function ItemOrganizer({
 		const { error, data } = await loginOrganizer({ organizerId: id });
 
 		if (error && !data) {
-			showNotification({
-				title: "Error",
-				message: "Gagal masuk ke dalam dashboard",
-				color: "red",
+			toast.error("Error", {
+				description: "Gagal masuk ke dalam dashboard",
 			});
 		}
 

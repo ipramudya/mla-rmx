@@ -16,7 +16,6 @@
 		"@hookform/resolvers": "^3.3.2",
 		"@mantine/core": "^7.2.2",
 		"@mantine/hooks": "^7.2.2",
-		"@mantine/notifications": "^7.2.2",
 		"@remix-run/css-bundle": "^2.3.1",
 		"@remix-run/node": "^2.3.1",
 		"@remix-run/react": "^2.3.1",
@@ -34,6 +33,7 @@
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.48.2",
 		"remeda": "^1.29.0",
+		"sonner": "^1.2.4",
 		"use-dehydrated-state": "^0.1.0",
 		"zod": "^3.22.4",
 		"zustand": "^4.4.7"
