@@ -27,8 +27,6 @@ export interface OrganizerUser {
 export interface OrganizerAccounts {
 	id: string;
 	name: string;
-	profile: null;
-	background: null;
 	username: string;
 	email_address: string;
 	is_locked: boolean;
@@ -39,6 +37,18 @@ export interface OrganizerAccounts {
 	logout_at: number | null;
 	user_id: string;
 	total_event: number;
+	background: OrganizerBackground;
+	profile: OrganizerProfile;
+}
+
+interface OrganizerBackground {
+	publicId: string;
+	secureUrl: string;
+}
+
+interface OrganizerProfile {
+	publicId: string;
+	secureUrl: string;
 }
 
 export declare interface BaseAPIReturn<T> {

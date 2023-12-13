@@ -79,7 +79,17 @@ function OrganizerGrid({
 		<SimpleGrid cols={3}>
 			{organizers.map(
 				(
-					{ email_address, name, total_event, is_locked, is_active, logout_at, id },
+					{
+						email_address,
+						name,
+						total_event,
+						is_locked,
+						is_active,
+						logout_at,
+						id,
+						background,
+						profile,
+					},
 					idx,
 				) => (
 					<ItemOrganizer
@@ -91,6 +101,8 @@ function OrganizerGrid({
 						isActive={is_active}
 						lastAccessedAt={logout_at}
 						totalLomba={total_event}
+						profileImg={profile.secureUrl}
+						backgroundImg={background.secureUrl}
 					/>
 				),
 			)}

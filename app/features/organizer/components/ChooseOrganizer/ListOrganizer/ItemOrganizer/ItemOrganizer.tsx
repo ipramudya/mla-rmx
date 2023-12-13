@@ -1,6 +1,5 @@
 import { Avatar, Badge, Flex, Group, Image, Stack, Text } from "@mantine/core";
 import { useNavigate } from "@remix-run/react";
-import { BannerOrganizer1, OrganizerAvatar } from "app/assets/images";
 import LoadingOverlay from "app/components/LoadingOverlay";
 import loginOrganizer from "app/features/organizer/api/login-organizer";
 import usePopupLogin from "app/features/organizer/hooks/use-popup-login";
@@ -20,6 +19,8 @@ interface Props {
 	isActive: boolean;
 	lastAccessedAt: number | null;
 	totalLomba: number;
+	profileImg: string;
+	backgroundImg: string;
 }
 
 export default function ItemOrganizer({
@@ -30,6 +31,8 @@ export default function ItemOrganizer({
 	isActive,
 	lastAccessedAt,
 	totalLomba,
+	profileImg,
+	backgroundImg,
 }: Props) {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
@@ -66,11 +69,11 @@ export default function ItemOrganizer({
 			<LoadingOverlay visible={loading} />
 
 			<Flex gap="md" direction="column" p={12} className={styles.root} onClick={handleClick}>
-				<Image src={BannerOrganizer1} radius="sm" className={styles.banner} />
+				<Image src={backgroundImg} radius="sm" className={styles.banner} />
 
 				<Stack px={8}>
 					<Group justify="space-between">
-						<Avatar src={OrganizerAvatar} />
+						<Avatar src={profileImg} />
 						<Group gap={2}>
 							{!isActive && (
 								<Badge size="sm" color="red" variant="light">
