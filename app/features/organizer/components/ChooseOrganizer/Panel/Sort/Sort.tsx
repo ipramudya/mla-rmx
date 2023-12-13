@@ -31,8 +31,6 @@ export default function Sort() {
 		setSort({ [k]: "asc" });
 	};
 
-	console.log("sort", sort);
-
 	const sortedKey = useMemo(() => {
 		if (!sort) return "reset";
 
