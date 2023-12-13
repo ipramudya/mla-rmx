@@ -76,12 +76,22 @@ export default function ItemOrganizer({
 						<Avatar src={profileImg} />
 						<Group gap={2}>
 							{!isActive && (
-								<Badge size="sm" color="red" variant="light">
+								<Badge
+									size="sm"
+									color="red"
+									variant="light"
+									style={{ lineHeight: "normal !important" }}
+								>
 									Innactive
 								</Badge>
 							)}
 							{isLocked && (
-								<Badge size="sm" color="indigo" variant="light">
+								<Badge
+									size="sm"
+									color="indigo"
+									variant="light"
+									style={{ lineHeight: "normal !important" }}
+								>
 									Private
 								</Badge>
 							)}

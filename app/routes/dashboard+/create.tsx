@@ -5,6 +5,7 @@ import { Icon } from "app/components/Icon";
 import createOrganizer from "app/features/organizer/api/create-organizer";
 import CreateOrganizerLayout from "app/features/organizer/components/CreateOrganizer/CreateOrganizerLayout";
 import styles from "app/features/organizer/components/CreateOrganizer/Switch.module.css";
+import useListOrganizers from "app/features/organizer/hooks/use-list-organizers";
 import type { CreateOrganizerPayload } from "app/features/organizer/utils/create-organizer-schema";
 import { createOrganizerSchema } from "app/features/organizer/utils/create-organizer-schema";
 import { useCallback, useEffect } from "react";
@@ -15,6 +16,7 @@ const DEFAULT_FORM_VALUES = { email: "", name: "" };
 
 export default function CreatePage() {
 	const navigate = useNavigate();
+	const { refetch } = useListOrganizers();
 
 	const { handleSubmit, register, unregister, formState, resetField, watch } =
 		useForm<CreateOrganizerPayload>({
@@ -35,6 +37,7 @@ export default function CreatePage() {
 		toast.success("Berhasil", {
 			description: "Selamat, organizer baru berhasil ditambahkan",
 		});
+		refetch();
 		navigate("/dashboard/choose");
 	};
 
