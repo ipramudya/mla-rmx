@@ -8,8 +8,8 @@ import usePopupLogin from "app/features/organizer/hooks/use-popup-login";
 import { orgsClientSession } from "app/lib/session/organizer-session";
 import useOrganizer from "app/lib/store/hooks/use-organizer";
 import { useForm } from "react-hook-form";
-import type { LoginPopupPayload } from "./login-popup-schema";
-import { loginPopupSchema } from "./login-popup-schema";
+import type { LoginPopupPayload } from "../../../utils/login-popup-schema";
+import { loginPopupSchema } from "../../../utils/login-popup-schema";
 
 const FORM_DEFAULT_VALUES = { password: "" };
 
