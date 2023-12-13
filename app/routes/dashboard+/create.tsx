@@ -11,7 +11,7 @@ import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const DEFAULT_FORM_VALUES = { email: "", name: "", isLocked: undefined, password: undefined };
+const DEFAULT_FORM_VALUES = { email: "", name: "" };
 
 export default function CreatePage() {
 	const navigate = useNavigate();
