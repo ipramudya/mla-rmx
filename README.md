@@ -1,4 +1,4 @@
-# Routes Rules
+# Rules
 
 ### Creating Route
 Untuk membuat route, terdapat beberapa opsi diantaranya:
@@ -44,5 +44,5 @@ Contoh:
 | `_landing+ > index.tsx` | `/`      |
 | `_landing+ > about.tsx` | `/about` |
 
-### Colocation Components
-Untuk memecah tampilan UI yang kompleks ke dalam beberapa component, serta  menjaga agar struktur folder tetap rapi, setiap routes dapat memiliki scope componentnya sendiri dengan membuat folder `components`
+### React Folder Pattern
+Pattern untuk cara bagaimana melakukan folder structure dapat diacu melalui halaman [react handbook](https://reacthandbook.dev/project-standards) 
