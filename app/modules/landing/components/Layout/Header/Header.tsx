@@ -1,11 +1,11 @@
-import { Box, Button, Container, Divider, Flex, Group, Text, Title } from "@mantine/core";
+import { Box, Container, Divider, Flex, Group, Text, Title } from "@mantine/core";
 import { Link } from "@remix-run/react";
 import useUser from "app/lib/store/hooks/use-user";
 import useHeader from "app/modules/landing/hooks/use-header";
 import HeaderLink from "../HeaderLink";
 import Profile from "../Profile";
 import Search from "../Search";
-import styles from "./Header.module.css";
+import CreateLombaButton from "./CreateLombaButton";
 
 export default function Header() {
 	const { isScrolledOver } = useHeader();
@@ -53,15 +53,7 @@ export default function Header() {
 					) : (
 						<Profile isScrolledOver={isScrolledOver} />
 					)}
-					<Button
-						classNames={{ root: isScrolledOver ? undefined : styles.create_lomba_btn }}
-						variant={isScrolledOver ? "gradient" : "default"}
-						component={Link}
-						to={isLoggedIn ? "/dashboard/choose" : "/auth/login"}
-						prefetch="intent"
-					>
-						Buat Lomba
-					</Button>
+					<CreateLombaButton isLoggedIn={isLoggedIn} isScrolledOver={isScrolledOver} />
 				</Group>
 			</Flex>
 		</Container>

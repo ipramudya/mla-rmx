@@ -15,6 +15,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Link } from "@remix-run/react";
 import { AddLombaSignature } from "app/assets/images";
 import { Icon } from "app/components/Icon";
+import useOrganizer from "app/lib/store/hooks/use-organizer";
 import useUser from "app/lib/store/hooks/use-user";
 import clsx from "clsx";
 import LogoutButton from "./LogoutButton";
@@ -26,7 +27,13 @@ interface Props {
 
 export default function Profile({ isScrolledOver }: Props) {
 	const user = useUser((s) => s.userData);
+	const currentOrgs = useOrganizer((s) => s.organizerData);
+
 	const [isOpen, { toggle, close }] = useDisclosure();
+
+	const getCreateLombaDestinationURL = () => {
+		return currentOrgs ? `/dashboard/${currentOrgs.id}` : "/dashboard/choose";
+	};
 
 	return (
 		<>
@@ -92,7 +99,7 @@ export default function Profile({ isScrolledOver }: Props) {
 					<Flex
 						component={Link}
 						prefetch="intent"
-						to="/dashboard/choose"
+						to={getCreateLombaDestinationURL()}
 						align="center"
 						justify="space-between"
 						gap="sm"
