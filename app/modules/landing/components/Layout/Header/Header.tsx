@@ -1,7 +1,7 @@
 import { Box, Container, Divider, Flex, Group, Text, Title } from "@mantine/core";
 import { Link } from "@remix-run/react";
-import useUser from "app/lib/store/hooks/use-user";
 import useHeader from "app/modules/landing/hooks/use-header";
+import { useRootRouteData } from "app/root";
 import HeaderLink from "../HeaderLink";
 import Profile from "../Profile";
 import Search from "../Search";
@@ -9,8 +9,10 @@ import CreateLombaButton from "./CreateLombaButton";
 
 export default function Header() {
 	const { isScrolledOver } = useHeader();
-	const user = useUser((s) => s.userData);
-	const isLoggedIn = Boolean(user);
+
+	const rootData = useRootRouteData();
+
+	const isLoggedIn = Boolean(rootData && rootData.user);
 
 	return (
 		<Container size="xl">
