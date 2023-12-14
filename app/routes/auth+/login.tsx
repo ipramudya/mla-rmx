@@ -2,11 +2,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, PasswordInput, Stack, Text } from "@mantine/core";
 import { useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
-import login from "app/features/auth/api/login";
-import type { LoginPayload } from "app/features/auth/utils/login-schema";
-import { loginFormSchema } from "app/features/auth/utils/login-schema";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
+import login from "app/modules/auth/api/login";
+import type { LoginPayload } from "app/modules/auth/utils/login-schema";
+import { loginFormSchema } from "app/modules/auth/utils/login-schema";
 import { useForm } from "react-hook-form";
 
 export default function LoginPage() {

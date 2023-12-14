@@ -1,7 +1,7 @@
-import useOrganizerId from "app/features/organizer/hooks/use-organizer-id";
+import useOrganizerId from "app/modules/organizer/hooks/use-organizer-id";
 
 export default function DashboardOrganizerLandingPage() {
-	const organizerId = useOrganizerId();
+	const { organizerId } = useOrganizerId();
 
 	return (
 		<div>

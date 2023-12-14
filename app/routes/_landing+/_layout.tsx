@@ -1,7 +1,7 @@
 import { Box } from "@mantine/core";
 import { Outlet } from "@remix-run/react";
-import Header from "app/features/landing/components/Layout/Header";
-import useHeader from "app/features/landing/hooks/use-header";
+import Header from "app/modules/landing/components/Layout/Header";
+import useHeader from "app/modules/landing/hooks/use-header";
 
 export default function LandingLayoyt() {
 	const { isScrolledOver: isOver } = useHeader();

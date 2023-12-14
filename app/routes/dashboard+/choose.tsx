@@ -4,12 +4,12 @@ import { json } from "@remix-run/node";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import getOrganizerAccounts, {
 	GET_ORGANIZER_ACCOUNTS_QUERY_KEY,
-} from "app/features/organizer/api/get-organizers-accounts";
-import Header from "app/features/organizer/components/ChooseOrganizer/Header";
-import Heading from "app/features/organizer/components/ChooseOrganizer/Heading";
-import ListOrganizer from "app/features/organizer/components/ChooseOrganizer/ListOrganizer";
-import LoginPopup from "app/features/organizer/components/ChooseOrganizer/LoginPopup";
-import Panel from "app/features/organizer/components/ChooseOrganizer/Panel";
+} from "app/modules/organizer/api/get-organizers-accounts";
+import Header from "app/modules/organizer/components/ChooseOrganizer/Header";
+import Heading from "app/modules/organizer/components/ChooseOrganizer/Heading";
+import ListOrganizer from "app/modules/organizer/components/ChooseOrganizer/ListOrganizer";
+import LoginPopup from "app/modules/organizer/components/ChooseOrganizer/LoginPopup";
+import Panel from "app/modules/organizer/components/ChooseOrganizer/Panel";
 import { Provider } from "jotai";
 
 export async function loader({ request }: LoaderFunctionArgs) {

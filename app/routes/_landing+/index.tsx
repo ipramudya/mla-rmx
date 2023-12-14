@@ -1,7 +1,7 @@
 import { Flex } from "@mantine/core";
-import Banner from "app/features/landing/components/Banner";
-import Filters from "app/features/landing/components/Filters";
-import LombaList from "app/features/landing/components/LombaLists";
+import Banner from "app/modules/landing/components/Banner";
+import Filters from "app/modules/landing/components/Filters";
+import LombaList from "app/modules/landing/components/LombaLists";
 
 export default function LandingPage() {
 	return (
