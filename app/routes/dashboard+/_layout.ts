@@ -14,7 +14,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const parsedCookie = parseCookie(cookieHeader);
 
 	const isAuthenticated = Boolean(parsedCookie.get("refresh_token"));
-	if (isAuthenticated) throw redirect("/");
+	if (!isAuthenticated) throw redirect("/");
 
 	const isOrganizerLoggedIn = Boolean(parsedCookie.get("organizer_refresh_token"));
 
