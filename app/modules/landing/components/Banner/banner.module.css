@@ -1,20 +1,19 @@
-.bannerWrapper {
+.banner_wrapper {
+    position: relative;
+    margin-bottom: 56px;
+    padding-top: 192px;
+    margin-top: -192px;
+    width: 100%;
+}
+
+.banner_background {
     position: absolute;
     inset: 0px 0px -1px;
     background-size: cover;
-    background-position: top;
+    background-position: center;
     transition: background 0.3s linear 0s;
     z-index: 1;
     min-height: 400px;
     width: 100%;
-}
-
-.bannerWrapper::after {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(60px);
-    background: linear-gradient(0deg, rgb(255, 255, 255) 5%, rgba(0, 0, 0, 0) 60%) rgba(0, 0, 0, 0.4);
-    pointer-events: none;
-    content: "";
+    filter: blur(30px);
 }

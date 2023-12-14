@@ -5,12 +5,14 @@ import LombaList from "app/modules/landing/components/LombaLists";
 
 export default function LandingPage() {
 	return (
-		<Flex component="main" direction="column" gap={42}>
+		<Flex component="main" direction="column">
 			<Banner />
 
-			<Filters />
+			<Flex component="section" bg="white" py={24} direction="column" gap={24}>
+				<Filters />
 
-			<LombaList />
+				<LombaList />
+			</Flex>
 		</Flex>
 	);
 }

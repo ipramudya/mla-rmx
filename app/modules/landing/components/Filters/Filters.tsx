@@ -5,10 +5,11 @@ import { FILTERS } from "./filter-data";
 export default function Filters() {
 	return (
 		<Container size="xl" w="100%">
-			<Flex component="section" justify="space-between" align="center" gap={20}>
+			<Flex component="nav" justify="space-between" align="center" gap={20}>
 				<Group>
 					{FILTERS.map((x) => (
 						<Button
+							bg="white"
 							key={x.key + "placeholder"}
 							size="md"
 							c={x.key !== "all" ? "gray.6" : "unset"}
@@ -20,7 +21,7 @@ export default function Filters() {
 						</Button>
 					))}
 				</Group>
-				<Button rightSection={<Icon.Filter size={16} />} size="md">
+				<Button bg="white" rightSection={<Icon.Filter size={16} />} size="md">
 					Filter
 				</Button>
 			</Flex>
