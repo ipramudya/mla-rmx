@@ -31,16 +31,16 @@ import theme from "app/lib/theme";
 import { me } from "app/services/user-data-service";
 import { useEffect, useState } from "react";
 import { useDehydratedState } from "use-dehydrated-state";
-import { HEADER_CACHE_CONTROL } from "./constant";
+import { DEFAULT_CACHE_HEADER } from "./constant";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
 
 	if (cookieHeader) {
-		const parsedCookie = parseCookie(cookieHeader);
-		const authenticated = Boolean(parsedCookie?.refresh_token);
+		const refreshToken = parseCookie(cookieHeader).get("refresh_token");
+		const authenticated = Boolean(refreshToken);
 
-		if (!parsedCookie || !authenticated) return null;
+		if (!authenticated) return null;
 
 		const { data, ctx } = await me(cookieHeader);
 
@@ -48,7 +48,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 			return json(
 				{ user: data.user, accessToken: ctx.params.access_token, authenticated },
 				{
-					headers: HEADER_CACHE_CONTROL,
+					headers: DEFAULT_CACHE_HEADER,
 				},
 			);
 		}

@@ -1,11 +1,14 @@
-export const parseCookie = (str: string): Record<string, string> | null =>
-	str
-		? str
-				.split(";")
-				.map((v) => v.split("="))
-				.reduce((acc, v) => {
-					// @ts-expect-error
-					acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
-					return acc;
-				}, {})
-		: null;
+import { cookieToObject } from "./cookie-object.server";
+
+export const parseCookie = (cookieString: string | null | undefined) => {
+	let remap: Map<string, string>;
+
+	if (!cookieString) {
+		remap = new Map([]);
+	} else {
+		const cookieObjects = cookieToObject(cookieString)!;
+		remap = new Map(Object.entries(cookieObjects));
+	}
+
+	return remap;
+};

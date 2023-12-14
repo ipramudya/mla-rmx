@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { parseCookie } from "app/functions/parse-cookie.server";
+import { cookieToObject } from "app/functions/cookie-object.server";
 import { verifiedCookie } from "app/lib/cookies/verify-cookie.server";
 import { endOfYesterday } from "date-fns";
 
@@ -7,7 +7,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeaders = request.headers.get("Cookie");
 
 	if (cookieHeaders) {
-		const parsedCookie = parseCookie(cookieHeaders);
+		const parsedCookie = cookieToObject(cookieHeaders);
 		const cookieKeys = Object.keys(parsedCookie ?? {});
 
 		const headers = new Headers();

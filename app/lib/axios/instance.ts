@@ -22,8 +22,8 @@ axiosInstance.interceptors.request.use(
 
 			token =
 				resourceType && resourceType === "organizer"
-					? parseCookie(cookieHeaders)?.[ORGS_SESSION_ACCESS_TOKEN]
-					: parseCookie(cookieHeaders)?.[CLIENT_SESSION_ACCESS_TOKEN];
+					? parseCookie(cookieHeaders).get(ORGS_SESSION_ACCESS_TOKEN)
+					: parseCookie(cookieHeaders).get(CLIENT_SESSION_ACCESS_TOKEN);
 		} else {
 			token =
 				resourceType && resourceType === "organizer"

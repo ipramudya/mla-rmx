@@ -10,9 +10,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
 	if (!cookieHeader) return null;
 
-	const parsedCookie = parseCookie(cookieHeader);
+	const cookieMap = parseCookie(cookieHeader);
+	const isAuthenticated = Boolean(
+		cookieMap.get("refresh_token") || cookieMap.get(CLIENT_SESSION_ACCESS_TOKEN),
+	);
 
-	if (parsedCookie && (parsedCookie.refresh_token || parsedCookie[CLIENT_SESSION_ACCESS_TOKEN])) {
+	if (isAuthenticated) {
 		return redirect("/", 301);
 	}
 

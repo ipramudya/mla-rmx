@@ -22,4 +22,4 @@ export const APP_STATIC_URL = IS_PRODUCTION
 
 export const IS_SERVER = typeof window === "undefined";
 
-export const HEADER_CACHE_CONTROL = { "Cache-Control": "private, max-age=300" };
+export const DEFAULT_CACHE_HEADER = { "Cache-Control": "private, max-age=300" };

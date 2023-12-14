@@ -16,9 +16,8 @@ const DEFAULT_FORM_VALUES = { firstName: "", lastName: "", password: "", phone: 
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
-	if (!cookieHeader) return redirect("/auth/login");
 
-	const verified = parseCookie(cookieHeader);
+	const verified = parseCookie(cookieHeader).get("verified");
 	if (!verified) return redirect("/auth/register");
 
 	return null;
