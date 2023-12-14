@@ -5,7 +5,7 @@ type MeResponse = {
 	user: ParticipantUser;
 };
 
-export async function me(cookie?: string) {
+export async function me(cookie?: string | null) {
 	return await protectedAPIHandler<MeResponse>("/users/me", {
 		method: "GET",
 		headers: {

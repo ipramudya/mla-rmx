@@ -37,18 +37,19 @@ import { DEFAULT_CACHE_HEADER } from "./constant";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
+	const refreshToken = parseCookie(cookieHeader).get("refresh_token");
+	const isAuthenticated = Boolean(refreshToken);
 
-	if (cookieHeader) {
-		const refreshToken = parseCookie(cookieHeader).get("refresh_token");
-		const authenticated = Boolean(refreshToken);
-
-		if (!authenticated) return null;
-
+	if (isAuthenticated) {
 		const { data, ctx } = await me(cookieHeader);
 
 		if (data && ctx) {
 			return json(
-				{ user: data.user, accessToken: ctx.params.access_token, authenticated },
+				{
+					user: data.user,
+					accessToken: ctx.params.access_token,
+					authenticated: isAuthenticated,
+				},
 				{
 					headers: DEFAULT_CACHE_HEADER,
 				},
@@ -59,7 +60,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	return null;
 }
 
-export default function App() {
+export default function RootApp() {
 	const data = useLoaderData<typeof loader>();
 	const setUserData = useUser((s) => s.setUserData);
 
