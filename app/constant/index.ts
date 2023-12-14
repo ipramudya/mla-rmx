@@ -21,3 +21,5 @@ export const APP_STATIC_URL = IS_PRODUCTION
 	: "http://localhost:3000/static/images";
 
 export const IS_SERVER = typeof window === "undefined";
+
+export const HEADER_CACHE_CONTROL = { "Cache-Control": "private, max-age=300" };

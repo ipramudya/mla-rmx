@@ -58,7 +58,7 @@ export default function ItemOrganizer({
 		if (data) {
 			orgsClientSession.setAccessToken(data.access_token);
 			setCurrentOrgs(data.identity);
-			navigate(`/dashboard/${data.identity.username}`);
+			navigate(`/dashboard/${data.identity.id}`);
 		}
 
 		setLoading(false);

@@ -40,7 +40,7 @@ export default function LoginPopup(props: Props) {
 
 		setCurrentOrgs(data.identity);
 
-		navigate(`/dashboard/${data.identity.username}`);
+		navigate(`/dashboard/${data.identity.id}`);
 
 		resetPopup();
 	};

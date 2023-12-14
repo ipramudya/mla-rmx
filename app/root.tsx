@@ -4,6 +4,7 @@ import "@mantine/core/styles.css";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type {
 	HandleErrorFunction,
+	HeadersFunction,
 	LinksFunction,
 	LoaderFunctionArgs,
 	MetaFunction,
@@ -30,21 +31,7 @@ import theme from "app/lib/theme";
 import { me } from "app/services/user-data-service";
 import { useEffect, useState } from "react";
 import { useDehydratedState } from "use-dehydrated-state";
-
-export const links: LinksFunction = () => [
-	...(cssBundleHref
-		? [
-				{ rel: "stylesheet", href: cssBundleHref },
-				{ rel: "stylesheet", href: globalStyles },
-		  ]
-		: []),
-];
-
-export const meta: MetaFunction = () => {
-	return [{ title: "Mulailomba" }, { name: "description", content: "Mulailomba..." }];
-};
-
-export const ErrorBoundary: HandleErrorFunction = ErrorNotFoundPage;
+import { HEADER_CACHE_CONTROL } from "./constant";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
@@ -61,9 +48,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 			return json(
 				{ user: data.user, accessToken: ctx.params.access_token, authenticated },
 				{
-					headers: {
-						"Cache-Control": "private, max-age=60",
-					},
+					headers: HEADER_CACHE_CONTROL,
 				},
 			);
 		}
@@ -124,3 +109,22 @@ export default function App() {
 		</html>
 	);
 }
+
+export const headers: HeadersFunction = ({ loaderHeaders }) => ({
+	"Cache-Control": loaderHeaders.get("Cache-Control")!,
+});
+
+export const links: LinksFunction = () => [
+	...(cssBundleHref
+		? [
+				{ rel: "stylesheet", href: cssBundleHref },
+				{ rel: "stylesheet", href: globalStyles },
+		  ]
+		: []),
+];
+
+export const meta: MetaFunction = () => {
+	return [{ title: "Mulailomba" }, { name: "description", content: "Mulailomba..." }];
+};
+
+export const ErrorBoundary: HandleErrorFunction = ErrorNotFoundPage;
