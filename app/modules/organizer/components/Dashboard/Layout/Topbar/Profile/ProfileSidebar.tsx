@@ -1,35 +1,25 @@
-import type { DrawerProps } from "@mantine/core";
 import {
 	Center,
 	CloseButton,
 	Divider,
 	Drawer,
+	type DrawerProps,
 	Flex,
 	Group,
-	Image,
 	ScrollArea,
 	Stack,
 	Text,
 } from "@mantine/core";
-import { Link } from "@remix-run/react";
-import { AddLombaSignature } from "app/assets/images";
 import { Icon } from "app/components/Icon";
 import PROFILE_SIDEBAR_LINKS from "app/constant/profile-sidebar-links";
-import useOrganizer from "app/lib/store/hooks/use-organizer";
+import useUser from "app/lib/store/hooks/use-user";
 import { Fragment } from "react";
 import LogoutButton from "./LogoutButton";
-import styles from "./Profile.module.css";
 
-interface Props extends Omit<DrawerProps, "children"> {
-	userFullName?: string;
-}
+type Props = Omit<DrawerProps, "children">;
 
-export default function ProfileSidebar({ opened, onClose, userFullName }: Props) {
-	const currentOrgs = useOrganizer((s) => s.organizerData);
-
-	const getCreateLombaDestinationURL = () => {
-		return currentOrgs ? `/dashboard/${currentOrgs.id}` : "/dashboard/choose";
-	};
+export default function ProfileSidebar({ opened, onClose }: Props) {
+	const user = useUser((s) => s.userData)!;
 
 	return (
 		<Drawer
@@ -38,14 +28,12 @@ export default function ProfileSidebar({ opened, onClose, userFullName }: Props)
 			onClose={onClose}
 			withCloseButton={false}
 			scrollAreaComponent={ScrollArea.Autosize}
-			styles={{}}
 		>
 			<Stack gap="md">
-				{/* header */}
 				<Flex align="center" pos="relative">
 					<div>
 						<Text component="h4" size="lg" fw="600">
-							Informasi Akun
+							Informasi Akun Utama
 						</Text>
 						<Text component="p" size="sm" variant="body-text">
 							Segala informasi mengenai data kamu
@@ -71,31 +59,12 @@ export default function ProfileSidebar({ opened, onClose, userFullName }: Props)
 					</Center>
 					<div>
 						<Text component="h4" fw="600">
-							Halo, {userFullName || "-"}!
+							Halo, {user.full_name || "-"}!
 						</Text>
 						<Text component="p" size="sm" variant="body-text">
 							Lihat dan ubah profile
 						</Text>
 					</div>
-				</Flex>
-				<Flex
-					component={Link}
-					prefetch="intent"
-					to={getCreateLombaDestinationURL()}
-					align="center"
-					justify="space-between"
-					gap="sm"
-					className={styles.to_dashboard_btn}
-				>
-					<div>
-						<Text component="h4" fw="600" variant="gradient">
-							Buat Lomba
-						</Text>
-						<Text component="p" size="sm" variant="body-text">
-							Jadi organizer dan adakan perlombaan, lalu temukan kandidat unggulan
-						</Text>
-					</div>
-					<Image src={AddLombaSignature} w="56px" h="56px" fit="contain" />
 				</Flex>
 				{PROFILE_SIDEBAR_LINKS.map((link, idx) => (
 					<Fragment key={"profile sidebar" + link.title + idx}>
