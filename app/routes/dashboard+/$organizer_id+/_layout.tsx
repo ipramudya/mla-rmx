@@ -5,6 +5,7 @@ import { DEFAULT_CACHE_HEADER } from "app/constant";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { orgsClientSession } from "app/lib/session/organizer-session";
 import useOrganizer from "app/lib/store/hooks/use-organizer";
+import Base from "app/modules/organizer/components/Dashboard/Layout/Base";
 import DashboardLayoutSkeleton from "app/modules/organizer/components/Dashboard/Layout/Skeleton";
 import { me } from "app/services/orgs-data-service";
 import { Suspense, useCallback, useEffect } from "react";
@@ -62,7 +63,13 @@ export default function InnerDashboardLayout() {
 
 	return (
 		<Suspense fallback={<DashboardLayoutSkeleton />} key={`layout inner org ${Math.random}`}>
-			<Await resolve={loaderResponse}>{(resolved) => <Outlet context={resolved} />}</Await>
+			<Await resolve={loaderResponse}>
+				{(resolved) => (
+					<Base>
+						<Outlet context={resolved} />
+					</Base>
+				)}
+			</Await>
 		</Suspense>
 	);
 }
