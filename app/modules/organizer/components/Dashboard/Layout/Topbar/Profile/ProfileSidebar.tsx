@@ -19,7 +19,7 @@ import LogoutButton from "./LogoutButton";
 type Props = Omit<DrawerProps, "children">;
 
 export default function ProfileSidebar({ opened, onClose }: Props) {
-	const user = useUser((s) => s.userData)!;
+	const user = useUser((s) => s.userData);
 
 	return (
 		<Drawer
@@ -59,7 +59,7 @@ export default function ProfileSidebar({ opened, onClose }: Props) {
 					</Center>
 					<div>
 						<Text component="h4" fw="600">
-							Halo, {user.full_name || "-"}!
+							Halo, {user?.full_name || "-"}!
 						</Text>
 						<Text component="p" size="sm" variant="body-text">
 							Lihat dan ubah profile

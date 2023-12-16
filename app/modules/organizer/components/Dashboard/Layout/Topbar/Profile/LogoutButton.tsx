@@ -1,5 +1,5 @@
 import { Button } from "@mantine/core";
-import { useNavigate } from "@remix-run/react";
+import { useFetcher, useNavigate } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import { userClientSession } from "app/lib/session";
 import { orgsClientSession } from "app/lib/session/organizer-session";
@@ -18,6 +18,7 @@ const onToastError = () => {
 
 export default function LogoutButton() {
 	const [loading, setLoading] = useState(false);
+	const fetcher = useFetcher();
 	const navigate = useNavigate();
 	const clearUserData = useUser((s) => s.clearUserData);
 	const clearOrganizerData = useOrganizer((s) => s.clearOrganizerData);
@@ -48,7 +49,7 @@ export default function LogoutButton() {
 		userClientSession.clearAccessToken();
 		orgsClientSession.clearAccessToken();
 
-		// fetcher.load("/");
+		fetcher.load("/");
 
 		setLoading(false);
 	};

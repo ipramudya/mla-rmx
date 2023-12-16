@@ -1,10 +1,12 @@
-import { Links, Meta, Scripts, useNavigate } from "@remix-run/react";
+import { Links, Meta, Scripts, useNavigate, useRouteError } from "@remix-run/react";
 import { ErrorDoodle } from "app/assets/images";
 import { Icon } from "../Icon";
 import styles from "./404.module.css";
 
 export default function ErrorNotFoundPage() {
 	const navigate = useNavigate();
+	const error = useRouteError();
+	console.error("from error boundary", error);
 
 	return (
 		<html>

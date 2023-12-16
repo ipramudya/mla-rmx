@@ -3,13 +3,13 @@ import { Link } from "@remix-run/react";
 import useOrganizer from "app/lib/store/hooks/use-organizer";
 
 export default function OrganizerLogo() {
-	const currentOrgs = useOrganizer((s) => s.organizerData)!;
+	const currentOrgs = useOrganizer((s) => s.organizerData);
 
 	return (
 		<Text component="h1">
 			<Flex
 				component={Link}
-				to={`/dashboard/${currentOrgs.id}`}
+				to={`/dashboard/${currentOrgs?.id}`}
 				align="center"
 				gap="sm"
 				td="none"
