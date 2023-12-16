@@ -16,7 +16,7 @@ import { Link } from "@remix-run/react";
 import { AddLombaSignature } from "app/assets/images";
 import { Icon } from "app/components/Icon";
 import useOrganizer from "app/lib/store/hooks/use-organizer";
-import { useRootRouteData } from "app/root";
+import useUser from "app/lib/store/hooks/use-user";
 import clsx from "clsx";
 import LogoutButton from "./LogoutButton";
 import styles from "./Profile.module.css";
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export default function Profile({ isScrolledOver }: Props) {
-	const rootData = useRootRouteData();
+	const user = useUser((s) => s.userData);
 	const currentOrgs = useOrganizer((s) => s.organizerData);
 
 	const [isOpen, { toggle, close }] = useDisclosure();
@@ -46,7 +46,7 @@ export default function Profile({ isScrolledOver }: Props) {
 				leftSection={<Icon.User size={16} variant={isScrolledOver ? "Outline" : "Bold"} />}
 			>
 				<Text truncate="end" maw="70px" size="sm" fw={600} lh={1}>
-					{rootData?.user?.full_name ?? "-"}
+					{user?.full_name ?? "-"}
 				</Text>
 			</Button>
 
@@ -89,7 +89,7 @@ export default function Profile({ isScrolledOver }: Props) {
 						</Center>
 						<div>
 							<Text component="h4" fw="600">
-								Halo, {rootData?.user?.full_name || "-"}!
+								Halo, {user?.full_name || "-"}!
 							</Text>
 							<Text component="p" size="sm" variant="body-text">
 								Lihat dan ubah profile

@@ -8,7 +8,6 @@ import type {
 	LinksFunction,
 	LoaderFunctionArgs,
 	MetaFunction,
-	SerializeFrom,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
@@ -19,7 +18,6 @@ import {
 	Scripts,
 	ScrollRestoration,
 	useLoaderData,
-	useMatches,
 } from "@remix-run/react";
 import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -131,14 +129,3 @@ export const meta: MetaFunction = () => {
 };
 
 export const ErrorBoundary: HandleErrorFunction = ErrorNotFoundPage;
-
-export const handle = "ROOT";
-
-/* shareable root route loader data */
-export const useRootRouteData = () => {
-	const routeLoaderData = useMatches().find((x) => x.handle === handle)?.data as
-		| SerializeFrom<typeof loader>
-		| undefined;
-
-	return routeLoaderData;
-};
