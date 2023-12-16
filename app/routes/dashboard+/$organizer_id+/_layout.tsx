@@ -1,6 +1,7 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { defer, redirect } from "@remix-run/node";
 import { Await, Outlet, useLoaderData } from "@remix-run/react";
+import { DEFAULT_CACHE_HEADER } from "app/constant";
 import { parseCookie } from "app/functions/parse-cookie.server";
 import { orgsClientSession } from "app/lib/session/organizer-session";
 import useOrganizer from "app/lib/store/hooks/use-organizer";
@@ -16,7 +17,7 @@ export function loader({ request }: LoaderFunctionArgs) {
 
 	const meResponse = me(cookieHeader);
 
-	return defer({ loaderResponse: meResponse }, { headers: { "Cache-Control": "no-store" } });
+	return defer({ loaderResponse: meResponse }, { headers: DEFAULT_CACHE_HEADER });
 }
 
 export default function InnerDashboardLayout() {
@@ -25,24 +26,30 @@ export default function InnerDashboardLayout() {
 	const setCurrentOrgs = useOrganizer((s) => s.setCurrentOrgs);
 	const currentOrgs = useOrganizer((s) => s.organizerData);
 
+	const initiateOrgsData = ({ ctx, data }: Awaited<typeof loaderResponse>) => {
+		if (data && ctx) {
+			const accessToken = ctx.params.access_token;
+
+			const hasAccessToken = Boolean(orgsClientSession.getAccessToken());
+			if (!hasAccessToken) {
+				orgsClientSession.setAccessToken(accessToken);
+			}
+
+			const isOrgsDataAlreadyStored = Boolean(
+				currentOrgs && currentOrgs.id === data.organizer.id,
+			);
+			if (!isOrgsDataAlreadyStored) {
+				setCurrentOrgs(data.organizer);
+			}
+		}
+	};
+
 	const handleDeferedResponse = useCallback(async () => {
 		if (loaderResponse !== undefined) {
 			const { data, ctx } = await loaderResponse;
 
-			if (data && ctx) {
-				const accessToken = ctx.params.access_token;
-
-				const hasAccessToken = Boolean(orgsClientSession.getAccessToken());
-				if (!hasAccessToken) {
-					orgsClientSession.setAccessToken(accessToken);
-				}
-
-				const isOrgsDataAlreadyStored = Boolean(
-					currentOrgs && currentOrgs.id === data.organizer.id,
-				);
-				if (!isOrgsDataAlreadyStored) {
-					setCurrentOrgs(data.organizer);
-				}
+			if (ctx && data) {
+				initiateOrgsData({ ctx, data } as Awaited<typeof loaderResponse>);
 			}
 		}
 
@@ -54,7 +61,7 @@ export default function InnerDashboardLayout() {
 	}, [handleDeferedResponse]);
 
 	return (
-		<Suspense fallback={<DashboardLayoutSkeleton />}>
+		<Suspense fallback={<DashboardLayoutSkeleton />} key={`layout inner org ${Math.random}`}>
 			<Await resolve={loaderResponse}>{(resolved) => <Outlet context={resolved} />}</Await>
 		</Suspense>
 	);

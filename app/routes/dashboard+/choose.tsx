@@ -1,6 +1,7 @@
 import { Stack } from "@mantine/core";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
+import { useNavigation } from "@remix-run/react";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 import getOrganizerAccounts, {
 	GET_ORGANIZER_ACCOUNTS_QUERY_KEY,
@@ -10,6 +11,7 @@ import Heading from "app/modules/organizer/components/ChooseOrganizer/Heading";
 import ListOrganizer from "app/modules/organizer/components/ChooseOrganizer/ListOrganizer";
 import LoginPopup from "app/modules/organizer/components/ChooseOrganizer/LoginPopup";
 import Panel from "app/modules/organizer/components/ChooseOrganizer/Panel";
+import DashboardLayoutSkeleton from "app/modules/organizer/components/Dashboard/Layout/Skeleton";
 import { Provider } from "jotai";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -34,7 +36,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function ChoosePage() {
-	return (
+	const navigation = useNavigation();
+
+	return navigation.state === "loading" ? (
+		<DashboardLayoutSkeleton />
+	) : (
 		<Provider>
 			<LoginPopup />
 
