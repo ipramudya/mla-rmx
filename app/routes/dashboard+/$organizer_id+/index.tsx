@@ -4,7 +4,7 @@ export default function DashboardOrganizerLandingPage() {
 	const { organizerId } = useOrganizerId();
 
 	return (
-		<div>
+		<div id="lolngds">
 			<p>dashboard {organizerId}</p>
 		</div>
 	);

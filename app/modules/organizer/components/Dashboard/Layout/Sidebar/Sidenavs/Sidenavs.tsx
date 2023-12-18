@@ -55,7 +55,7 @@ export default function Sidenavs() {
 							variant={isActive ? "light" : "subtle"}
 							color={isActive ? "indigo" : "gray"}
 							component={Link}
-							to={`/dashboard/${data?.organizer.id}/${url}`}
+							to={`/dashboard/${data?.organizer.id}${url}`}
 							key={"sidebar nav " + idx}
 							leftSection={<GenerateIcon size={20} />}
 							classNames={{

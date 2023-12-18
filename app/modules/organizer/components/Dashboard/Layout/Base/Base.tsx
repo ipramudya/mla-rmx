@@ -1,4 +1,4 @@
-import { Box, Flex } from "@mantine/core";
+import { Box, Flex, ScrollArea } from "@mantine/core";
 import type { PropsWithChildren } from "react";
 import Sidebar from "../Sidebar";
 import Topbar from "../Topbar";
@@ -10,11 +10,20 @@ export default function Base({ children }: PropsWithChildren) {
 			<Flex className={styles.inner_base}>
 				<Topbar />
 
-				<Flex gap={8} h="100%">
+				<Box className={styles.main_wrapper}>
 					<Sidebar />
 
-					<Flex component="main">{children}</Flex>
-				</Flex>
+					<Flex component="section" className={styles.content_section}>
+						<ScrollArea
+							className={styles.scrollarea}
+							styles={{
+								thumb: { backgroundColor: "var(--mantine-color-gray-3)" },
+							}}
+						>
+							{children}
+						</ScrollArea>
+					</Flex>
+				</Box>
 			</Flex>
 		</Box>
 	);

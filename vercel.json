@@ -1,4 +1,0 @@
-{
-	"buildCommand": "remix build",
-	"regions": ["sin1"]
-}
