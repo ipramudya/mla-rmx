@@ -1,0 +1,12 @@
+.wrapper {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: color .3s ease;
+}
+
+.active {
+    border-color: var(--mantine-color-indigo-6);
+    padding: 2px;
+}

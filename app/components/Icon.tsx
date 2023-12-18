@@ -1,5 +1,6 @@
 import type { Icon as IconsaxIcon, IconProps } from "iconsax-react";
 import {
+	Add,
 	AddCircle,
 	AddSquare,
 	ArrowDown,
@@ -25,6 +26,7 @@ import {
 	Location,
 	Lock,
 	Logout,
+	Maximize,
 	MedalStar,
 	MessageAdd1,
 	MessageQuestion,
@@ -75,9 +77,11 @@ export const Icon = {
 	Lomba: MedalStar,
 	Logout,
 	Location,
+	Maximize,
 	Menu: HambergerMenu,
 	Organizer: People,
 	Password: Lock,
+	Plus: Add,
 	PlusCircle: AddCircle,
 	PlusSquare: AddSquare,
 	Reveal: Eye,
