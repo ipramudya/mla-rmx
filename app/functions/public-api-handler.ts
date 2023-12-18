@@ -9,7 +9,7 @@ interface APIHandlerOptions extends Omit<RequestInit, "method"> {
 export default async function publicAPIHandler<T>(
 	url: string,
 	{ headers, ...options }: APIHandlerOptions,
-): Promise<Omit<BaseAPIReturn<{ ok: boolean } & T>, "ctx">> {
+): Promise<Omit<BaseAPIReturn<{ ok: boolean } & T>, "accessToken">> {
 	try {
 		const res = await fetch(BACKEND_API_URL + url, {
 			headers: {

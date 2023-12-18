@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs, SerializeFrom } from "@remix-run/node";
 import { defer, redirect } from "@remix-run/node";
 import { Await, Outlet, useLoaderData } from "@remix-run/react";
 import { DEFAULT_CACHE_HEADER } from "app/constant";
@@ -21,16 +21,16 @@ export function loader({ request }: LoaderFunctionArgs) {
 	return defer({ loaderResponse: meResponse }, { headers: DEFAULT_CACHE_HEADER });
 }
 
+export type LoaderData = SerializeFrom<Awaited<typeof loader["loaderResponse"]>>;
+
 export default function InnerDashboardLayout() {
 	const { loaderResponse } = useLoaderData<typeof loader>();
 
 	const setCurrentOrgs = useOrganizer((s) => s.setCurrentOrgs);
 	const currentOrgs = useOrganizer((s) => s.organizerData);
 
-	const initiateOrgsData = ({ ctx, data }: Awaited<typeof loaderResponse>) => {
-		if (data && ctx) {
-			const accessToken = ctx.params.access_token;
-
+	const initiateOrgsData = ({ accessToken, data }: Awaited<typeof loaderResponse>) => {
+		if (data && accessToken) {
 			const hasAccessToken = Boolean(orgsClientSession.getAccessToken());
 			if (!hasAccessToken) {
 				orgsClientSession.setAccessToken(accessToken);
@@ -47,10 +47,10 @@ export default function InnerDashboardLayout() {
 
 	const handleDeferedResponse = useCallback(async () => {
 		if (loaderResponse !== undefined) {
-			const { data, ctx } = await loaderResponse;
+			const { data, accessToken } = await loaderResponse;
 
-			if (ctx && data) {
-				initiateOrgsData({ ctx, data } as Awaited<typeof loaderResponse>);
+			if (accessToken && data) {
+				initiateOrgsData({ accessToken, data } as Awaited<typeof loaderResponse>);
 			}
 		}
 

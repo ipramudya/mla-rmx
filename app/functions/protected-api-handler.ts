@@ -31,13 +31,16 @@ export default async function protectedAPIHandler<T>(
 		});
 
 		if (status > 300 || !data) {
-			return { data: null, error: `${status} -- ${statusText}`, ctx: null };
+			return { data: null, error: `${status} -- ${statusText}`, accessToken: null };
 		}
 
+		/* injected from axios instance interceptor response which run on the runtime server */
+		const accessToken = config.params ? config.params.access_token : null;
+
 		// @ts-expect-error extending generic
-		return { data, error: null, ctx: config };
+		return { data, error: null, accessToken };
 	} catch (error: any) {
 		console.log("error-" + url, error.message);
-		return { data: null, error: "Server Error", ctx: null };
+		return { data: null, error: "Server Error", accessToken: null };
 	}
 }

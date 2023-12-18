@@ -1,5 +1,3 @@
-import type { AxiosRequestConfig } from "axios";
-
 export interface ParticipantUser {
 	id: string;
 	full_name: string;
@@ -27,5 +25,5 @@ export interface OrganizerUser {
 export declare interface BaseAPIReturn<T> {
 	data: T | null;
 	error: string | null;
-	ctx: AxiosRequestConfig | null;
+	accessToken: string | null;
 }

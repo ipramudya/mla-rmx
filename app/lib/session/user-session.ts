@@ -4,7 +4,9 @@ export const CLIENT_SESSION_ACCESS_TOKEN = "cs_at";
 
 export const userClientSession = {
 	setAccessToken: (session: string) => {
-		jsCookie.set(CLIENT_SESSION_ACCESS_TOKEN, session);
+		jsCookie.set(CLIENT_SESSION_ACCESS_TOKEN, session, {
+			sameSite: "Lax",
+		});
 	},
 	getAccessToken: () => jsCookie.get(CLIENT_SESSION_ACCESS_TOKEN) || "",
 	clearAccessToken: () => jsCookie.remove(CLIENT_SESSION_ACCESS_TOKEN),

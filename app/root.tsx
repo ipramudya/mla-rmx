@@ -39,13 +39,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const isAuthenticated = Boolean(refreshToken);
 
 	if (isAuthenticated) {
-		const { data, ctx } = await me(cookieHeader);
+		const { data, accessToken } = await me(cookieHeader);
 
-		if (data && ctx) {
+		if (data) {
 			return json(
 				{
 					user: data.user,
-					accessToken: ctx.params.access_token,
+					accessToken,
 					authenticated: isAuthenticated,
 				},
 				{
@@ -68,7 +68,7 @@ export default function RootApp() {
 			return;
 		}
 
-		if (data) {
+		if (data && data.accessToken) {
 			setUserData(data.user);
 			userClientSession.setAccessToken(data.accessToken);
 		}
