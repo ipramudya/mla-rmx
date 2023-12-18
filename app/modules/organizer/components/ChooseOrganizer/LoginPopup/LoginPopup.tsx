@@ -71,11 +71,13 @@ export default function LoginPopup(props: Props) {
 						<Input.Wrapper
 							label="Password"
 							error={formState.errors.password?.message || false}
+							styles={{ label: { marginBottom: "4px" } }}
 							withAsterisk
 						>
 							<PasswordInput
 								error={!!formState.errors.password}
 								size="md"
+								data-autofocus
 								leftSection={<Icon.Password size={20} />}
 								placeholder="Masukan password organizer"
 								{...register("password")}
