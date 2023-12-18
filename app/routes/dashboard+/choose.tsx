@@ -3,6 +3,7 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useNavigation } from "@remix-run/react";
 import { QueryClient, dehydrate } from "@tanstack/react-query";
+import { DEFAULT_CACHE_HEADER } from "app/constant";
 import getOrganizerAccounts, {
 	GET_ORGANIZER_ACCOUNTS_QUERY_KEY,
 } from "app/modules/organizer/api/get-organizers-accounts";
@@ -25,20 +26,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
 		queryFn: () => getOrganizerAccounts(undefined, cookie),
 	});
 
-	return json(
-		{ dehydratedState: dehydrate(queryClient) },
-		{
-			headers: {
-				"Cache-Control": "private, max-age=60",
-			},
-		},
-	);
+	return json({ dehydratedState: dehydrate(queryClient) }, { headers: DEFAULT_CACHE_HEADER });
 }
 
 export default function ChoosePage() {
 	const navigation = useNavigation();
 
-	return navigation.state === "loading" ? (
+	return navigation.state === "loading" && navigation.location.pathname.includes("dashboard") ? (
 		<DashboardLayoutSkeleton />
 	) : (
 		<Provider>
