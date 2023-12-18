@@ -4,9 +4,22 @@
     border-radius: 10px;
     border: 2px solid transparent;
     transition: color .3s ease;
+    opacity: 0.4;
+    position: relative;
 }
 
 .active {
-    border-color: var(--mantine-color-indigo-6);
-    padding: 2px;
+    opacity: 1;
+}
+
+.indicator {
+    position: absolute;
+    width: 4px;
+    height: 36px;
+    top: -2px;
+    left: -8px;
+    z-index: 102;
+    border-radius: 6px;
+    background-color: var(--mantine-color-indigo-4);
+    transition: all 0.3s ease-in-out;
 }

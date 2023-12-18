@@ -1,19 +1,32 @@
-import { Avatar, Center, HoverCard, Text } from "@mantine/core";
+import { Avatar, Box, Center, HoverCard, Text } from "@mantine/core";
+import { useAsyncValue } from "@remix-run/react";
 import type { OrganizerAccounts } from "app/modules/organizer/types/organizer-accounts";
+import type { LoaderData } from "app/routes/dashboard+/$organizer_id+/_layout";
 import clsx from "clsx";
+import { useMemo } from "react";
 import styles from "./OrganizerItem.module.css";
 
 interface Props {
 	organizer: OrganizerAccounts;
-	active?: boolean;
 }
 
-export default function OrganizerItem({ organizer, active }: Props) {
+export default function OrganizerItem({ organizer }: Props) {
+	const asyncValue = useAsyncValue() as LoaderData;
+
+	const isActive = useMemo(() => {
+		if (organizer.id === asyncValue.data?.organizer.id) {
+			return true;
+		}
+
+		return false;
+	}, [asyncValue.data?.organizer.id, organizer.id]);
+
 	return (
 		<HoverCard position="right" width={240} shadow="md">
 			<HoverCard.Target>
-				<Center className={clsx(styles.wrapper, active ? styles.active : "")}>
-					<Avatar src={organizer.profile.secureUrl} />
+				<Center className={clsx(styles.wrapper, isActive ? styles.active : "")}>
+					{isActive && <Box className={styles.indicator} />}
+					<Avatar size="sm" src={organizer.profile.secureUrl} />
 				</Center>
 			</HoverCard.Target>
 
