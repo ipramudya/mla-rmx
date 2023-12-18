@@ -13,7 +13,9 @@ import ListOrganizer from "app/modules/organizer/components/ChooseOrganizer/List
 import LoginPopup from "app/modules/organizer/components/ChooseOrganizer/LoginPopup";
 import Panel from "app/modules/organizer/components/ChooseOrganizer/Panel";
 import DashboardLayoutSkeleton from "app/modules/organizer/components/Dashboard/Layout/Skeleton";
+import useListOrganizers from "app/modules/organizer/hooks/use-list-organizers";
 import { Provider } from "jotai";
+import { useEffect } from "react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
@@ -31,6 +33,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function ChoosePage() {
 	const navigation = useNavigation();
+	const { refetch } = useListOrganizers();
+
+	useEffect(() => {
+		refetch();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return navigation.state === "loading" && navigation.location.pathname.includes("dashboard") ? (
 		<DashboardLayoutSkeleton />

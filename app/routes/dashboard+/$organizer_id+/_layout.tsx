@@ -21,7 +21,7 @@ export function loader({ request }: LoaderFunctionArgs) {
 	return defer({ loaderResponse: meResponse }, { headers: DEFAULT_CACHE_HEADER });
 }
 
-export type LoaderData = SerializeFrom<Awaited<typeof loader["loaderResponse"]>>;
+export type LoaderData = Awaited<SerializeFrom<typeof loader>["loaderResponse"]>;
 
 export default function InnerDashboardLayout() {
 	const { loaderResponse } = useLoaderData<typeof loader>();
