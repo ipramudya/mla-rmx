@@ -19,7 +19,6 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from "@remix-run/react";
-import { captureRemixErrorBoundaryError, withSentry } from "@sentry/remix";
 import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import globalStyles from "app/assets/styles/global.css";
@@ -59,7 +58,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	return null;
 }
 
-function RootApp() {
+export default function RootApp() {
 	const data = useLoaderData<typeof loader>();
 	const setUserData = useUser((s) => s.setUserData);
 
@@ -111,8 +110,6 @@ function RootApp() {
 		</html>
 	);
 }
-
-export default withSentry(RootApp);
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => ({
 	"Cache-Control": loaderHeaders.get("Cache-Control")!,
