@@ -1,0 +1,21 @@
+.wrapper {
+    width: 248px;
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    background-color: white;
+    border-radius: 10px;
+}
+
+.nav_inner_btn {
+    height: fit-content;
+}
+
+.nav_inner_btn {
+    min-height: 42px;
+    justify-content: start;
+}
+

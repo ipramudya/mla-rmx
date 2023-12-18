@@ -14,7 +14,7 @@ export default function BottomSidebar() {
 		<Stack p={12} style={{ borderRadius: "10px" }} bg="white">
 			<Button
 				variant="subtle"
-				color="var(--mantine-color-dark-3)"
+				color="gray"
 				leftSection={<Icon.Back size={20} />}
 				styles={{
 					inner: {

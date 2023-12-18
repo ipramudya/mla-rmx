@@ -63,12 +63,10 @@ export default function InnerDashboardLayout() {
 
 	return (
 		<Suspense fallback={<DashboardLayoutSkeleton />} key={`layout inner org ${Math.random}`}>
-			<Await resolve={loaderResponse}>
-				{(resolved) => (
-					<Base>
-						<Outlet context={resolved} />
-					</Base>
-				)}
+			<Await resolve={loaderResponse} errorElement={<div>oops!</div>}>
+				<Base>
+					<Outlet />
+				</Base>
 			</Await>
 		</Suspense>
 	);

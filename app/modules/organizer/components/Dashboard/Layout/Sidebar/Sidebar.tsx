@@ -1,6 +1,7 @@
 import { Flex } from "@mantine/core";
 import BottomSidebar from "./BottomSidebar";
 import OrganizerChannels from "./OrganizerChannels";
+import Sidenavs from "./Sidenavs";
 
 export default function Sidebar() {
 	return (
@@ -8,7 +9,7 @@ export default function Sidebar() {
 			<Flex gap={8} style={{ flexGrow: 1 }}>
 				<OrganizerChannels />
 
-				{/* sidenavs */}
+				<Sidenavs />
 			</Flex>
 
 			{/* bottom nav */}
