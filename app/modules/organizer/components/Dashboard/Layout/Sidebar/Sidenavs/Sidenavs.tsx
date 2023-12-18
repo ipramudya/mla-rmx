@@ -16,7 +16,7 @@ export default function Sidenavs() {
 	const getIsNavActive = (url: string): boolean => {
 		const pathnames = pathname.split("/").slice(3);
 
-		if (url === "/" && pathnames.length === 0) return true;
+		if (url === "/" && (pathnames.length === 0 || pathnames[0] === "")) return true;
 
 		if (pathnames.includes(url)) return true;
 
