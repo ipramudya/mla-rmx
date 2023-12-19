@@ -28,10 +28,26 @@ import { parseCookie } from "app/functions/parse-cookie.server";
 import { userClientSession } from "app/lib/session";
 import useUser from "app/lib/store/hooks/use-user";
 import theme from "app/lib/theme";
-import { me } from "app/services/user-data-service";
+import { userMe } from "app/services/user-data-service";
 import { useEffect, useState } from "react";
 import { useDehydratedState } from "use-dehydrated-state";
-import { DEFAULT_CACHE_HEADER } from "./constant";
+import { orgsClientSession } from "./lib/session/organizer-session";
+import useOrganizer from "./lib/store/hooks/use-organizer";
+import { orgsMe } from "./services/orgs-data-service";
+import type { OrganizerUser, ParticipantUser } from "./types";
+
+type LoaderData = {
+	user: {
+		data: ParticipantUser;
+		accessToken: string | null;
+	};
+	orgs: {
+		data: OrganizerUser | undefined;
+		accessToken: string | null;
+	} | null;
+};
+
+export const shouldRevalidate = () => false;
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const cookieHeader = request.headers.get("Cookie");
@@ -39,19 +55,35 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const isAuthenticated = Boolean(refreshToken);
 
 	if (isAuthenticated) {
-		const { data, accessToken } = await me(cookieHeader);
+		const { data: userMeData, accessToken: userAccessToken } = await userMe(cookieHeader);
 
-		if (data) {
-			return json(
-				{
-					user: data.user,
-					accessToken,
-					authenticated: isAuthenticated,
+		let data = {} as LoaderData;
+		if (userMeData) {
+			data = {
+				user: {
+					data: userMeData.user,
+					accessToken: userAccessToken,
 				},
-				{
-					headers: DEFAULT_CACHE_HEADER,
-				},
-			);
+				orgs: null,
+			};
+
+			const orgsRefreshToken = parseCookie(cookieHeader).get("organizer_refresh_token");
+			const isOrgsAuthenticated = Boolean(orgsRefreshToken);
+
+			if (isOrgsAuthenticated) {
+				const { data: orgsMeData, accessToken: orgsAccessToken } =
+					await orgsMe(cookieHeader);
+
+				data = {
+					...data,
+					orgs: {
+						data: orgsMeData?.organizer,
+						accessToken: orgsAccessToken,
+					},
+				};
+			}
+
+			return json(data);
 		}
 	}
 
@@ -59,20 +91,33 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function RootApp() {
-	const data = useLoaderData<typeof loader>();
+	const loaderData = useLoaderData<typeof loader>();
 	const setUserData = useUser((s) => s.setUserData);
+	const setCurrentOrgs = useOrganizer((s) => s.setCurrentOrgs);
 
 	useEffect(() => {
-		if (!data) {
+		if (!loaderData) {
 			userClientSession.clearAccessToken();
+			orgsClientSession.clearAccessToken();
 			return;
 		}
 
-		if (data && data.accessToken) {
-			setUserData(data.user);
-			userClientSession.setAccessToken(data.accessToken);
+		if (loaderData) {
+			const { user, orgs } = loaderData;
+
+			setUserData(user.data);
+			if (user.accessToken) {
+				userClientSession.setAccessToken(user.accessToken);
+			}
+
+			if (orgs && orgs.data) {
+				setCurrentOrgs(orgs.data);
+				if (orgs.accessToken) {
+					orgsClientSession.setAccessToken(orgs.accessToken);
+				}
+			}
 		}
-	}, [data, setUserData]);
+	}, [loaderData, setCurrentOrgs, setUserData]);
 
 	const [queryClient] = useState(
 		() =>

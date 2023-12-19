@@ -1,17 +1,16 @@
 import { Button, Stack } from "@mantine/core";
-import { useAsyncValue, useNavigate, useNavigation } from "@remix-run/react";
+import { useNavigate, useNavigation } from "@remix-run/react";
 import { Icon } from "app/components/Icon";
 import LoadingOverlay from "app/components/LoadingOverlay";
 import { orgsClientSession } from "app/lib/session/organizer-session";
 import useOrganizer from "app/lib/store/hooks/use-organizer";
 import logoutOrganizer from "app/modules/organizer/api/logout-organizer";
-import type { LoaderData } from "app/routes/dashboard+/$organizer_id+/_layout";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 export default function BottomSidebar() {
 	const [loading, setLoading] = useState(false);
-	const { data } = useAsyncValue() as LoaderData;
+	const organizer = useOrganizer((s) => s.organizerData);
 
 	const navigate = useNavigate();
 	const navigation = useNavigation();
@@ -21,13 +20,13 @@ export default function BottomSidebar() {
 	const isNavigatingOutsideDashboard = useMemo(() => {
 		if (
 			navigation.location &&
-			data &&
-			!navigation.location.pathname.includes(data.organizer.id || "")
+			organizer &&
+			!navigation.location.pathname.includes(organizer.id || "")
 		)
 			return true;
 
 		return false;
-	}, [data, navigation.location]);
+	}, [navigation.location, organizer]);
 
 	const handleSwitchToHomesite = () => {
 		navigate("/");

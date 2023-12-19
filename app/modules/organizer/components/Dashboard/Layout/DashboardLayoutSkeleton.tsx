@@ -27,25 +27,25 @@ export default function DashboardLayoutSkeleton() {
 						p={12}
 						style={{ borderRadius: "10px" }}
 					>
-						{Array.from({ length: 4 }).map((_, idx) => (
+						{Array.from({ length: 5 }).map((_, idx) => (
 							<Skeleton key={"orgs skeleton " + idx} w={36} h={36} />
 						))}
 					</Flex>
 
 					{/* sidebar skeleton */}
 					<Flex
-						gap={16}
+						gap={44}
 						p={12}
 						direction="column"
 						miw={248}
 						bg="white"
 						style={{ borderRadius: "10px" }}
 					>
-						<Skeleton w="100%" h={47} />
-						<Stack gap={12}>
+						<Skeleton w="100%" h={50} />
+						<Stack gap={14} pl={12}>
 							{Array.from({ length: 7 }).map((_, idx) => (
 								<Box key={"sidebar skeleton" + idx} w="100%" mih={42}>
-									<Skeleton h={23} w={96} />
+									<Skeleton h={24} w={96} />
 								</Box>
 							))}
 						</Stack>
