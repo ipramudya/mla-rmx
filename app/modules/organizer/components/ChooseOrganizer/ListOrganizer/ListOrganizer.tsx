@@ -103,8 +103,8 @@ function OrganizerGrid({
 						isActive={is_active}
 						lastAccessedAt={logout_at}
 						totalLomba={total_event}
-						profileImg={profile.secureUrl}
-						backgroundImg={background.secureUrl}
+						profileImg={profile?.secureUrl || ""}
+						backgroundImg={background?.secureUrl || ""}
 					/>
 				),
 			)}

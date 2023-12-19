@@ -1,22 +1,10 @@
-import { Links, Meta, Scripts, useNavigate, useRouteError } from "@remix-run/react";
+import { Links, Meta, Scripts, useNavigate } from "@remix-run/react";
 import { ErrorDoodle } from "app/assets/images";
-import { useEffect } from "react";
 import { Icon } from "../Icon";
 import styles from "./404.module.css";
 
 export default function ErrorNotFoundPage() {
 	const navigate = useNavigate();
-	const error = useRouteError();
-
-	useEffect(() => {
-		throw new Error("Error", {
-			cause: {
-				error,
-			},
-		});
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	return (
 		<html>

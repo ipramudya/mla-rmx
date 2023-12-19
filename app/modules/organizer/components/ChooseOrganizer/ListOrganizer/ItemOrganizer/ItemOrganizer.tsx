@@ -69,11 +69,13 @@ export default function ItemOrganizer({
 			<LoadingOverlay visible={loading} />
 
 			<Flex gap="md" direction="column" p={12} className={styles.root} onClick={handleClick}>
-				<Image src={backgroundImg} radius="sm" className={styles.banner} />
+				{backgroundImg && (
+					<Image src={backgroundImg} radius="sm" className={styles.banner} />
+				)}
 
 				<Stack px={8}>
 					<Group justify="space-between">
-						<Avatar src={profileImg} />
+						{profileImg && <Avatar src={profileImg} />}
 						<Group gap={2}>
 							{!isActive && (
 								<Badge

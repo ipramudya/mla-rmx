@@ -26,7 +26,9 @@ export default function OrganizerItem({ organizer }: Props) {
 			<HoverCard.Target>
 				<Center className={clsx(styles.wrapper, isActive ? styles.active : "")}>
 					{isActive && <Box className={styles.indicator} />}
-					<Avatar size="sm" src={organizer.profile.secureUrl} />
+					{organizer.profile.secureUrl && (
+						<Avatar size="sm" src={organizer.profile.secureUrl} />
+					)}
 				</Center>
 			</HoverCard.Target>
 
