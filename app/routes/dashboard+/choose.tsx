@@ -12,7 +12,7 @@ import Heading from "app/modules/organizer/components/ChooseOrganizer/Heading";
 import ListOrganizer from "app/modules/organizer/components/ChooseOrganizer/ListOrganizer";
 import LoginPopup from "app/modules/organizer/components/ChooseOrganizer/LoginPopup";
 import Panel from "app/modules/organizer/components/ChooseOrganizer/Panel";
-import DashboardLayoutSkeleton from "app/modules/organizer/components/Dashboard/Layout/Skeleton";
+import DashboardLayoutSkeleton from "app/modules/organizer/components/Dashboard/Layout/DashboardLayoutSkeleton";
 import useListOrganizers from "app/modules/organizer/hooks/use-list-organizers";
 import { Provider } from "jotai";
 import { useEffect } from "react";

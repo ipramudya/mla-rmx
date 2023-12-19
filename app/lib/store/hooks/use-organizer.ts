@@ -23,7 +23,7 @@ const useOrganizer = create<State & Actions>()(
 		}),
 		{
 			name: "co", // current organizer
-			storage: createJSONStorage(() => sessionStorage),
+			storage: createJSONStorage(() => localStorage),
 		},
 	),
 );

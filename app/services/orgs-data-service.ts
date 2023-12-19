@@ -5,7 +5,7 @@ type MeResponse = {
 	organizer: OrganizerUser;
 };
 
-export async function me(cookie?: string) {
+export async function orgsMe(cookie?: string | null) {
 	return await protectedAPIHandler<MeResponse>("/organizers/me", {
 		method: "GET",
 		asOrganizer: true,
